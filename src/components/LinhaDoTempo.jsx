@@ -24,21 +24,6 @@ const CARD_WIDTH = 480
 const CARD_GAP   = 72
 const CARD_TOTAL = CARD_WIDTH + CARD_GAP
 
-// ── Parâmetros do efeito ondulado ─────────────────────────────────────────
-// A "onda" vertical: intensidade média, bem visível.
-const WAVE_AMPLITUDE = 120        // altura da ondulação em px (pico a base ~ 2x)
-const WAVE_LENGTH    = CARD_TOTAL * 2.4  // comprimento de onda (define nº de curvas na tela)
-
-// Foco central: quão grande e quão "seletivo" é o destaque do meio.
-const SCALE_CENTER   = 1.28       // escala do card centralizado
-const SCALE_EDGE     = 0.72       // escala dos cards afastados
-const FOCUS_WIDTH    = CARD_TOTAL * 1.15  // largura da "zona de foco" (menor = mais concentrado)
-
-// Desaceleração suave perto do centro: o track anda mais devagar
-// quando um card está centralizado, criando a sensação de "respiro".
-const SLOWDOWN_MAX   = 0.55       // 0 = sem freio, 1 = para totalmente no centro
-const BASE_SPEED     = 0.7        // velocidade base do auto-scroll
-
 // ─── Lightbox ──────────────────────────────────────────────────────────────
 function Lightbox({ item, onClose, onPrev, onNext }) {
   useEffect(() => {
@@ -80,6 +65,7 @@ function Lightbox({ item, onClose, onPrev, onNext }) {
         onClick={e => e.stopPropagation()}
         style={{
           position: 'relative', maxWidth: 720, width: '100%',
+          /* Sapphire escuro como fundo do modal */
           background: 'linear-gradient(145deg, rgba(35,60,100,0.98), rgba(4,11,25,0.98))',
           border: '1px solid rgba(95,130,155,0.3)',
           borderRadius: 20, overflow: 'hidden',
@@ -92,6 +78,7 @@ function Lightbox({ item, onClose, onPrev, onNext }) {
             style={{ width: '100%', maxHeight: 420, objectFit: 'cover', display: 'block' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(4,11,25,1) 0%,rgba(4,11,25,.3) 50%,transparent 100%)' }} />
           <div style={{ position: 'absolute', bottom: 20, left: 24, display: 'flex', alignItems: 'center', gap: 10 }}>
+            {/* Badge do ano — Sunshine */}
             <span style={{ background: '#f0c832', color: '#040b19', fontWeight: 800, fontSize: 22, padding: '6px 18px', borderRadius: 8 }}>
               {item.year}
             </span>
@@ -118,6 +105,7 @@ function Lightbox({ item, onClose, onPrev, onNext }) {
                 onClick={fn}
                 style={{
                   flex: 1, padding: '10px 0', borderRadius: 10, fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                  /* Sunshine para o botão primário */
                   background: primary ? 'rgba(240,200,50,.15)' : 'rgba(255,255,255,.05)',
                   border:     primary ? '1px solid rgba(240,200,50,.4)' : '1px solid rgba(95,130,155,.25)',
                   color:      primary ? '#f0c832' : 'rgba(240,240,240,.7)',
@@ -133,10 +121,8 @@ function Lightbox({ item, onClose, onPrev, onNext }) {
 }
 
 // ─── Card ──────────────────────────────────────────────────────────────────
-// Agora todos os cards têm a mesma estrutura (imagem + conector + badge).
-// O conector aponta pra linha central; a onda/escala são aplicadas pelo pai
-// via ref (cardRef), frame a frame.
-function Card({ item, onOpen, dragInfoRef, cardRef }) {
+function Card({ item, index, onOpen, dragInfoRef }) {
+  const isAbove = index % 2 === 0
   const startPos = useRef({ x: 0, y: 0, t: 0 })
   const DRAG_THRESHOLD = 16
   const TIME_THRESHOLD = 500
@@ -151,73 +137,81 @@ function Card({ item, onOpen, dragInfoRef, cardRef }) {
     if (dist < DRAG_THRESHOLD && elapsed < TIME_THRESHOLD) onOpen()
   }
 
-  return (
+  const badge = (
+    <div style={{ textAlign: 'center', padding: isAbove ? '0 0 6px' : '6px 0 0', flexShrink: 0 }}>
+      {/* Sunshine no badge */}
+      <span style={{
+        display: 'inline-block', background: '#f0c832', color: '#040b19',
+        fontWeight: 800, fontSize: 20, letterSpacing: '.05em', padding: '8px 20px', borderRadius: 10,
+      }}>{item.year}</span>
+      {item.label && (
+        <p style={{ color: 'rgba(240,240,240,.45)', fontSize: 15, margin: '6px 0 0', fontWeight: 600 }}>{item.label}</p>
+      )}
+    </div>
+  )
+
+  const connector = (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
+      {/* Cold Steel nas linhas do conector */}
+      <div style={{ width: 2, height: 36, background: 'rgba(95,130,155,.6)' }} />
+      {/* Sunshine no ponto central */}
+      <div style={{
+        width: 18, height: 18, borderRadius: '50%', flexShrink: 0,
+        background: '#f0c832', boxShadow: '0 0 16px rgba(240,200,50,.7)',
+      }} />
+      <div style={{ width: 2, height: 36, background: 'rgba(95,130,155,.6)' }} />
+    </div>
+  )
+
+  const cardVisual = (
     <div
-      ref={cardRef}
+      onPointerDown={(e) => handleDown(e.clientX, e.clientY)}
+      onPointerUp={(e)   => handleUp(e.clientX, e.clientY)}
       style={{
         width: CARD_WIDTH, flexShrink: 0,
-        display: 'flex', flexDirection: 'column', alignItems: 'center',
-        userSelect: 'none',
-        willChange: 'transform, opacity',
-        // transform/opacity/zIndex são escritos pelo loop de animação
+        /* Sapphire escuro como fundo do card */
+        background: 'linear-gradient(180deg, #1a2e50 0%, #0f1e38 100%)',
+        border: '1px solid rgba(95,130,155,.2)',
+        borderRadius: 16, overflow: 'hidden',
+        boxShadow: '0 6px 30px rgba(0,0,0,.5)',
+        cursor: 'pointer',
+        transition: 'transform .25s ease, box-shadow .25s ease',
+      }}
+      onMouseEnter={e => {
+        e.currentTarget.style.transform = 'scale(1.04)'
+        e.currentTarget.style.boxShadow = '0 10px 40px rgba(240,200,50,.2)'
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.transform = 'scale(1)'
+        e.currentTarget.style.boxShadow = '0 6px 30px rgba(0,0,0,.5)'
       }}
     >
-      {/* Conector: liga o topo do card até a linha central ondulada.
-          O comprimento é ajustado pelo pai para acompanhar a onda. */}
-      <div className="card-connector" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
-        <div className="connector-line" style={{ width: 2, height: 30, background: 'rgba(95,130,155,.6)' }} />
+      <div style={{ position: 'relative', height: 320, overflow: 'hidden' }}>
+        <img src={item.image} alt={item.year} draggable={false}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(4,11,25,.85) 0%,transparent 55%)' }} />
+        {/* Ícone lupa — Cold Steel */}
         <div style={{
-          width: 16, height: 16, borderRadius: '50%', flexShrink: 0,
-          background: '#f0c832', boxShadow: '0 0 16px rgba(240,200,50,.7)',
-        }} />
-        <div className="connector-line" style={{ width: 2, height: 12, background: 'rgba(95,130,155,.6)' }} />
+          position: 'absolute', top: 14, right: 14, width: 44, height: 44, borderRadius: '50%',
+          background: 'rgba(95,130,155,.25)', border: '1px solid rgba(95,130,155,.5)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20,
+        }}>🔍</div>
       </div>
+      <div style={{ padding: '24px 26px' }}>
+        <p style={{ color: 'rgba(240,240,240,.65)', fontSize: 18, lineHeight: 1.6, margin: 0 }}>{item.desc}</p>
+      </div>
+    </div>
+  )
 
-      {/* Badge do ano */}
-      <div style={{ textAlign: 'center', padding: '6px 0 10px', flexShrink: 0 }}>
-        <span style={{
-          display: 'inline-block', background: '#f0c832', color: '#040b19',
-          fontWeight: 800, fontSize: 20, letterSpacing: '.05em', padding: '8px 20px', borderRadius: 10,
-        }}>{item.year}</span>
-        {item.label && (
-          <p style={{ color: 'rgba(240,240,240,.5)', fontSize: 15, margin: '6px 0 0', fontWeight: 600 }}>{item.label}</p>
-        )}
-      </div>
-
-      {/* Visual do card */}
-      <div
-        onPointerDown={(e) => handleDown(e.clientX, e.clientY)}
-        onPointerUp={(e)   => handleUp(e.clientX, e.clientY)}
-        style={{
-          width: CARD_WIDTH, flexShrink: 0,
-          background: 'linear-gradient(180deg, #1a2e50 0%, #0f1e38 100%)',
-          border: '1px solid rgba(95,130,155,.2)',
-          borderRadius: 16, overflow: 'hidden',
-          boxShadow: '0 6px 30px rgba(0,0,0,.5)',
-          cursor: 'pointer',
-        }}
-      >
-        <div style={{ position: 'relative', height: 300, overflow: 'hidden' }}>
-          <img src={item.image} alt={item.year} draggable={false}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(4,11,25,.85) 0%,transparent 55%)' }} />
-          <div style={{
-            position: 'absolute', top: 14, right: 14, width: 44, height: 44, borderRadius: '50%',
-            background: 'rgba(95,130,155,.25)', border: '1px solid rgba(95,130,155,.5)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20,
-          }}>🔍</div>
-        </div>
-        <div style={{ padding: '22px 26px' }}>
-          <p style={{ color: 'rgba(240,240,240,.65)', fontSize: 18, lineHeight: 1.6, margin: 0 }}>{item.desc}</p>
-        </div>
-      </div>
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: CARD_WIDTH, flexShrink: 0, userSelect: 'none' }}>
+      {isAbove ? (<>{badge}{connector}{cardVisual}</>) : (<>{cardVisual}{connector}{badge}</>)}
     </div>
   )
 }
 
 // ─── Componente principal ──────────────────────────────────────────────────
 export default function LinhaDoTempo() {
-  const viewportRef = useRef(null)   // container visível (para achar o centro)
   const trackRef    = useRef(null)
   const dragInfoRef = useRef({ offset: 0, startOffset: 0 })
   const [selected, setSelected] = useState(null)
@@ -229,11 +223,9 @@ export default function LinhaDoTempo() {
   const lastX       = useRef(0)
   const resumeTimer = useRef(null)
 
-  // refs de cada card, para aplicar transform frame a frame
-  const cardRefs = useRef([])
-
   const items     = [...milestones, ...milestones, ...milestones]
   const loopWidth = milestones.length * CARD_TOTAL
+  const SPEED     = 0.7
 
   const clamp = (v) => {
     if (v >= loopWidth * 2) return v - loopWidth
@@ -241,84 +233,16 @@ export default function LinhaDoTempo() {
     return v
   }
 
-  // curva de destaque em função da distância ao centro (gaussiana)
-  const focusCurve = (dist) => {
-    const x = dist / FOCUS_WIDTH
-    return Math.exp(-(x * x))   // 1 no centro → 0 nas bordas
-  }
-
   useEffect(() => {
     offsetRef.current = loopWidth
-
-    const applyWave = () => {
-      const vp = viewportRef.current
-      if (!vp) return
-      const centerX = vp.clientWidth / 2
-
-      for (let i = 0; i < cardRefs.current.length; i++) {
-        const el = cardRefs.current[i]
-        if (!el) continue
-
-        // posição do centro do card na tela
-        const cardCenter = (i * CARD_TOTAL) + CARD_TOTAL / 2 - offsetRef.current + CARD_GAP / 2
-        const dist = cardCenter - centerX
-
-        // foco (0..1): 1 quando centralizado
-        const focus = focusCurve(dist)
-
-        // escala: interpola entre borda e centro
-        const scale = SCALE_EDGE + (SCALE_CENTER - SCALE_EDGE) * focus
-
-        // onda vertical senoidal ao longo do eixo horizontal
-        const waveY = Math.sin(cardCenter / WAVE_LENGTH * Math.PI * 2) * WAVE_AMPLITUDE
-
-        // opacidade e profundidade: destaque no foco
-        const opacity = 0.45 + 0.55 * focus
-        const z = Math.round(focus * 1000)
-
-        el.style.transform = `translate3d(0, ${waveY}px, 0) scale(${scale})`
-        el.style.opacity   = opacity
-        el.style.zIndex    = z
-
-        // conector acompanha a onda: quando o card sobe (waveY negativo),
-        // ele está acima da linha central, então o conteúdo já se ajusta.
-        // ajuste fino do comprimento do conector conforme a onda:
-        const conn = el.querySelector('.card-connector')
-        if (conn) {
-          const stretch = Math.max(0, Math.min(1, (waveY + WAVE_AMPLITUDE) / (WAVE_AMPLITUDE * 2)))
-          conn.style.opacity = (0.5 + 0.5 * focus).toFixed(2)
-          conn.style.transform = `scaleY(${(0.8 + 0.5 * stretch).toFixed(2)})`
-          conn.style.transformOrigin = 'top center'
-        }
-      }
-    }
-
     const tick = () => {
-      if (!pausedRef.current && !isDragging.current) {
-        // desaceleração suave: quando algum card está no centro,
-        // reduz a velocidade proporcionalmente ao foco máximo.
-        const vp = viewportRef.current
-        let maxFocus = 0
-        if (vp) {
-          const centerX = vp.clientWidth / 2
-          for (let i = 0; i < cardRefs.current.length; i++) {
-            const cardCenter = (i * CARD_TOTAL) + CARD_TOTAL / 2 - offsetRef.current + CARD_GAP / 2
-            const f = focusCurve(cardCenter - centerX)
-            if (f > maxFocus) maxFocus = f
-          }
-        }
-        const speed = BASE_SPEED * (1 - SLOWDOWN_MAX * maxFocus)
-        offsetRef.current = clamp(offsetRef.current + speed)
-      }
-
+      if (!pausedRef.current && !isDragging.current)
+        offsetRef.current = clamp(offsetRef.current + SPEED)
       if (trackRef.current)
         trackRef.current.style.transform = `translate3d(${-offsetRef.current}px,0,0)`
-
-      applyWave()
       dragInfoRef.current.offset = offsetRef.current
       rafRef.current = requestAnimationFrame(tick)
     }
-
     rafRef.current = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(rafRef.current)
   }, [loopWidth])
@@ -373,10 +297,7 @@ export default function LinhaDoTempo() {
         boxSizing: 'border-box',
         display: 'flex', flexDirection: 'column',
       }}>
-        <style>{`
-          .timeline-track { will-change: transform; }
-          .wave-card { transition: none; }
-        `}</style>
+        <style>{`.timeline-track { will-change: transform; }`}</style>
 
         {/* Glow — Sapphire */}
         <div style={{
@@ -394,12 +315,14 @@ export default function LinhaDoTempo() {
 
         {/* Cabeçalho */}
         <div style={{ textAlign: 'center', marginBottom: 40, position: 'relative', zIndex: 10, flexShrink: 0 }}>
+          {/* Cold Steel no label superior */}
           <p style={{ color: '#5f829b', fontSize: 11, fontWeight: 700, letterSpacing: '.4em', textTransform: 'uppercase', margin: '0 0 12px' }}>
             Quem Somos?
           </p>
           <h2 style={{ color: '#f0f0f0', fontSize: 44, fontWeight: 800, margin: '0 0 16px', letterSpacing: '-.02em' }}>
             A Linde Vidros
           </h2>
+          {/* Sunshine na linha decorativa */}
           <div style={{ width: 48, height: 2, background: '#f0c832', margin: '0 auto 14px', borderRadius: 2 }} />
           <p style={{ color: 'rgba(240,240,240,.28)', fontSize: 12, margin: 0 }}>
             Clique em um card para ver mais · Arraste para explorar
@@ -409,19 +332,18 @@ export default function LinhaDoTempo() {
         {/* Carrossel */}
         <div style={{ flex: 1, display: 'flex', alignItems: 'center', width: '100%', minHeight: 0 }}>
           <div
-            ref={viewportRef}
-            style={{ position: 'relative', overflow: 'hidden', cursor: 'grab', width: '100%', height: '100%', touchAction: 'pan-y', display: 'flex', alignItems: 'center' }}
+            style={{ position: 'relative', overflow: 'hidden', cursor: 'grab', width: '100%', touchAction: 'pan-y' }}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
             onPointerLeave={onPointerUp}
             onPointerCancel={onPointerUp}
           >
-            {/* Linha central de referência — sutil, o efeito principal é a onda dos cards */}
+            {/* Linha horizontal — Cold Steel */}
             <div style={{
               position: 'absolute', top: '50%', left: 0, right: 0,
               height: 2, marginTop: -1,
-              background: 'rgba(95,130,155,.25)',
+              background: 'rgba(95,130,155,.4)',
               pointerEvents: 'none', zIndex: 0,
             }} />
 
@@ -431,13 +353,8 @@ export default function LinhaDoTempo() {
               gap: 0, padding: '20px 0',
             }}>
               {items.map((item, i) => (
-                <div key={i} className="wave-card" style={{ margin: `0 ${CARD_GAP / 2}px` }}>
-                  <Card
-                    item={item}
-                    onOpen={() => openCard(i)}
-                    dragInfoRef={dragInfoRef}
-                    cardRef={(el) => { cardRefs.current[i] = el }}
-                  />
+                <div key={i} style={{ margin: `0 ${CARD_GAP / 2}px` }}>
+                  <Card item={item} index={i} onOpen={() => openCard(i)} dragInfoRef={dragInfoRef} />
                 </div>
               ))}
             </div>
