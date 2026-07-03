@@ -1,0 +1,123 @@
+/* ══════════════════════════════════════════════════════════════
+   TELA PRODUTOS — background azul sólido (cima) → imagem (baixo)
+   SEM grade de quadrados.
+══════════════════════════════════════════════════════════════ */
+
+.hero-section {
+  position: relative;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  padding: 0 2rem;
+  box-sizing: border-box;
+
+  /* Fundo: imagem totem.jpeg (que já vem com degradê azul embutido)
+     + um véu azul leve por cima para garantir legibilidade do conteúdo.
+     'cover' preenche a tela toda mantendo proporção. */
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(4, 11, 25, 0.55) 0%,
+      rgba(35, 60, 100, 0.35) 45%,
+      rgba(4, 11, 25, 0.65) 100%
+    ),
+    url('/images/totem.jpeg');
+  background-size: cover, cover;
+  background-position: center, center;
+  background-repeat: no-repeat, no-repeat;
+}
+
+/* Glow central suave — Cold Steel em baixa opacidade (~18%) */
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(95,130,185,0.18) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-section::after {
+  content: '';
+  position: absolute;
+  bottom: 14%;
+  right: 8%;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, rgba(95,130,185,0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  flex-shrink: 0;
+  padding-top: 2cm;
+}
+
+.hero-logo {
+  height: 260px;
+  width: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.hero-title-block {
+  text-align: center;
+  margin-top: 32px;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.hero-title {
+  color: #f0c832;
+  font-size: 5rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  margin: 0;
+  line-height: 1;
+  text-align: center;
+}
+
+.hero-subtitle {
+  color: rgba(240,240,240,0.65);
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin: 14px 0 0;
+  text-align: center;
+}
+
+.carousel-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  padding-bottom: 120px;
+  min-height: 0;
+}
