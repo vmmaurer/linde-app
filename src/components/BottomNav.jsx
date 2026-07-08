@@ -61,21 +61,18 @@ const TabButton = styled.button`
 
   &:active { transform: scale(0.96); }
 
-  svg {
-    width: 42px;
-    height: 42px;
-    fill: currentColor;
-    transition: all 0.25s ease;
-  }
-
-  /* Ícone em imagem (ex: Contato) — segue o tamanho dos SVGs */
+  /* Ícones em imagem (glass PNG) */
   img.tab-icon {
-    width: 42px;
-    height: 42px;
+    width: 46px;
+    height: 46px;
     object-fit: contain;
     transition: all 0.25s ease;
-    /* quando inativo, deixa levemente apagado como os SVGs */
-    opacity: ${({ $active }) => ($active ? 1 : 0.8)};
+    /* inativo fica levemente apagado; ativo fica cheio e com brilho */
+    opacity: ${({ $active }) => ($active ? 1 : 0.75)};
+    filter: ${({ $active }) =>
+      $active
+        ? 'drop-shadow(0 2px 8px rgba(0,122,255,0.55))'
+        : 'none'};
   }
 
   span {
@@ -87,27 +84,11 @@ const TabButton = styled.button`
 `;
 
 const tabs = [
-  { id: 'produtos',  label: 'Produtos',  icon: 'home'     },
-  { id: 'estrutura', label: 'Estrutura', icon: 'files'    },
-  { id: 'historia',  label: 'História',  icon: 'calendar' },
-  { id: 'contato',   label: 'Contato',   icon: 'contato'  },
+  { id: 'produtos',  label: 'Produtos',  icon: '/images/NAV-FLAT-PRODUTOS.png'  },
+  { id: 'estrutura', label: 'Estrutura', icon: '/images/NAV-FLAT-ESTRUTURA.png' },
+  { id: 'historia',  label: 'História',  icon: '/images/NAV-FLAT-EMPRESA.png'  },
+  { id: 'contato',   label: 'Contato',   icon: '/images/ICON_CONTATO.png'   },
 ];
-
-const icons = {
-  home: (
-    <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" /></svg>
-  ),
-  files: (
-    <svg viewBox="0 0 24 24"><path d="M6 2c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6H6zm0 18V4h7v5h5v11H6z" /></svg>
-  ),
-  calendar: (
-    <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z" /></svg>
-  ),
-  // Ícone de Contato como imagem PNG
-  contato: (
-    <img className="tab-icon" src="/images/ICON_CONTATO.png" alt="Contato" />
-  ),
-};
 
 const BottomNav = ({ currentScreen, onScreenChange }) => {
   const navRef  = useRef(null);
@@ -172,7 +153,7 @@ const BottomNav = ({ currentScreen, onScreenChange }) => {
           $active={currentScreen === tab.id}
           onClick={() => onScreenChange(tab.id)}
         >
-          {icons[tab.icon]}
+          <img className="tab-icon" src={tab.icon} alt={tab.label} />
           <span>{tab.label}</span>
         </TabButton>
       ))}

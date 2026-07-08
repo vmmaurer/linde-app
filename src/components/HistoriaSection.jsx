@@ -2,6 +2,8 @@ import React from 'react';
 import LinhaDoTempo from './LinhaDoTempo';
 import './HeroSection.css';
 
+// Fundo global da fachada aparece — section transparente.
+
 const HistoriaSection = () => {
   return (
     <section
@@ -11,7 +13,12 @@ const HistoriaSection = () => {
         alignItems: 'stretch',
         overflowY: 'hidden',
         padding: 0,
-        background: 'linear-gradient(180deg, #040b19 0%, #405b7a 50%, #040b19 100%)',
+        /* Fundo: imagem da História (já vem com azul embutido) + véu leve */
+        backgroundImage:
+          'linear-gradient(180deg, rgba(4,11,25,0.55) 0%, rgba(35,60,100,0.30) 45%, rgba(4,11,25,0.75) 100%), url(/images/FUNDO-PAGINA-HISTORIA.png)',
+        backgroundSize: 'cover, cover',
+        backgroundPosition: 'center, center',
+        backgroundRepeat: 'no-repeat, no-repeat',
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
@@ -27,7 +34,7 @@ const HistoriaSection = () => {
 
       <div className="grid-overlay" />
 
-      {/* Fades laterais */}
+      {/* Fades laterais — azul escuro para combinar com o fundo */}
       {[['left', '90deg'], ['right', '270deg']].map(([side, deg]) => (
         <div
           key={side}
@@ -37,15 +44,13 @@ const HistoriaSection = () => {
             bottom: 0,
             [side]: 0,
             width: 80,
-            background: `linear-gradient(${deg}, rgba(4,11,25,0.9) 0%, transparent 100%)`,
+            background: `linear-gradient(${deg}, rgba(4,11,25,0.85) 0%, transparent 100%)`,
             pointerEvents: 'none',
             zIndex: 20,
           }}
         />
       ))}
 
-      {/* Este wrapper precisa de height: 100% E flex: 1 para que
-          a section do LinhaDoTempo receba uma altura real do pai */}
       <div style={{
         position: 'relative',
         zIndex: 2,

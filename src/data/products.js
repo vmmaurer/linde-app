@@ -6,6 +6,8 @@ export const products = [
     subtitle: 'Laminado',
     image: '/images/laminado1.png',
     modalImage: '/images/laminado1.png',
+    // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.png'
+    brandLogo: '',
     // Para adicionar vídeo/fotos: preencha a lista media abaixo.
     // type: 'video' ou 'image'. Pode misturar na ordem que quiser.
     media: [
@@ -15,13 +17,11 @@ export const products = [
     ],
     color: 'from-cyan-900/80 to-navy-950/90',
     description:
-      'Boxes para banheiro que combinam design refinado com máxima durabilidade. Fabricados em vidro temperado de alta qualidade, oferecem segurança e sofisticação ao seu ambiente.',
-    applications: ['Residências de alto padrão', 'Hotéis e pousadas', 'Spas e centros de bem-estar'],
-    benefits: [
-      'Vidro temperado 8mm ou 10mm',
-      'Perfis em alumínio anodizado',
-      'Vedação superior contra umidade',
-      'Instalação precisa e garantida',
+      'Composto por duas ou mais chapas de vidro unidas por uma camada intermediária, o vidro laminado oferece maior segurança, pois mantém os fragmentos presos em caso de quebra. Além disso, bloqueia até 99% dos raios UV, contribuindo para a proteção de pessoas e ambientes.',
+    applications: [
+      'Guarda-corpos e corrimãos',
+      'Fachadas e vitrines',
+      'Coberturas e claraboias',
     ],
   },
   {
@@ -31,6 +31,8 @@ export const products = [
     subtitle: 'Maior resistência',
     image: '/images/sentryglas.png',
     modalImage: '/images/sentryglas.png',
+    // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.png'
+    brandLogo: '/images/ICON-SENTRYGLAS.png',
     media: [
       { type: 'image', src: '/images/sentryglas.png' },
       // { type: 'video', src: '/images/seu_video.mp4' },
@@ -38,13 +40,11 @@ export const products = [
     ],
     color: 'from-blue-900/80 to-navy-950/90',
     description:
-      'Fachadas em vidro que transformam edifícios em ícones arquitetônicos. Soluções completas de envelopamento com desempenho térmico, acústico e estético de excelência.',
-    applications: ['Edifícios corporativos', 'Torres residenciais', 'Centros comerciais'],
-    benefits: [
-      'Alto desempenho térmico',
-      'Redução de ruídos externos',
-      'Tratamentos de controle solar',
-      'Projetos sob medida',
+      'O vidro laminado com SentryGlas® utiliza um interlayer ionoplástico de alta performance, proporcionando resistência estrutural superior e maior segurança. Sua tecnologia oferece excelente proteção contra impactos, intempéries e cargas elevadas, permitindo soluções arquitetônicas mais arrojadas e duráveis.',
+    applications: [
+      'Pisos e passarelas de vidro',
+      'Guarda-corpos estruturais',
+      'Coberturas e fachadas especiais',
     ],
   },
   {
@@ -54,6 +54,8 @@ export const products = [
     subtitle: 'Estilo e privacidade',
     image: '/images/texturizado.png',
     modalImage: '/images/texturizado.png',
+    // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.png'
+    brandLogo: '',
     media: [
       { type: 'image', src: '/images/texturizado.png' },
       // { type: 'video', src: '/images/seu_video.mp4' },
@@ -61,13 +63,11 @@ export const products = [
     ],
     color: 'from-indigo-900/80 to-navy-950/90',
     description:
-      'Divisórias que criam ambientes integrados sem perder privacidade. Ideais para escritórios modernos e residências que valorizam luz natural e fluidez espacial.',
-    applications: ['Escritórios e corporativos', 'Home office premium', 'Consultórios e clínicas'],
-    benefits: [
-      'Vidro laminado ou temperado',
-      'Sistemas deslizantes ou fixos',
-      'Tratamento acústico disponível',
-      'Personalização total do layout',
+      'O vidro texturizado possui desenhos em relevo em sua superfície, combinando estética, privacidade e iluminação natural. Sua textura difunde a luz de forma suave, criando ambientes mais confortáveis e sofisticados sem bloquear a luminosidade.',
+    applications: [
+      'Portas e divisórias internas',
+      'Boxes de banheiro',
+      'Fachadas e elementos decorativos',
     ],
   },
   {
@@ -77,6 +77,8 @@ export const products = [
     subtitle: 'Conforto total',
     image: '/images/insulado1.png',
     modalImage: '/images/insulado1.png',
+    // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.png'
+    brandLogo: '',
     media: [
       { type: 'image', src: '/images/insulado1.png' },
       // { type: 'video', src: '/images/seu_video.mp4' },
@@ -84,13 +86,11 @@ export const products = [
     ],
     color: 'from-slate-800/80 to-navy-950/90',
     description:
-      'Vidro insulado (duplo ou triplo) que garante isolamento térmico e acústico superior. Tecnologia que resulta em economia de energia e máximo conforto interno.',
-    applications: ['Janelas de alto padrão', 'Portas externas', 'Coberturas e telhados envidraçados'],
-    benefits: [
-      'Redução de até 70% na transmissão de calor',
-      'Isolamento acústico certificado',
-      'Versatilidade de composição',
-      'Economia em climatização',
+      'O vidro insulado é composto por duas ou mais placas de vidro separadas por uma câmara de ar desidratada e hermeticamente selada. Essa configuração proporciona excelente isolamento térmico e acústico, aumentando o conforto dos ambientes sem comprometer a entrada de luz natural.',
+    applications: [
+      'Janelas e portas residenciais',
+      'Fachadas e esquadrias de alto desempenho',
+      'Ambientes que exigem conforto térmico e acústico',
     ],
   },
   {
@@ -100,6 +100,8 @@ export const products = [
     subtitle: 'Proteção Solar',
     image: '/images/protecaosolar.png',
     modalImage: '/images/protecaosolar.png',
+    // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.png'
+    brandLogo: '/images/ICON-HABITAT.png',
     media: [
       { type: 'image', src: '/images/protecaosolar.png' },
       // { type: 'video', src: '/images/seu_video.mp4' },
@@ -107,13 +109,11 @@ export const products = [
     ],
     color: 'from-amber-900/80 to-navy-950/90',
     description:
-      'Vidros com tratamento de controle solar que filtram a radiação UV e infravermelho, mantendo ambientes frescos e protegidos sem comprometer a entrada de luz natural.',
-    applications: ['Fachadas residenciais e comerciais', 'Coberturas externas', 'Ambientes com grande exposição solar'],
-    benefits: [
-      'Bloqueio de até 95% dos raios UV',
-      'Redução do ganho de calor solar',
-      'Preservação de móveis e revestimentos',
-      'Diversas tonalidades disponíveis',
+      'O vidro Habitat combina controle solar, conforto e segurança, reduzindo a entrada de calor e bloqueando raios UV que podem danificar móveis e revestimentos. Sua tecnologia contribui para ambientes mais agradáveis, com maior eficiência energética e integração entre áreas internas e externas.',
+    applications: [
+      'Fachadas residenciais',
+      'Portas e janelas de alto desempenho',
+      'Varandas e áreas envidraçadas',
     ],
   },
   {
@@ -121,22 +121,22 @@ export const products = [
     slug: 'Espelhos',
     title: 'Espelhos',
     subtitle: 'Precisão e acabamento impecável',
-    image: '/images/espelhos.png',
-    modalImage: '/images/espelhos.png',
+    image: '/images/espelho-novo.png',
+    modalImage: '/images/espelho-novo.png',
+    // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.png'
+    brandLogo: '',
     media: [
-      { type: 'image', src: '/images/espelhos.png' },
+      { type: 'image', src: '/images/espelho-novo.png' },
       // { type: 'video', src: '/images/seu_video.mp4' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
     ],
     color: 'from-purple-900/80 to-navy-950/90',
     description:
-      'Espelhos de alta qualidade em múltiplos acabamentos e formatos. Do espelho residencial ao painel decorativo de grande porte, soluções que ampliam e valorizam qualquer ambiente.',
-    applications: ['Salas e corredores', 'Academias e estúdios', 'Lojas e showrooms'],
-    benefits: [
-      'Corte e borda personalizados',
-      'Acabamentos bisotados disponíveis',
-      'Espelhos de segurança laminados',
-      'Instalação especializada inclusa',
+      'Os espelhos ampliam a sensação de espaço, valorizam a iluminação dos ambientes e agregam sofisticação aos projetos. Disponíveis em diferentes tonalidades e formatos, são versáteis e podem ser utilizados tanto para fins decorativos quanto funcionais.',
+    applications: [
+      'Decoração de interiores',
+      'Móveis e painéis decorativos',
+      'Academias, lojas e ambientes corporativos',
     ],
   },
   {
@@ -144,22 +144,22 @@ export const products = [
     slug: 'Temperado',
     title: 'Temperado',
     subtitle: 'Qualidade garantida',
-    image: '/images/temperado.jpeg',
-    modalImage: '/images/temperado.jpeg',
+    image: '/images/temperado-novo.png',
+    modalImage: '/images/temperado-novo.png',
+    // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.png'
+    brandLogo: '',
     media: [
-      { type: 'image', src: '/images/temperado.jpeg' },
+      { type: 'image', src: '/images/temperado-novo.png' },
       // { type: 'video', src: '/images/seu_video.mp4' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
     ],
     color: 'from-teal-900/80 to-navy-950/90',
     description:
-      'Guarda-corpos em vidro temperado que unem proteção e estética. Solução ideal para varandas, escadarias e áreas externas que exigem segurança sem comprometer a vista.',
-    applications: ['Varandas e terraços', 'Escadas e mezaninos', 'Piscinas e áreas externas'],
-    benefits: [
-      'Vidro temperado de 10mm a 12mm',
-      'Certificação de segurança NR-18',
-      'Fixação por perfis ou spider',
-      'Aprovado por normas técnicas ABNT',
+      'O vidro temperado passa por um processo de aquecimento e resfriamento controlado que aumenta sua resistência mecânica em até quatro vezes em comparação ao vidro comum. Também oferece maior resistência térmica e, em caso de quebra, fragmenta-se em pequenos pedaços menos cortantes, proporcionando mais segurança.',
+    applications: [
+      'Portas e divisórias',
+      'Boxes de banheiro',
+      'Tampos de mesa e móveis de vidro',
     ],
   },
   {
@@ -169,6 +169,8 @@ export const products = [
     subtitle: 'MultiLaminado',
     image: '/images/mutilaminado.jpeg',
     modalImage: '/images/mutilaminado.jpeg',
+    // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.png'
+    brandLogo: '',
     media: [
       { type: 'image', src: '/images/multilaminado2.jpeg' },
       // { type: 'video', src: '/images/seu_video.mp4' },
@@ -176,13 +178,11 @@ export const products = [
     ],
     color: 'from-cyan-900/80 to-navy-950/90',
     description:
-      'Boxes para banheiro que combinam design refinado com máxima durabilidade. Fabricados em vidro temperado de alta qualidade, oferecem segurança e sofisticação ao seu ambiente.',
-    applications: ['Residências de alto padrão', 'Hotéis e pousadas', 'Spas e centros de bem-estar'],
-    benefits: [
-      'Vidro temperado 8mm ou 10mm',
-      'Perfis em alumínio anodizado',
-      'Vedação superior contra umidade',
-      'Instalação precisa e garantida',
+      'O vidro multilaminado é composto por múltiplas lâminas de vidro unidas por camadas de PVB, oferecendo elevada resistência e segurança. Indicado para aplicações que exigem proteção reforçada contra impactos e tentativas de invasão.',
+    applications: [
+      'Agências bancárias e guaritas',
+      'Vitrines e joalherias',
+      'Pisos e visores de piscina',
     ],
   },
   {
@@ -192,20 +192,20 @@ export const products = [
     subtitle: 'Pinázio',
     image: '/images/pinazio.jpeg',
     modalImage: '/images/pinazio.jpeg',
+    // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.png'
+    brandLogo: '',
     media: [
       { type: 'image', src: '/images/pinazio.jpeg' },
-      // { type: 'video', src: '/images/seu_video.mp4'teste },
+      // { type: 'video', src: '/images/seu_video.mp4' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
     ],
     color: 'from-cyan-900/80 to-navy-950/90',
     description:
-      'Boxes para banheiro que combinam design refinado com máxima durabilidade. Fabricados em vidro temperado de alta qualidade, oferecem segurança e sofisticação ao seu ambiente.',
-    applications: ['Residências de alto padrão', 'Hotéis e pousadas', 'Spas e centros de bem-estar'],
-    benefits: [
-      'Vidro temperado 8mm ou 10mm',
-      'Perfis em alumínio anodizado',
-      'Vedação superior contra umidade',
-      'Instalação precisa e garantida',
+      'O pinázio é um perfil interno aplicado em vidros insulados que cria divisões visuais entre os vãos, agregando estética e personalidade ao projeto. Ele reproduz o aspecto de esquadrias segmentadas sem comprometer a praticidade e o desempenho do conjunto.',
+    applications: [
+      'Portas e janelas residenciais',
+      'Fachadas com estilo clássico ou colonial',
+      'Projetos arquitetônicos com design personalizado',
     ],
   },
   {
@@ -215,6 +215,8 @@ export const products = [
     subtitle: 'Persiana Integrada',
     image: '/images/persiana.png',
     modalImage: '/images/persiana.png',
+    // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.png'
+    brandLogo: '/images/ICON-SCREENLINE.png',
     media: [
       { type: 'image', src: '/images/persiana.png' },
       // { type: 'video', src: '/images/seu_video.mp4' },
@@ -222,13 +224,11 @@ export const products = [
     ],
     color: 'from-cyan-900/80 to-navy-950/90',
     description:
-      'Boxes para banheiro que combinam design refinado com máxima durabilidade. Fabricados em vidro temperado de alta qualidade, oferecem segurança e sofisticação ao seu ambiente.',
-    applications: ['Residências de alto padrão', 'Hotéis e pousadas', 'Spas e centros de bem-estar'],
-    benefits: [
-      'Vidro temperado 8mm ou 10mm',
-      'Perfis em alumínio anodizado',
-      'Vedação superior contra umidade',
-      'Instalação precisa e garantida',
+      'A persiana integrada é instalada no interior do vidro insulado, protegida contra poeira, umidade e desgaste, garantindo praticidade, durabilidade e baixa manutenção. Produzida sob encomenda com tecnologia ScreenLine® e montada pela Linde Vidros, oferece controle de luminosidade e privacidade sem comprometer a estética do ambiente.',
+    applications: [
+      'Janelas e portas residenciais',
+      'Ambientes corporativos e salas de reunião',
+      'Hospitais, clínicas e hotéis',
     ],
   },
   {
@@ -236,92 +236,69 @@ export const products = [
     slug: 'extra-clear',
     title: 'Extra Clear',
     subtitle: 'Extra Clear',
-    image: '/images/extraclear.jpeg',
-    modalImage: '/images/extraclear.jpeg',
+    image: '/images/extra-clear.png',
+    modalImage: '/images/extra-clear.png',
+    // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.png'
+    brandLogo: '',
     media: [
-      { type: 'image', src: '/images/extraclear.jpeg' },
+      { type: 'image', src: '/images/extra-clear.png' },
       // { type: 'video', src: '/images/seu_video.mp4' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
     ],
     color: 'from-cyan-900/80 to-navy-950/90',
     description:
-      'Boxes para banheiro que combinam design refinado com máxima durabilidade. Fabricados em vidro temperado de alta qualidade, oferecem segurança e sofisticação ao seu ambiente.',
-    applications: ['Residências de alto padrão', 'Hotéis e pousadas', 'Spas e centros de bem-estar'],
-    benefits: [
-      'Vidro temperado 8mm ou 10mm',
-      'Perfis em alumínio anodizado',
-      'Vedação superior contra umidade',
-      'Instalação precisa e garantida',
+      'O vidro extra clear possui elevada transparência e neutralidade, proporcionando maior fidelidade às cores e uma visualização mais nítida dos ambientes e objetos. Versátil, pode ser utilizado em diferentes composições e transformações, agregando sofisticação aos projetos.',
+    applications: [
+      'Vitrines e fachadas comerciais',
+      'Guarda-corpos e divisórias',
+      'Móveis e peças decorativas de alto padrão',
     ],
   },
+  
   {
     id: 12,
-    slug: 'super-clear',
-    title: 'Super Clear',
-    subtitle: 'Super Clear',
-    image: '/images/SUPER.jpeg',
-    modalImage: '/images/SUPER.jpeg',
-    media: [
-      { type: 'image', src: '/images/SUPER.jpeg' },
-      // { type: 'video', src: '/images/seu_video.mp4' },
-      // { type: 'image', src: '/images/outra_foto.jpg' },
-    ],
-    color: 'from-cyan-900/80 to-navy-950/90',
-    description:
-      'Boxes para banheiro que combinam design refinado com máxima durabilidade. Fabricados em vidro temperado de alta qualidade, oferecem segurança e sofisticação ao seu ambiente.',
-    applications: ['Residências de alto padrão', 'Hotéis e pousadas', 'Spas e centros de bem-estar'],
-    benefits: [
-      'Vidro temperado 8mm ou 10mm',
-      'Perfis em alumínio anodizado',
-      'Vedação superior contra umidade',
-      'Instalação precisa e garantida',
-    ],
-  },
-  {
-    id: 13,
     slug: 'serigrafia',
     title: 'Serigrafia',
     subtitle: 'Serigrafia',
     image: '/images/CARD-SERIGRAFIA.png',
     modalImage: '/images/CARD-SERIGRAFIA.png',
+    // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.png'
+    brandLogo: '',
     media: [
       { type: 'video', src: '/images/siregrafia.mp4' },
-      { type: 'image', src: '/images/CARD-SERIGRAFIA.png' },
+      { type: 'image', src: '/images/2SERIGRAFIA.png' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
     ],
     color: 'from-cyan-900/80 to-navy-950/90',
     description:
-      'O vidro serigrafado recebe uma camada de tinta cerâmica aplicada sobre a superfície do vidro. Durante o processo de têmpera, essa tinta se funde ao material, resultando em um acabamento de alta resistência, excelente durabilidade e visual sofisticado.',
-    applications: ['Revestimentos de paredes', 'Ambientes residenciais e corporativos', 'Cozinhas, salas de jantar e dormitórios', 'Escritórios, bancos e espaços comerciais', 'Projetos de decoração e design de interiores'],
-    benefits: [
-      'Disponível em ampla variedade de cores',
-      'Alta resistência e aderência da tinta',
-      'Excelente durabilidade',
-      'Acabamento sofisticado',
-      'Fácil manutenção',
+      'O vidro serigrafado recebe uma aplicação de tinta que proporciona acabamento sofisticado, personalização e alta durabilidade. Disponível nas versões temperada ou pintura fria, permite uma ampla variedade de cores e aplicações decorativas.',
+    applications: [
+      'Revestimentos de paredes',
+      'Mobiliário e decoração de interiores',
+      'Ambientes corporativos e comerciais',
     ],
   },
   {
-    id: 14,
+    id: 13,
     slug: 'Low-E',
     title: 'Low-E',
     subtitle: 'Low-E',
-    image: '/images/low.png',
-    modalImage: '/images/low.png',
+    image: '/images/low-e-novo.png',
+    modalImage: '/images/low-e-novo.png',
+    // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.png'
+    brandLogo: '',
     media: [
-      { type: 'image', src: '/images/low.png' },
+      { type: 'image', src: '/images/low-e-novo.png' },
       // { type: 'video', src: '/images/seu_video.mp4' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
     ],
     color: 'from-cyan-900/80 to-navy-950/90',
     description:
-      'Boxes para banheiro que combinam design refinado com máxima durabilidade. Fabricados em vidro temperado de alta qualidade, oferecem segurança e sofisticação ao seu ambiente.',
-    applications: ['Residências de alto padrão', 'Hotéis e pousadas', 'Spas e centros de bem-estar'],
-    benefits: [
-      'Vidro temperado 8mm ou 10mm',
-      'Perfis em alumínio anodizado',
-      'Vedação superior contra umidade',
-      'Instalação precisa e garantida',
+      'O vidro Low-E (baixa emissividade) possui uma camada metálica especial que reduz a transferência de calor através do vidro, contribuindo para maior eficiência energética e conforto térmico. Sua tecnologia permite aproveitar a luz natural enquanto minimiza o ganho ou a perda de calor dos ambientes.',
+    applications: [
+      'Vidros insulados de alto desempenho',
+      'Fachadas residenciais e comerciais',
+      'Ambientes climatizados com foco em eficiência energética',
     ],
   },
 ]
