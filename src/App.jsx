@@ -11,10 +11,18 @@ const App = () => {
   const [currentScreen, setCurrentScreen] = useState('produtos');
   const [modalOpen, setModalOpen] = useState(false);
   const idleTimer = useRef(null);
+  const navReturnTimer = useRef(null);
 
   const resetIdleTimer = () => {
     if (idleTimer.current) clearTimeout(idleTimer.current);
-    idleTimer.current = setTimeout(() => setCurrentScreen('produtos'), 30000);
+    // O timer roda SEMPRE (inclusive com card aberto). Numa feira, se
+    // alguém abre e abandona, após 30s o card fecha e volta pra tela
+    // inicial. Qualquer toque na tela reinicia esta contagem.
+    idleTimer.current = setTimeout(() => {
+      // fecha qualquer modal/card aberto (o ProductModal escuta este evento)
+      window.dispatchEvent(new CustomEvent('force-close-modal'));
+      setCurrentScreen('produtos');
+    }, 30000);
   };
 
   useEffect(() => {
@@ -28,15 +36,26 @@ const App = () => {
     };
   }, []);
 
-  // Esconde a navbar quando qualquer modal/lightbox abre
+  // Controla o modal e o reaparecimento da navbar.
+  //  - Ao ABRIR: navbar some na hora.
+  //  - Ao FECHAR: a navbar só volta após um pequeno atraso (400ms). Isso
+  //    evita que o mesmo toque que fecha o card (no botão X, que fica no
+  //    lugar da navbar) atinja a navbar recém-reaparecida e troque de tela.
   useEffect(() => {
-    const open = () => setModalOpen(true);
-    const close = () => setModalOpen(false);
+    const open = () => {
+      if (navReturnTimer.current) clearTimeout(navReturnTimer.current);
+      setModalOpen(true);
+    };
+    const close = () => {
+      if (navReturnTimer.current) clearTimeout(navReturnTimer.current);
+      navReturnTimer.current = setTimeout(() => setModalOpen(false), 400);
+    };
     window.addEventListener('modal-open', open);
     window.addEventListener('modal-close', close);
     return () => {
       window.removeEventListener('modal-open', open);
       window.removeEventListener('modal-close', close);
+      if (navReturnTimer.current) clearTimeout(navReturnTimer.current);
     };
   }, []);
 
@@ -48,7 +67,7 @@ const App = () => {
     const prevent = (e) => e.preventDefault();
 
     const onTouchStart = (e) => {
-      if (e.touches.length > 1) e.preventDefault();
+    if (e.touches.length > 1) e.preventDefault();
     };
     const onTouchMove = (e) => {
       if (e.touches.length > 1) {
@@ -104,7 +123,7 @@ const App = () => {
       case 'historia':  return <HistoriaSection />;
       case 'contato':   return <CTASection />;
       default:          return <HeroSection />;
-    }
+  }
   };
 
   return (

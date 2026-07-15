@@ -148,16 +148,7 @@ export default function ProductModal({ product, onClose }) {
         }}
         onPointerDown={(e) => e.stopPropagation()}
       >
-        <button
-          className="absolute top-5 right-5 z-10 touch-target flex items-center justify-center w-14 h-14 rounded-full"
-          style={{ background: 'rgba(0,0,0,0.35)', border: '1px solid rgba(255,255,255,0.2)' }}
-          onPointerDown={onClose}
-          aria-label="Fechar"
-        >
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-            <path d="M4 4L18 18M18 4L4 18" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
-          </svg>
-        </button>
+        {/* botão de fechar movido para a base da tela (ver abaixo) */}
 
         <div className="flex flex-col overflow-y-auto" style={{ maxHeight: '82vh' }}>
           <MediaCarousel media={mediaList} />
@@ -188,24 +179,20 @@ export default function ProductModal({ product, onClose }) {
               {product.description}
             </p>
 
-            {/* Applications — mesmo estilo de caixa dos antigos Diferenciais */}
+            {/* Applications — apenas ícone + texto, sem caixa clicável */}
             <div>
               <h3 className="text-glass-300 text-xs font-semibold tracking-widest uppercase mb-3">
                 Aplicações
               </h3>
-              <div className="grid grid-cols-1 gap-2">
+              <div className="flex flex-col gap-3">
                 {product.applications.map((app, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center gap-3 rounded-xl px-4 py-3"
-                    style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}
-                  >
-                    {/* Ícone de marcador (localização) — combina com "onde aplicar" */}
+                  <div key={i} className="flex items-center gap-3">
+                    {/* Ícone de marcador (localização) */}
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="flex-shrink-0">
                       <path d="M9 1.5c-2.9 0-5.25 2.35-5.25 5.25 0 3.94 5.25 9.75 5.25 9.75s5.25-5.81 5.25-9.75C14.25 3.85 11.9 1.5 9 1.5z" stroke="#75c2ff" strokeWidth="1.6" strokeLinejoin="round"/>
                       <circle cx="9" cy="6.75" r="1.9" stroke="#75c2ff" strokeWidth="1.6"/>
                     </svg>
-                    <span className="text-white/85 text-sm">{app}</span>
+                    <span className="text-white/85 text-base">{app}</span>
                   </div>
                 ))}
               </div>
@@ -215,6 +202,37 @@ export default function ProductModal({ product, onClose }) {
           </div>
         </div>
       </div>
+
+      {/* Botão FECHAR fixo na base — ocupa o lugar da navbar (que fica
+          escondida com o modal aberto). Só existe enquanto o modal existe. */}
+      <button
+        onPointerDown={onClose}
+        aria-label="Fechar"
+        style={{
+          position: 'fixed',
+          bottom: '2cm',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 60,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 14,
+          padding: '26px 60px',
+          borderRadius: '99rem',
+          background: 'rgba(255, 255, 255, 0.14)',
+          border: '1px solid rgba(255, 255, 255, 0.28)',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.3)',
+          backdropFilter: 'blur(20px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+          color: '#fff',
+          cursor: 'pointer',
+        }}
+      >
+        <svg width="38" height="38" viewBox="0 0 22 22" fill="none">
+          <path d="M4 4L18 18M18 4L4 18" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
+        </svg>
+        <span style={{ fontSize: 24, fontWeight: 500, letterSpacing: '0.3px' }}>Fechar</span>
+      </button>
 
       <style>{`
         @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }

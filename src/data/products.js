@@ -12,6 +12,11 @@ export const products = [
     // type: 'video' ou 'image'. Pode misturar na ordem que quiser.
     media: [
       { type: 'image', src: '/images/laminado1.png' },
+      {type: 'image', src: '/images/LAMINADO-1.png'},
+      { type: 'image', src: '/images/LAMINADO-2.png' },
+      { type: 'image', src: '/images/LAMINADO-3.png' },
+      { type: 'image', src: '/images/LAMINADO-5.png' },
+
       // { type: 'video', src: '/images/seu_video.mp4' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
     ],
@@ -81,6 +86,11 @@ export const products = [
     brandLogo: '',
     media: [
       { type: 'image', src: '/images/insulado1.png' },
+      { type: 'image', src: '/images/INSULADO-1.png' },
+      { type: 'image', src: '/images/INSULADO-2.png' },
+      { type: 'image', src: '/images/INSULADO-3.jpg' },
+      { type: 'image', src: '/images/INSULADO-4.png' },
+
       // { type: 'video', src: '/images/seu_video.mp4' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
     ],
@@ -127,6 +137,11 @@ export const products = [
     brandLogo: '',
     media: [
       { type: 'image', src: '/images/espelho-novo.png' },
+      { type: 'image', src: '/images/ESPELHO_5.png' },
+      { type: 'image', src: '/images/ESPELHO_4.png' },
+      { type: 'image', src: '/images/ESPELHO_3.png' },
+      { type: 'image', src: '/images/ESPELHO_2.png' },
+      { type: 'image', src: '/images/ESPELHO_1.png' },
       // { type: 'video', src: '/images/seu_video.mp4' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
     ],
@@ -150,6 +165,13 @@ export const products = [
     brandLogo: '',
     media: [
       { type: 'image', src: '/images/temperado-novo.png' },
+      { type: 'image', src: '/images/TEMPERADO-1.png' },
+      { type: 'image', src: '/images/TEMPERADO-2.png' },
+      { type: 'image', src: '/images/TEMPERADO-3.png' },
+      { type: 'image', src: '/images/TEMPERADO-4.png' },
+      { type: 'image', src: '/images/TEMPERADO-5.png' },
+      { type: 'image', src: '/images/TEMPERADO-6.png'}
+
       // { type: 'video', src: '/images/seu_video.mp4' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
     ],
@@ -173,6 +195,11 @@ export const products = [
     brandLogo: '',
     media: [
       { type: 'image', src: '/images/multilaminado2.jpeg' },
+       { type: 'image', src: '/images/MULTILAMINADO-1.png' },
+        { type: 'image', src: '/images/MULTILAMINADO-2.png' },
+         { type: 'image', src: '/images/MULTILAMINADO-3.png' },
+          { type: 'image', src: '/images/MULTILAMINADO-4.pngg' },
+           { type: 'image', src: '/images/MULTILAMINADO-5.png' },
       // { type: 'video', src: '/images/seu_video.mp4' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
     ],
@@ -266,7 +293,11 @@ export const products = [
     brandLogo: '',
     media: [
       { type: 'video', src: '/images/siregrafia.mp4' },
-      { type: 'image', src: '/images/2SERIGRAFIA.png' },
+      { type: 'image', src: '/images/SIREGRAFIA-1.png' },
+       { type: 'image', src: '/images/SIREGRAFIA-2.png' },
+        { type: 'image', src: '/images/SIREGRAFIA-3.png' },
+         { type: 'image', src: '/images/SIREGRAFIA-4.png' },
+          { type: 'image', src: '/images/SIREGRAFIA-5.png' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
     ],
     color: 'from-cyan-900/80 to-navy-950/90',
