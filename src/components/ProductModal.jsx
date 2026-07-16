@@ -220,7 +220,7 @@ export default function ProductModal({ product, onClose }) {
             padding: '30px 68px',
             borderRadius: '99rem',
             background: 'rgba(35, 60, 100, 0.65)',
-            border: '1.5px solid rgba(240,200,50,0.6)',
+            border: '2.5px solid rgba(240,200,50,0.6)',
             boxShadow: '0 10px 36px rgba(0,0,0,0.4), 0 0 28px rgba(240,200,50,0.22), inset 0 1px 1px rgba(255,255,255,0.15)',
             backdropFilter: 'blur(20px) saturate(180%)',
             WebkitBackdropFilter: 'blur(20px) saturate(180%)',
