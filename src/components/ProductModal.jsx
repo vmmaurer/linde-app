@@ -128,8 +128,8 @@ export default function ProductModal({ product, onClose }) {
   return createPortal(
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-50 flex items-center justify-center p-6"
-      style={{ animation: 'fadeIn 0.3s ease forwards', paddingBottom: '160px', paddingTop: '24px' }}
+      className="fixed inset-0 z-50 flex flex-col items-center p-6"
+      style={{ animation: 'fadeIn 0.3s ease forwards' }}
     >
       <div
         className="absolute inset-0 bg-navy-950/80 backdrop-blur-xl"
@@ -137,20 +137,24 @@ export default function ProductModal({ product, onClose }) {
         style={{ animation: 'fadeIn 0.3s ease forwards' }}
       />
 
+      {/* Espaçador superior — junto com o inferior, mantém o card
+          centralizado e reserva espaço simétrico para o botão fechar */}
+      <div style={{ flex: '1 1 0%', minHeight: 0 }} />
+
       <div
         className="relative w-full max-w-3xl rounded-3xl shadow-glass-lg flex flex-col"
         style={{
           background: 'linear-gradient(155deg, rgba(114, 119, 136, 0.98) 0%, rgba(121, 127, 150, 0.99) 100%)',
           border: '1px solid rgba(255,255,255,0.15)',
           animation: 'modalScale 0.4s cubic-bezier(0.22,1,0.36,1) forwards',
-          maxHeight: '82vh',
+          maxHeight: '78vh',
+          flexShrink: 0,
           overflow: 'hidden',
+          zIndex: 1,
         }}
         onPointerDown={(e) => e.stopPropagation()}
       >
-        {/* botão de fechar movido para a base da tela (ver abaixo) */}
-
-        <div className="flex flex-col overflow-y-auto" style={{ maxHeight: '82vh' }}>
+        <div className="flex flex-col overflow-y-auto" style={{ maxHeight: '78vh' }}>
           <MediaCarousel media={mediaList} />
 
           <div className="p-8 md:p-10 flex flex-col gap-6">
@@ -203,36 +207,33 @@ export default function ProductModal({ product, onClose }) {
         </div>
       </div>
 
-      {/* Botão FECHAR fixo na base — ocupa o lugar da navbar (que fica
-          escondida com o modal aberto). Só existe enquanto o modal existe. */}
-      <button
-        onPointerDown={onClose}
-        aria-label="Fechar"
-        style={{
-          position: 'fixed',
-          bottom: '2cm',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 60,
-          display: 'flex',
-          alignItems: 'center',
-          gap: 14,
-          padding: '26px 60px',
-          borderRadius: '99rem',
-          background: 'rgba(255, 255, 255, 0.14)',
-          border: '1px solid rgba(255, 255, 255, 0.28)',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.3)',
-          backdropFilter: 'blur(20px) saturate(180%)',
-          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-          color: '#fff',
-          cursor: 'pointer',
-        }}
-      >
-        <svg width="38" height="38" viewBox="0 0 22 22" fill="none">
-          <path d="M4 4L18 18M18 4L4 18" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
-        </svg>
-        <span style={{ fontSize: 24, fontWeight: 500, letterSpacing: '0.3px' }}>Fechar</span>
-      </button>
+      {/* Espaçador inferior — centraliza o botão fechar entre o fim
+          do card e o fim da tela (mesmo flex-grow do espaçador superior) */}
+      <div className="w-full flex items-center justify-center" style={{ flex: '1 1 0%', minHeight: 0, zIndex: 1 }}>
+        <button
+          onPointerDown={onClose}
+          aria-label="Fechar"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 16,
+            padding: '30px 68px',
+            borderRadius: '99rem',
+            background: 'rgba(35, 60, 100, 0.65)',
+            border: '1.5px solid rgba(240,200,50,0.6)',
+            boxShadow: '0 10px 36px rgba(0,0,0,0.4), 0 0 28px rgba(240,200,50,0.22), inset 0 1px 1px rgba(255,255,255,0.15)',
+            backdropFilter: 'blur(20px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+            color: '#f0f0f0',
+            cursor: 'pointer',
+          }}
+        >
+          <svg width="42" height="42" viewBox="0 0 22 22" fill="none">
+            <path d="M4 4L18 18M18 4L4 18" stroke="#f0f0f0" strokeWidth="2.5" strokeLinecap="round" />
+          </svg>
+          <span style={{ fontSize: 26, fontWeight: 500, letterSpacing: '0.3px' }}>Fechar</span>
+        </button>
+      </div>
 
       <style>{`
         @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
