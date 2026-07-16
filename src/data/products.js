@@ -334,65 +334,6 @@ export const products = [
   },
 ]
 
-export const galleryImages = [
-  {
-    id: 1,
-    src: '/images/VIDRO LAMINADO.JPG',
-    alt: 'Sala com divisória de vidro',
-    desc: 'Divisórias de vidro que integram ambientes mantendo a sensação de amplitude e a entrada de luz natural.',
-    span: 'col-span-2 row-span-2',
-  },
-  {
-    id: 2,
-    src: '/images/VIDRO LAMINADO.JPG',
-    alt: 'Fachada corporativa',
-    desc: 'Fachadas envidraçadas que transformam edifícios corporativos em referências de design e modernidade.',
-    span: 'col-span-1 row-span-1',
-  },
-  {
-    id: 3,
-    src: '/images/VIDRO LAMINADO.JPG',
-    alt: 'Banheiro moderno',
-    desc: 'Boxes e acabamentos em vidro temperado que aliam sofisticação, segurança e fácil manutenção.',
-    span: 'col-span-1 row-span-1',
-  },
-  {
-    id: 4,
-    src: '/images/VIDRO LAMINADO.JPG',
-    alt: 'Cozinha integrada',
-    desc: 'Soluções em vidro para cozinhas integradas, oferecendo proteção, beleza e praticidade no dia a dia.',
-    span: 'col-span-1 row-span-2',
-  },
-  {
-    id: 5,
-    src: '/images/VIDRO LAMINADO.JPG',
-    alt: 'Varanda com guarda-corpo',
-    desc: 'Guarda-corpos em vidro que garantem segurança sem comprometer a vista e a estética do ambiente.',
-    span: 'col-span-2 row-span-1',
-  },
-  {
-    id: 6,
-    src: '/images/VIDRO LAMINADO.JPG',
-    alt: 'Escritório moderno',
-    desc: 'Painéis e divisórias de vidro ideais para escritórios que valorizam transparência e produtividade.',
-    span: 'col-span-1 row-span-1',
-  },
-  {
-    id: 7,
-    src: '/images/VIDRO LAMINADO.JPG',
-    alt: 'Fachada vidro espelhado',
-    desc: 'Vidro espelhado com controle solar, reduzindo o calor interno e conferindo elegância à fachada.',
-    span: 'col-span-1 row-span-1',
-  },
-  {
-    id: 8,
-    src: '/images/VIDRO LAMINADO.JPG',
-    alt: 'Terraço com vidro',
-    desc: 'Fechamentos de vidro para terraços e áreas externas, ampliando o conforto em qualquer estação.',
-    span: 'col-span-2 row-span-1',
-  },
-]
-
 export const beforeAfterExamples = [
   {
     id: 1,

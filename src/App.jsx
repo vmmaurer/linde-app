@@ -114,8 +114,8 @@ const App = () => {
   }, []);
 
   // Renderiza SÓ a tela ativa (em vez de manter as 4 montadas no slider).
-  // Isso evita que a Galeria pesada (Estrutura) fique sempre carregada,
-  // que era a causa da travada ao trocar de tela.
+  // Isso evita que telas pesadas fiquem sempre carregadas, que era a
+  // causa da travada ao trocar de tela.
   const renderScreen = () => {
     switch (currentScreen) {
       case 'produtos':  return <HeroSection />;
@@ -149,8 +149,8 @@ const App = () => {
       `}</style>
 
       {/* key força o React a remontar (e animar) ao trocar de tela.
-          Como só a tela ativa existe, a Galeria só monta quando entra
-          na Estrutura, e é desmontada ao sair — liberando memória. */}
+          Como só a tela ativa existe, cada tela só monta quando entra
+          e é desmontada ao sair — liberando memória. */}
       <div
         key={currentScreen}
         style={{
