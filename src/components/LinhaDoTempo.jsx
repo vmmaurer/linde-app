@@ -18,6 +18,7 @@ const milestones = [
   { image: '/images/linde_2018.jpg',  year: '2018', desc: 'Isolamento térmico e acústico para maior conforto.' },
   { image: '/images/linde_2025_1.jpg', year: '2025', label: 'Fábrica 1', desc: 'Personalização com impressão de alta qualidade.' },
   { image: '/images/linde_2025_2.jpg', year: '2025', label: 'Fábrica 2', desc: 'Espelhos sob medida para todos os ambientes.' },
+  { image: '/images/totem.jpeg',       year: '2027', desc: 'A Linde Vidros segue em frente, com novas fábricas, tecnologias e soluções em vidro para os próximos capítulos da nossa história.' },
 ]
 
 const CARD_WIDTH = 480
@@ -134,7 +135,7 @@ function Lightbox({ item, onClose, onPrev, onNext }) {
 // Agora todos os cards têm a mesma estrutura (imagem + conector + badge).
 // O conector aponta pra linha central; a onda/escala são aplicadas pelo pai
 // via ref (cardRef), frame a frame.
-function Card({ item, onOpen, dragInfoRef, cardRef }) {
+function Card({ item, onOpen, dragInfoRef, cardRef, bookend }) {
   const startPos = useRef({ x: 0, y: 0, t: 0 })
   const DRAG_THRESHOLD = 16
   const TIME_THRESHOLD = 500
@@ -162,7 +163,18 @@ function Card({ item, onOpen, dragInfoRef, cardRef }) {
     >
       {/* Conector: liga o topo do card até a linha central ondulada.
           O comprimento é ajustado pelo pai para acompanhar a onda. */}
-      <div className="card-connector" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
+      <div className="card-connector" style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
+        {bookend && (
+          <span style={{
+            position: 'absolute', bottom: '100%', left: '50%', transform: 'translateX(-50%)',
+            marginBottom: 8, whiteSpace: 'nowrap',
+            fontSize: 12, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase',
+            color: '#f0c832', background: 'rgba(240,200,50,.12)', border: '1px solid rgba(240,200,50,.35)',
+            borderRadius: 999, padding: '5px 14px',
+          }}>
+            {bookend === 'start' ? 'Fundação' : 'Continua…'}
+          </span>
+        )}
         <div className="connector-dot" style={{
           width: 16, height: 16, borderRadius: '50%', flexShrink: 0,
           background: 'transparent',
@@ -198,11 +210,6 @@ function Card({ item, onOpen, dragInfoRef, cardRef }) {
           <img src={item.image} alt={item.year} draggable={false}
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(4,11,25,.85) 0%,transparent 55%)' }} />
-          <div style={{
-            position: 'absolute', top: 14, right: 14, width: 44, height: 44, borderRadius: '50%',
-            background: 'rgba(95,130,155,.25)', border: '1px solid rgba(95,130,155,.5)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20,
-          }}>🔍</div>
         </div>
         <div style={{ padding: '22px 26px', height: 150, boxSizing: 'border-box', overflow: 'hidden' }}>
           <p style={{ color: 'rgba(240,240,240,.65)', fontSize: 18, lineHeight: 1.6, margin: 0 }}>{item.desc}</p>
@@ -298,27 +305,40 @@ export default function LinhaDoTempo() {
             const LINE_GAP_ABOVE = 0  // ponto/linha centrados na ponta da haste
             const x = dRect.left + dRect.width / 2 - vpRect.left
             const y = dRect.top + dRect.height / 2 - vpRect.top - LINE_GAP_ABOVE
-            pts.push({ x, y })
+            // cycle = qual repetição do array de milestones este card pertence.
+            // usado para NÃO conectar a linha entre o fim de um ciclo (2027)
+            // e o início do próximo (1989) — cada ciclo tem sua própria linha,
+            // do card "Fundação" até o card "Continua…".
+            pts.push({ x, y, cycle: Math.floor(i / milestones.length) })
           }
         }
       }
 
-      // desenha a linha amarela ligando os pontos dourados como curva suave.
-      // fator K menor = curva mais 'justa' aos pontos (menos barriga entre eles).
-      if (wavePathRef.current && pts.length >= 2) {
+      // desenha a linha amarela ligando os pontos dourados como curva suave,
+      // em segmentos separados por ciclo (corta a linha entre 2027 e 1989).
+      if (wavePathRef.current) {
         pts.sort((a, b) => a.x - b.x)
+        const cycles = new Map()
+        for (const p of pts) {
+          if (!cycles.has(p.cycle)) cycles.set(p.cycle, [])
+          cycles.get(p.cycle).push(p)
+        }
         const K = 0.12
-        let d = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`
-        for (let i = 0; i < pts.length - 1; i++) {
-          const p0 = pts[i - 1] || pts[i]
-          const p1 = pts[i]
-          const p2 = pts[i + 1]
-          const p3 = pts[i + 2] || p2
-          const c1x = p1.x + (p2.x - p0.x) * K
-          const c1y = p1.y + (p2.y - p0.y) * K
-          const c2x = p2.x - (p3.x - p1.x) * K
-          const c2y = p2.y - (p3.y - p1.y) * K
-          d += ` C ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`
+        let d = ''
+        for (const seg of cycles.values()) {
+          if (seg.length < 2) continue
+          d += `M ${seg[0].x.toFixed(1)} ${seg[0].y.toFixed(1)}`
+          for (let i = 0; i < seg.length - 1; i++) {
+            const p0 = seg[i - 1] || seg[i]
+            const p1 = seg[i]
+            const p2 = seg[i + 1]
+            const p3 = seg[i + 2] || p2
+            const c1x = p1.x + (p2.x - p0.x) * K
+            const c1y = p1.y + (p2.y - p0.y) * K
+            const c2x = p2.x - (p3.x - p1.x) * K
+            const c2y = p2.y - (p3.y - p1.y) * K
+            d += ` C ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`
+          }
         }
         wavePathRef.current.setAttribute('d', d)
       }
@@ -507,16 +527,21 @@ export default function LinhaDoTempo() {
               display: 'inline-flex', alignItems: 'center',
               gap: 0, padding: '20px 0',
             }}>
-              {items.map((item, i) => (
-                <div key={i} className="wave-card" style={{ margin: `0 ${CARD_GAP / 2}px` }}>
-                  <Card
-                    item={item}
-                    onOpen={() => openCard(i)}
-                    dragInfoRef={dragInfoRef}
-                    cardRef={(el) => { cardRefs.current[i] = el }}
-                  />
-                </div>
-              ))}
+              {items.map((item, i) => {
+                const mIdx = i % milestones.length
+                const bookend = mIdx === 0 ? 'start' : mIdx === milestones.length - 1 ? 'end' : null
+                return (
+                  <div key={i} className="wave-card" style={{ margin: `0 ${CARD_GAP / 2}px` }}>
+                    <Card
+                      item={item}
+                      onOpen={() => openCard(i)}
+                      dragInfoRef={dragInfoRef}
+                      cardRef={(el) => { cardRefs.current[i] = el }}
+                      bookend={bookend}
+                    />
+                  </div>
+                )
+              })}
             </div>
           </div>
         </div>
