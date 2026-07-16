@@ -2,13 +2,15 @@ import React, { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import MediaCarousel from './MediaCarousel'
 
-export default function ProductModal({ product, onClose }) {
+// ── Pop-up de detalhe dos cards da aba Estrutura ──
+// Mesma "casca" (overlay + botão Fechar centralizado) criada para o
+// ProductModal, com uma nota de cabeçalho no topo (tag + título, igual
+// ao que já aparece no card) e um carrossel de mídia maior em destaque.
+export default function EstruturaModal({ feature, onClose }) {
   const overlayRef = useRef(null)
 
   useEffect(() => {
-    const handleKey = (e) => {
-      if (e.key === 'Escape') onClose()
-    }
+    const handleKey = (e) => { if (e.key === 'Escape') onClose() }
     window.addEventListener('keydown', handleKey)
     window.addEventListener('force-close-modal', onClose)
     document.body.style.overflow = 'hidden'
@@ -21,17 +23,10 @@ export default function ProductModal({ product, onClose }) {
     }
   }, [onClose])
 
-  if (!product) return null
+  if (!feature) return null
 
   const modalRoot = document.getElementById('modal-root')
   if (!modalRoot) return null
-
-  let mediaList = product.media
-  if (!mediaList || mediaList.length === 0) {
-    mediaList = []
-    if (product.modalVideo) mediaList.push({ type: 'video', src: product.modalVideo })
-    if (product.modalImage) mediaList.push({ type: 'image', src: product.modalImage })
-  }
 
   return createPortal(
     <div
@@ -50,67 +45,75 @@ export default function ProductModal({ product, onClose }) {
       <div style={{ flex: '1 1 0%', minHeight: 0 }} />
 
       <div
-        className="relative w-full max-w-3xl rounded-3xl shadow-glass-lg flex flex-col"
+        className="relative w-full max-w-4xl rounded-3xl shadow-glass-lg flex flex-col"
         style={{
           background: 'linear-gradient(155deg, rgba(114, 119, 136, 0.98) 0%, rgba(121, 127, 150, 0.99) 100%)',
           border: '1px solid rgba(255,255,255,0.15)',
           animation: 'modalScale 0.4s cubic-bezier(0.22,1,0.36,1) forwards',
-          maxHeight: '78vh',
+          maxHeight: '82vh',
           flexShrink: 0,
           overflow: 'hidden',
           zIndex: 1,
         }}
         onPointerDown={(e) => e.stopPropagation()}
       >
-        <div className="flex flex-col overflow-y-auto" style={{ maxHeight: '78vh' }}>
-          <MediaCarousel media={mediaList} />
+        <div className="flex flex-col overflow-y-auto" style={{ maxHeight: '82vh' }}>
+
+          {/* Nota de cabeçalho — mesma info do card (tag + título) */}
+          <div style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16,
+            padding: '22px 28px', borderBottom: '1px solid rgba(255,255,255,0.14)',
+            background: 'rgba(4,11,25,0.18)',
+          }}>
+            <div>
+              <div
+                className="inline-flex items-center gap-1.5 rounded-full mb-2 font-medium tracking-wider uppercase"
+                style={{
+                  background: 'rgba(95,130,155,0.22)',
+                  border: '1px solid rgba(95,130,155,0.45)',
+                  color: '#c8dde8',
+                  fontSize: 11,
+                  padding: '5px 12px',
+                }}
+              >
+                <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#5f829b', flexShrink: 0 }} />
+                {feature.tag}
+              </div>
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-white leading-tight">
+                {feature.title}
+              </h2>
+            </div>
+            <span style={{
+              color: '#f0c832', fontSize: 34, fontWeight: 800, flexShrink: 0,
+              textShadow: '0 2px 10px rgba(0,0,0,0.4)',
+            }}>
+              {String(feature.index + 1).padStart(2, '0')}
+            </span>
+          </div>
+
+          <MediaCarousel media={feature.media} height="52vh" minHeight={380} />
 
           <div className="p-8 md:p-10 flex flex-col gap-6">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-glass-300 text-sm font-medium tracking-widest uppercase mb-2">
-                  {product.subtitle}
-                </p>
-                <h2 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight">
-                  {product.title}
-                </h2>
-              </div>
-
-              {/* Logo da marca — só aparece se o produto tiver o campo brandLogo */}
-              {product.brandLogo && (
-                <img
-                  src={product.brandLogo}
-                  alt=""
-                  className="flex-shrink-0 object-contain"
-                  style={{ height: '64px', width: 'auto', maxWidth: '160px' }}
-                />
-              )}
-            </div>
-
             <p className="text-white/75 text-lg leading-relaxed">
-              {product.description}
+              {feature.longDesc}
             </p>
 
-            {/* Applications — apenas ícone + texto, sem caixa clicável */}
             <div>
               <h3 className="text-glass-300 text-xs font-semibold tracking-widest uppercase mb-3">
-                Aplicações
+                Destaques
               </h3>
               <div className="flex flex-col gap-3">
-                {product.applications.map((app, i) => (
+                {feature.highlights.map((h, i) => (
                   <div key={i} className="flex items-center gap-3">
-                    {/* Ícone de marcador (localização) */}
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="flex-shrink-0">
                       <path d="M9 1.5c-2.9 0-5.25 2.35-5.25 5.25 0 3.94 5.25 9.75 5.25 9.75s5.25-5.81 5.25-9.75C14.25 3.85 11.9 1.5 9 1.5z" stroke="#75c2ff" strokeWidth="1.6" strokeLinejoin="round"/>
                       <circle cx="9" cy="6.75" r="1.9" stroke="#75c2ff" strokeWidth="1.6"/>
                     </svg>
-                    <span className="text-white/85 text-base">{app}</span>
+                    <span className="text-white/85 text-base">{h}</span>
                   </div>
                 ))}
               </div>
             </div>
-
-            {/* Seção Diferenciais removida conforme solicitado */}
           </div>
         </div>
       </div>

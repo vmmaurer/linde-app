@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './HeroSection.css';
+import EstruturaModal from './EstruturaModal';
 
 // ── Paleta: Sapphire #233c64 · Cold Steel #5f829b · Sunshine #f0c832 · Off-white #f0f0f0
 
@@ -8,35 +9,76 @@ const features = [
     tag: 'Fábrica',
     title: 'Sede Industrial',
     desc: 'Planta própria estruturada para produzir com agilidade em grande escala.',
+    longDesc: 'Nossa planta sede reúne produção, estoque e administração em um só complexo, com espaço para receber cargas, manobrar caminhões e crescer junto com a demanda. É daqui que sai cada projeto que leva o nome Linde Vidros.',
+    highlights: [
+      'Amplo pátio para carga e descarga',
+      'Estrutura preparada para expansão',
+      'Localização estratégica para distribuição regional',
+    ],
     image: '/images/empresa-1.jpg',
+    media: [
+      { type: 'image', src: '/images/empresa-1.jpg' },
+      { type: 'image', src: '/images/empresa-2.jpg' },
+    ],
   },
   {
     tag: 'Produção',
     title: 'Parque de Máquinas',
     desc: 'Equipamentos de ponta para corte, têmpera e beneficiamento do vidro.',
+    longDesc: 'Investimos continuamente em maquinário para acompanhar a evolução do setor: linhas de corte, têmpera e beneficiamento que garantem precisão milimétrica e acabamento de alto padrão em cada chapa de vidro.',
+    highlights: [
+      'Corte de precisão em grande escala',
+      'Fornos de têmpera para vidros de 2,8mm a 19mm',
+      'Beneficiamento completo sob o mesmo teto',
+    ],
     image: '/images/IMG_6240.JPG',
+    media: [
+      { type: 'video', src: '/images/siregrafia-maquina.mp4' },
+      { type: 'image', src: '/images/IMG_6240.JPG' },
+    ],
   },
   {
     tag: 'Logística',
     title: 'Estoque Próprio',
     desc: 'Matéria-prima sempre disponível, pronta para entrar em produção.',
+    longDesc: 'Mantemos um estoque próprio e organizado por lote, garantindo que a matéria-prima certa esteja sempre disponível assim que um pedido entra em produção — sem depender de terceiros nem atrasar prazos.',
+    highlights: [
+      'Matéria-prima sempre disponível',
+      'Organização por lote e rastreabilidade',
+      'Redução real nos prazos de entrega',
+    ],
     image: '/images/ESTOQUE.JPG',
+    media: [
+      { type: 'image', src: '/images/ESTOQUE.JPG' },
+      { type: 'image', src: '/images/IMG_5735.JPG' },
+    ],
   },
   {
     tag: 'Entrega',
     title: 'Frota Própria',
     desc: 'Veículos próprios levando qualidade a toda a região.',
+    longDesc: 'Nossa frota própria acompanha cada etapa da entrega, do carregamento no pátio até o destino final, com veículos preparados para transportar vidro com segurança em toda a região de atuação.',
+    highlights: [
+      'Entregas próprias, sem intermediários',
+      'Veículos preparados para carga de vidro',
+      'Cobertura em toda a região de atuação',
+    ],
     image: '/images/FROTA.jpg',
+    media: [
+      { type: 'image', src: '/images/FROTA.jpg' },
+    ],
   },
 ];
 
-function FeatureCard({ index, tag, title, desc, image }) {
+function FeatureCard({ index, tag, title, desc, image, onOpen }) {
   return (
     <div
+      onClick={(e) => { e.stopPropagation(); onOpen() }}
       style={{
         position: 'relative',
         borderRadius: 22,
         overflow: 'hidden',
+        cursor: 'pointer',
         border: '1px solid rgba(95,130,155,0.3)',
         boxShadow: '0 16px 40px rgba(0,0,0,0.45)',
         background: '#0b1830',
@@ -61,6 +103,17 @@ function FeatureCard({ index, tag, title, desc, image }) {
       }}>
         {String(index + 1).padStart(2, '0')}
       </span>
+
+      {/* Indicador de expandir — avisa que o card é clicável */}
+      <div style={{
+        position: 'absolute', top: 12, right: 12, width: 38, height: 38, borderRadius: '50%',
+        background: 'rgba(35,60,100,0.55)', border: '1px solid rgba(240,200,50,0.4)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+      }}>
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+          <path d="M3 7V3H7M13 3H17V7M7 17H3V13M17 13V17H13" stroke="#f0c832" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </div>
 
       {/* Conteúdo — mesmo padrão de tag do ArcCarousel */}
       <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: 'clamp(14px, 2.4vw, 24px)' }}>
@@ -96,6 +149,8 @@ function FeatureCard({ index, tag, title, desc, image }) {
 }
 
 const EstruturaSection = () => {
+  const [selected, setSelected] = useState(null);
+
   return (
     <section
       className="hero-section estrutura-fullheight"
@@ -160,10 +215,17 @@ const EstruturaSection = () => {
           gap: 18, padding: '0 24px 240px', boxSizing: 'border-box',
         }}>
           {features.map((f, i) => (
-            <FeatureCard key={f.title} index={i} {...f} />
+            <FeatureCard key={f.title} index={i} {...f} onOpen={() => setSelected(i)} />
           ))}
         </div>
       </div>
+
+      {selected !== null && (
+        <EstruturaModal
+          feature={{ ...features[selected], index: selected }}
+          onClose={() => setSelected(null)}
+        />
+      )}
     </section>
   );
 };
