@@ -87,7 +87,7 @@ const tabs = [
   { id: 'produtos',  label: 'Produtos',  icon: '/images/NAV-FLAT-PRODUTOS.png'  },
   { id: 'estrutura', label: 'Estrutura', icon: '/images/NAV-FLAT-ESTRUTURA.png' },
   { id: 'historia',  label: 'História',  icon: '/images/NAV-FLAT-EMPRESA.png'  },
-  { id: 'contato',   label: 'Contato',   icon: '/images/ICON_CONTATO.png'   },
+  { id: 'contato',   label: 'Contato',   icon: '/images/NAV FLAT CONTATO.png'   },
 ];
 
 const BottomNav = ({ currentScreen, onScreenChange }) => {

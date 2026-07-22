@@ -40,6 +40,12 @@ export const products = [
     brandLogo: '/images/ICON-SENTRYGLAS.png',
     media: [
       { type: 'image', src: '/images/sentryglas.png' },
+      { type: 'image', src: '/images/SENTRYGLAS_1.png' },
+      { type: 'image', src: '/images/SENTRYGLAS_2.png' },
+      { type: 'image', src: '/images/SENTRYGLAS_3.png' },
+      { type: 'image', src: '/images/SENTRYGLAS_4.png' },
+      { type: 'image', src: '/images/SENTRYGLAS_5.png' },
+
       // { type: 'video', src: '/images/seu_video.mp4' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
     ],
@@ -63,6 +69,12 @@ export const products = [
     brandLogo: '',
     media: [
       { type: 'image', src: '/images/texturizado.png' },
+      { type: 'image', src: '/images/TEXTURIZADO_1.png' },
+      { type: 'image', src: '/images/TEXTURIZADO_2.png' },
+      { type: 'image', src: '/images/TEXTURIZADO_3.png' },
+      { type: 'image', src: '/images/TEXTURIZADO_4.png' },
+      { type: 'image', src: '/images/TEXTURIZADO_5.png' },
+
       // { type: 'video', src: '/images/seu_video.mp4' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
     ],
@@ -88,7 +100,7 @@ export const products = [
       { type: 'image', src: '/images/insulado1.png' },
       { type: 'image', src: '/images/INSULADO-1.png' },
       { type: 'image', src: '/images/INSULADO-2.png' },
-      { type: 'image', src: '/images/INSULADO-3.jpg' },
+      { type: 'image', src: '/images/INSULADO-3.jpeg' },
       { type: 'image', src: '/images/INSULADO-4.png' },
 
       // { type: 'video', src: '/images/seu_video.mp4' },
@@ -114,6 +126,11 @@ export const products = [
     brandLogo: '/images/ICON-HABITAT.png',
     media: [
       { type: 'image', src: '/images/protecaosolar.png' },
+      { type: 'image', src: '/images/HABITAT_1.jpg.jpeg' },
+      { type: 'image', src: '/images/HABITAT_2.jpg.jpeg' },
+      { type: 'image', src: '/images/HABITAT_3.png' },
+      { type: 'image', src: '/images/HABITAT_4.png' },
+      { type: 'image', src: '/images/HABITAT_5.png' },
       // { type: 'video', src: '/images/seu_video.mp4' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
     ],
@@ -198,7 +215,7 @@ export const products = [
        { type: 'image', src: '/images/MULTILAMINADO-1.png' },
         { type: 'image', src: '/images/MULTILAMINADO-2.png' },
          { type: 'image', src: '/images/MULTILAMINADO-3.png' },
-          { type: 'image', src: '/images/MULTILAMINADO-4.pngg' },
+          { type: 'image', src: '/images/MULTILAMINADO-4.png' },
            { type: 'image', src: '/images/MULTILAMINADO-5.png' },
       // { type: 'video', src: '/images/seu_video.mp4' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
@@ -223,6 +240,12 @@ export const products = [
     brandLogo: '',
     media: [
       { type: 'image', src: '/images/pinazio.jpeg' },
+      { type: 'image', src: '/images/PINAZIO-1.png' },
+      { type: 'image', src: '/images/PINAZIO_2.png' },
+      { type: 'image', src: '/images/PINAZIO_3.png' },
+      { type: 'image', src: '/images/PINAZIO_4.png' },
+      { type: 'image', src: '/images/PINAZIO_5.png' },
+    
       // { type: 'video', src: '/images/seu_video.mp4' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
     ],
@@ -246,6 +269,12 @@ export const products = [
     brandLogo: '/images/ICON-SCREENLINE.png',
     media: [
       { type: 'image', src: '/images/persiana.png' },
+      { type: 'image', src: '/images/PERSIANA_1.png' },
+      { type: 'image', src: '/images/PERSIANA_2.png' },
+      { type: 'image', src: '/images/PERSIANA_3.png' },
+      { type: 'image', src: '/images/PERSIANA_4.png' },
+      { type: 'image', src: '/images/PERSIANA_5.png' },
+
       // { type: 'video', src: '/images/seu_video.mp4' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
     ],
@@ -269,6 +298,11 @@ export const products = [
     brandLogo: '',
     media: [
       { type: 'image', src: '/images/extra-clear.png' },
+       { type: 'image', src: '/images/EXTRACLEAR_1.png' },
+        { type: 'image', src: '/images/EXTRACLEAR_2.png' },
+         { type: 'image', src: '/images/EXTRACLEAR_3.png' },
+          { type: 'image', src: '/images/EXTRACLEAR_4.png' },
+           { type: 'image', src: '/images/EXTRACLEAR_5.png' },
       // { type: 'video', src: '/images/seu_video.mp4' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
     ],
@@ -293,11 +327,11 @@ export const products = [
     brandLogo: '',
     media: [
       { type: 'video', src: '/images/siregrafia.mp4' },
-      { type: 'image', src: '/images/SIREGRAFIA-1.png' },
-       { type: 'image', src: '/images/SIREGRAFIA-2.png' },
-        { type: 'image', src: '/images/SIREGRAFIA-3.png' },
-         { type: 'image', src: '/images/SIREGRAFIA-4.png' },
-          { type: 'image', src: '/images/SIREGRAFIA-5.png' },
+      { type: 'image', src: '/images/SERIGRAFIA-1.png' },
+       { type: 'image', src: '/images/SERIGRAFIA-2.png' },
+        { type: 'image', src: '/images/SERIGRAFIA-3.png' },
+         { type: 'image', src: '/images/SERIGRAFIA-4.png' },
+          { type: 'image', src: '/images/SERIGRAFIA-5.png' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
     ],
     color: 'from-cyan-900/80 to-navy-950/90',
@@ -320,6 +354,12 @@ export const products = [
     brandLogo: '',
     media: [
       { type: 'image', src: '/images/low-e-novo.png' },
+      { type: 'image', src: '/images/LOWE_1.png' },
+      { type: 'image', src: '/images/LOWE_2.png' },
+      { type: 'image', src: '/images/LOWE_3.png' },
+      { type: 'image', src: '/images/LOWE_4.png' },
+      { type: 'image', src: '/images/LOWE_5.png' },
+
       // { type: 'video', src: '/images/seu_video.mp4' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
     ],
