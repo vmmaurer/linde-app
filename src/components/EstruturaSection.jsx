@@ -193,16 +193,16 @@ const EstruturaSection = () => {
 
         {/* Cabeçalho — mesmo padrão da tela História (alturas em clamp()
             para sobrar espaço pra grade em telas curtas/paisagem) */}
-        <div className="brand-masthead" style={{ textAlign: 'center', marginBottom: 'clamp(8px, 2vh, 20px)', flexShrink: 0 }}>
+        <div className="brand-masthead" style={{ '--masthead-top-offset': '0px', textAlign: 'center', marginBottom: 8, flexShrink: 0 }}>
           <img src="/images/logonavbar.png" alt="Linde Vidros"
-            className="brand-masthead__logo" style={{ marginBottom: 28 }} />
-          <p style={{ color: '#5f829b', fontSize: 11, fontWeight: 700, letterSpacing: '.4em', textTransform: 'uppercase', margin: '0 0 10px' }}>
+            className="brand-masthead__logo" style={{ marginBottom: 8 }} />
+          <p style={{ color: '#5f829b', fontSize: 11, fontWeight: 700, letterSpacing: '.4em', textTransform: 'uppercase', margin: '0 0 6px' }}>
             Como Trabalhamos
           </p>
-          <h2 style={{ color: '#f0f0f0', fontSize: 'clamp(28px, 4vh, 40px)', fontWeight: 800, margin: '0 0 12px', letterSpacing: '-.02em' }}>
+          <h2 style={{ color: '#f0f0f0', fontSize: 'clamp(28px, 4vh, 40px)', fontWeight: 800, margin: '0 0 6px', letterSpacing: '-.02em' }}>
             Nossa Estrutura
           </h2>
-          <div style={{ width: 48, height: 2, background: '#f0c832', margin: '0 auto 12px', borderRadius: 2 }} />
+          <div style={{ width: 48, height: 2, background: '#f0c832', margin: '0 auto 8px', borderRadius: 2 }} />
           <p style={{ color: 'rgba(240,240,240,.45)', fontSize: 13, margin: 0 }}>
             Da fábrica à entrega: os bastidores de cada vidro Linde
           </p>
