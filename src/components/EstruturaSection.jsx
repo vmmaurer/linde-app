@@ -193,9 +193,9 @@ const EstruturaSection = () => {
 
         {/* Cabeçalho — mesmo padrão da tela História (alturas em clamp()
             para sobrar espaço pra grade em telas curtas/paisagem) */}
-        <div style={{ textAlign: 'center', paddingTop: 'clamp(14px, 4vh, 57px)', marginBottom: 'clamp(8px, 2vh, 20px)', flexShrink: 0 }}>
+        <div className="brand-masthead" style={{ textAlign: 'center', marginBottom: 'clamp(8px, 2vh, 20px)', flexShrink: 0 }}>
           <img src="/images/logonavbar.png" alt="Linde Vidros"
-            style={{ height: 'clamp(90px, 11vh, 150px)', width: 'auto', objectFit: 'contain', display: 'inline-block', marginBottom: 'clamp(8px, 1.6vh, 18px)' }} />
+            className="brand-masthead__logo" style={{ marginBottom: 28 }} />
           <p style={{ color: '#5f829b', fontSize: 11, fontWeight: 700, letterSpacing: '.4em', textTransform: 'uppercase', margin: '0 0 10px' }}>
             Como Trabalhamos
           </p>
@@ -212,7 +212,7 @@ const EstruturaSection = () => {
         <div style={{
           flex: 1, minHeight: 0, width: '100%', maxWidth: 1400, margin: '0 auto',
           display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gridTemplateRows: 'repeat(2, 1fr)',
-          gap: 18, padding: '0 24px 240px', boxSizing: 'border-box',
+          gap: 18, padding: '0 24px 210px', boxSizing: 'border-box',
         }}>
           {features.map((f, i) => (
             <FeatureCard key={f.title} index={i} {...f} onOpen={() => setSelected(i)} />

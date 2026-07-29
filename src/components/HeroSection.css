@@ -71,14 +71,22 @@
   width: 100%;
   max-width: 1200px;
   flex-shrink: 0;
-  padding-top: 2cm;
+  padding-top: var(--masthead-top-offset);
 }
 
+.brand-masthead {
+  --masthead-top-offset: 2cm;
+  --masthead-logo-height: 260px;
+  padding-top: var(--masthead-top-offset);
+}
+
+.brand-masthead__logo,
 .hero-logo {
-  height: 260px;
+  height: var(--masthead-logo-height, 260px);
   width: auto;
   display: block;
   margin: 0 auto;
+  object-fit: contain;
 }
 
 .hero-title-block {

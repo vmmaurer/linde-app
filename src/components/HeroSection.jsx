@@ -13,8 +13,8 @@ const HeroSection = () => {
     <section className="hero-section">
       {/* grade de quadrados removida */}
 
-      <div className="hero-content">
-        <img className="hero-logo" src="/images/logonavbar.png" alt="Logo" />
+      <div className="hero-content brand-masthead">
+        <img className="hero-logo brand-masthead__logo" src="/images/logonavbar.png" alt="Linde Vidros" />
 
         <div className="hero-title-block">
           {/* Label — Cold Steel */}

@@ -12,7 +12,7 @@ function QRCode() {
         src="/images/qrcode_whatsapp_linde_mensagem.png"
         alt="QR Code WhatsApp Linde Vidros"
         className="object-contain"
-        style={{ width: '220px', height: '220px' }}
+        style={{ width: '180px', height: '180px' }}
       />
     </div>
   )
@@ -32,18 +32,20 @@ export default function CTASection() {
         minHeight: '100%',
         width: '100%',
         boxSizing: 'border-box',
-        paddingTop: '4.5cm',
+        paddingTop: 0,
         paddingBottom: '160px',
       }}
     >
       <div className="relative z-10 max-w-2xl mx-auto flex flex-col items-center text-center">
 
         {/* Logo Linde 60 anos — topo */}
-        <img
-          src="/images/logo-linde.png"
-          alt="Linde Vidros 60 anos"
-          style={{ height: '90px', width: 'auto', objectFit: 'contain', display: 'block', margin: '0 auto 28px' }}
-        />
+        <div className="brand-masthead" style={{ marginBottom: 28 }}>
+          <img
+            className="brand-masthead__logo"
+            src="/images/logonavbar.png"
+            alt="Linde Vidros"
+          />
+        </div>
 
         {/* Tag — Sunshine */}
         <div
@@ -97,7 +99,7 @@ export default function CTASection() {
           Confira nossa região de atuação:
         </p>
 
-        <div style={{ width: '100%', maxWidth: '620px' }}>
+        <div style={{ width: '100%', maxWidth: '500px' }}>
           <img
             src="/images/REGIÃO.gif"
             alt="Mapa de atuação Linde Vidros"

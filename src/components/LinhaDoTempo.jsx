@@ -440,7 +440,7 @@ export default function LinhaDoTempo() {
 
       <section style={{
         position: 'relative',
-        padding: '2cm 0 40px',
+        padding: '0 0 40px',
         background: 'transparent',
         overflow: 'hidden',
         width: '100%', height: '100%',
@@ -461,9 +461,9 @@ export default function LinhaDoTempo() {
         }} />
 
         {/* Logo */}
-        <div style={{ textAlign: 'center', marginBottom: 24, position: 'relative', zIndex: 10, flexShrink: 0 }}>
+        <div className="brand-masthead" style={{ textAlign: 'center', marginBottom: 32, position: 'relative', zIndex: 10, flexShrink: 0 }}>
           <img src="/images/logonavbar.png" alt="Linde Vidros"
-            style={{ height: 260, width: 'auto', objectFit: 'contain', display: 'inline-block' }} />
+            className="brand-masthead__logo" />
         </div>
 
         {/* Cabeçalho */}
