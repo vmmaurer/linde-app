@@ -195,7 +195,7 @@ const EstruturaSection = () => {
 
         {/* Cabeçalho — mesmo padrão da tela História (alturas em clamp()
             para sobrar espaço pra grade em telas curtas/paisagem) */}
-        <div className="brand-masthead" style={{ '--masthead-top-offset': '0px', '--estrutura-stack-gap': '18px', textAlign: 'center', marginBottom: 'var(--estrutura-stack-gap)', flexShrink: 0 }}>
+        <div className="brand-masthead" style={{ '--masthead-top-offset': '0px', '--estrutura-stack-gap': '32px', textAlign: 'center', marginBottom: 'var(--estrutura-stack-gap)', flexShrink: 0 }}>
           <img src="/images/logonavbar.png" alt="Linde Vidros"
             className="brand-masthead__logo" style={{ marginBottom: 'var(--estrutura-stack-gap)' }} />
           <p style={{ color: '#5f829b', fontSize: 11, fontWeight: 700, letterSpacing: '.4em', textTransform: 'uppercase', margin: '0 0 6px' }}>
@@ -214,7 +214,7 @@ const EstruturaSection = () => {
         <div style={{
           flex: 1, minHeight: 0, width: '100%', maxWidth: 1400, margin: '0 auto',
           display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gridTemplateRows: 'repeat(2, 1fr)',
-          gap: 18, padding: '0 24px 228px', boxSizing: 'border-box',
+          gap: 18, padding: '0 24px 242px', boxSizing: 'border-box',
         }}>
           {features.map((f, i) => (
             <FeatureCard key={f.title} index={i} {...f} onOpen={() => setSelected(i)} />
