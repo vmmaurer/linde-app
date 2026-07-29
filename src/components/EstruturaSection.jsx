@@ -78,6 +78,8 @@ function FeatureCard({ index, tag, title, desc, image, onOpen }) {
         position: 'relative',
         borderRadius: 22,
         overflow: 'hidden',
+        transform: 'scale(0.94)',
+        transformOrigin: 'top center',
         cursor: 'pointer',
         border: '1px solid rgba(95,130,155,0.3)',
         boxShadow: '0 16px 40px rgba(0,0,0,0.45)',
