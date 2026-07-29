@@ -195,9 +195,10 @@ const EstruturaSection = () => {
 
         {/* Cabeçalho — mesmo padrão da tela História (alturas em clamp()
             para sobrar espaço pra grade em telas curtas/paisagem) */}
-        <div className="brand-masthead" style={{ '--masthead-top-offset': '0px', '--estrutura-stack-gap': '32px', textAlign: 'center', marginBottom: 'var(--estrutura-stack-gap)', flexShrink: 0 }}>
+        <div className="brand-masthead" style={{ '--masthead-top-offset': '0px', '--estrutura-stack-gap': '32px', textAlign: 'center', marginBottom: 'var(--estrutura-stack-gap)', flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--estrutura-stack-gap)' }}>
           <img src="/images/logonavbar.png" alt="Linde Vidros"
-            className="brand-masthead__logo" style={{ marginBottom: 'var(--estrutura-stack-gap)' }} />
+            className="brand-masthead__logo" />
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <p style={{ color: '#5f829b', fontSize: 11, fontWeight: 700, letterSpacing: '.4em', textTransform: 'uppercase', margin: '0 0 6px' }}>
             Como Trabalhamos
           </p>
@@ -208,6 +209,7 @@ const EstruturaSection = () => {
           <p style={{ color: 'rgba(240,240,240,.45)', fontSize: 13, margin: 0 }}>
             Da fábrica à entrega: os bastidores de cada vidro Linde
           </p>
+          </div>
         </div>
 
         {/* Grade de destaques */}
