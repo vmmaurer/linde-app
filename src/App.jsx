@@ -12,7 +12,6 @@ const App = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const idleTimer = useRef(null);
   const navReturnTimer = useRef(null);
-  const playingVideos = useRef(new Set());
 
   const clearIdleTimer = () => {
     if (idleTimer.current) {
@@ -24,9 +23,13 @@ const App = () => {
   const resetIdleTimer = () => {
     clearIdleTimer();
 
-    // Enquanto qualquer vídeo estiver tocando, a experiência não é
-    // considerada inativa. A contagem recomeça quando o último vídeo parar.
-    if (playingVideos.current.size > 0) return;
+    // Consulta apenas os vídeos que realmente estão na página. Assim, um
+    // vídeo removido ao fechar o modal ou trocar de mídia nunca deixa a
+    // contagem de inatividade bloqueada.
+    const hasPlayingVideo = Array.from(document.querySelectorAll('video'))
+      .some((video) => !video.paused && !video.ended);
+    if (hasPlayingVideo) return;
+
     // O timer roda SEMPRE (inclusive com card aberto). Numa feira, se
     // alguém abre e abandona, após 30s o card fecha e volta pra tela
     // inicial. Qualquer toque na tela reinicia esta contagem.
@@ -40,15 +43,24 @@ const App = () => {
   useEffect(() => {
     const handleVideoPlaying = (event) => {
       if (!(event.target instanceof HTMLVideoElement)) return;
-      playingVideos.current.add(event.target);
       clearIdleTimer();
     };
 
     const handleVideoStopped = (event) => {
       if (!(event.target instanceof HTMLVideoElement)) return;
-      playingVideos.current.delete(event.target);
       resetIdleTimer();
     };
+
+    const removedVideoObserver = new MutationObserver((mutations) => {
+      const removedVideo = mutations.some((mutation) =>
+        Array.from(mutation.removedNodes).some((node) =>
+          node instanceof HTMLVideoElement
+          || (node instanceof Element && node.querySelector('video'))
+        )
+      );
+
+      if (removedVideo) resetIdleTimer();
+    });
 
     window.addEventListener('mousedown', resetIdleTimer);
     window.addEventListener('touchstart', resetIdleTimer);
@@ -59,6 +71,7 @@ const App = () => {
     document.addEventListener('ended', handleVideoStopped, true);
     document.addEventListener('emptied', handleVideoStopped, true);
     document.addEventListener('error', handleVideoStopped, true);
+    removedVideoObserver.observe(document.body, { childList: true, subtree: true });
     resetIdleTimer();
 
     return () => {
@@ -69,7 +82,7 @@ const App = () => {
       document.removeEventListener('ended', handleVideoStopped, true);
       document.removeEventListener('emptied', handleVideoStopped, true);
       document.removeEventListener('error', handleVideoStopped, true);
-      playingVideos.current.clear();
+      removedVideoObserver.disconnect();
       clearIdleTimer();
     };
   }, []);
