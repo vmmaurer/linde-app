@@ -12,9 +12,21 @@ const App = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const idleTimer = useRef(null);
   const navReturnTimer = useRef(null);
+  const playingVideos = useRef(new Set());
+
+  const clearIdleTimer = () => {
+    if (idleTimer.current) {
+      clearTimeout(idleTimer.current);
+      idleTimer.current = null;
+    }
+  };
 
   const resetIdleTimer = () => {
-    if (idleTimer.current) clearTimeout(idleTimer.current);
+    clearIdleTimer();
+
+    // Enquanto qualquer vídeo estiver tocando, a experiência não é
+    // considerada inativa. A contagem recomeça quando o último vídeo parar.
+    if (playingVideos.current.size > 0) return;
     // O timer roda SEMPRE (inclusive com card aberto). Numa feira, se
     // alguém abre e abandona, após 30s o card fecha e volta pra tela
     // inicial. Qualquer toque na tela reinicia esta contagem.
@@ -26,13 +38,39 @@ const App = () => {
   };
 
   useEffect(() => {
+    const handleVideoPlaying = (event) => {
+      if (!(event.target instanceof HTMLVideoElement)) return;
+      playingVideos.current.add(event.target);
+      clearIdleTimer();
+    };
+
+    const handleVideoStopped = (event) => {
+      if (!(event.target instanceof HTMLVideoElement)) return;
+      playingVideos.current.delete(event.target);
+      resetIdleTimer();
+    };
+
     window.addEventListener('mousedown', resetIdleTimer);
     window.addEventListener('touchstart', resetIdleTimer);
+    // Eventos de mídia não sobem pela árvore; a captura permite cobrir todos
+    // os vídeos atuais e futuros do site sem acoplar a regra aos componentes.
+    document.addEventListener('playing', handleVideoPlaying, true);
+    document.addEventListener('pause', handleVideoStopped, true);
+    document.addEventListener('ended', handleVideoStopped, true);
+    document.addEventListener('emptied', handleVideoStopped, true);
+    document.addEventListener('error', handleVideoStopped, true);
     resetIdleTimer();
+
     return () => {
       window.removeEventListener('mousedown', resetIdleTimer);
       window.removeEventListener('touchstart', resetIdleTimer);
-      if (idleTimer.current) clearTimeout(idleTimer.current);
+      document.removeEventListener('playing', handleVideoPlaying, true);
+      document.removeEventListener('pause', handleVideoStopped, true);
+      document.removeEventListener('ended', handleVideoStopped, true);
+      document.removeEventListener('emptied', handleVideoStopped, true);
+      document.removeEventListener('error', handleVideoStopped, true);
+      playingVideos.current.clear();
+      clearIdleTimer();
     };
   }, []);
 

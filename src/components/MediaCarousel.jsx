@@ -37,7 +37,6 @@ export default function MediaCarousel({ media, height = '48vh', minHeight = 340 
           className="w-full h-full"
           style={{ objectFit: 'cover', objectPosition: 'center' }}
           autoPlay
-          loop
           muted
           playsInline
         />
