@@ -200,7 +200,7 @@ const EstruturaSection = () => {
             className="brand-masthead__logo" />
         </div>
 
-        <div style={{ minHeight: 'clamp(56px, 8vh, 84px)', padding: '8px 0', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', flexShrink: 0, position: 'relative', top: '-10px' }}>
+        <div style={{ minHeight: 'clamp(56px, 8vh, 84px)', padding: '8px 0', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', flexShrink: 0, position: 'relative', top: '-50px' }}>
           <p style={{ color: '#5f829b', fontSize: 11, fontWeight: 700, letterSpacing: '.4em', textTransform: 'uppercase', margin: '0 0 6px' }}>
             Como Trabalhamos
           </p>
