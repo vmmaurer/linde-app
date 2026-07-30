@@ -195,20 +195,20 @@ const EstruturaSection = () => {
 
         {/* Cabeçalho — mesmo padrão da tela História (alturas em clamp()
             para sobrar espaço pra grade em telas curtas/paisagem) */}
-        <div className="brand-masthead" style={{ '--masthead-top-offset': '0px', textAlign: 'center', marginBottom: 0, flexShrink: 0 }}>
+        <div className="brand-masthead" style={{ textAlign: 'center', marginBottom: 32, flexShrink: 0 }}>
           <img src="/images/logonavbar.png" alt="Linde Vidros"
             className="brand-masthead__logo" />
         </div>
 
-        <div style={{ minHeight: 'clamp(56px, 8vh, 84px)', padding: '8px 0', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', flexShrink: 0, position: 'relative', top: '-50px' }}>
-          <p style={{ color: '#5f829b', fontSize: 11, fontWeight: 700, letterSpacing: '.4em', textTransform: 'uppercase', margin: '0 0 6px' }}>
+        <div style={{ textAlign: 'center', marginBottom: 40, flexShrink: 0, position: 'relative', zIndex: 10 }}>
+          <p style={{ color: '#5f829b', fontSize: 11, fontWeight: 700, letterSpacing: '.4em', textTransform: 'uppercase', margin: '0 0 12px' }}>
             Como Trabalhamos
           </p>
-          <h2 style={{ color: '#f0f0f0', fontSize: 'clamp(28px, 4vh, 40px)', fontWeight: 800, margin: '0 0 6px', letterSpacing: '-.02em' }}>
+          <h2 style={{ color: '#f0f0f0', fontSize: 44, fontWeight: 800, margin: '0 0 16px', letterSpacing: '-.02em' }}>
             Nossa Estrutura
           </h2>
-          <div style={{ width: 48, height: 2, background: '#f0c832', margin: '0 auto 8px', borderRadius: 2 }} />
-          <p style={{ color: 'rgba(240,240,240,.45)', fontSize: 13, margin: 0 }}>
+          <div style={{ width: 48, height: 2, background: '#f0c832', margin: '0 auto 14px', borderRadius: 2 }} />
+          <p style={{ color: 'rgba(240,240,240,.45)', fontSize: 12, margin: 0 }}>
             Da fábrica à entrega: os bastidores de cada vidro Linde
           </p>
         </div>
