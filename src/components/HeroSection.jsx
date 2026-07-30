@@ -53,7 +53,11 @@ const HeroSection = () => {
       </div>
 
       <div className="carousel-wrapper">
-        <ArcCarousel items={products} onCardTap={setActiveProduct} />
+        <ArcCarousel
+          items={products}
+          onCardTap={setActiveProduct}
+          paused={Boolean(activeProduct)}
+        />
       </div>
 
       {activeProduct && (

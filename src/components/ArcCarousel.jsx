@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react'
 
 // ── Paleta: Sapphire #233c64 · Cold Steel #5f829b · Sunshine #f0c832
 
-export default function ArcCarousel({ items, onCardTap }) {
+export default function ArcCarousel({ items, onCardTap, paused = false }) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const [dragOffset, setDragOffset] = useState(0)
@@ -46,9 +46,13 @@ export default function ArcCarousel({ items, onCardTap }) {
   }, [startAutoRotate])
 
   useEffect(() => {
-    startAutoRotate()
+    clearInterval(autoRotateTimer.current)
+    clearTimeout(resumeTimer.current)
+
+    if (!paused) startAutoRotate()
+
     return () => { clearInterval(autoRotateTimer.current); clearTimeout(resumeTimer.current) }
-  }, [startAutoRotate])
+  }, [paused, startAutoRotate])
 
   const goTo = useCallback((idx) => {
     if (isAnimating) return
