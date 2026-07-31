@@ -38,6 +38,8 @@ export const products = [
     media: [
       { type: 'image', src: '/images/LAMINADO-1.png' },
       { type: 'image', src: '/images/LAMINADO-3.png' },
+      { type: 'image', src: '/images/TEMPERADO-2.png' },
+      { type: 'image', src: '/images/TEMPERADO-3.png' },
     ],
     color: 'from-cyan-900/80 to-navy-950/90',
     description:
@@ -202,11 +204,8 @@ export const products = [
     media: [
       { type: 'image', src: '/images/temperado-novo.png' },
       { type: 'image', src: '/images/TEMPERADO-1.png' },
-      { type: 'image', src: '/images/TEMPERADO-2.png' },
-      { type: 'image', src: '/images/TEMPERADO-3.png' },
       { type: 'image', src: '/images/TEMPERADO-4.png' },
       { type: 'image', src: '/images/TEMPERADO-5.png' },
-      { type: 'image', src: '/images/TEMPERADO-6.png'}
 
       // { type: 'video', src: '/images/seu_video.mp4' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
