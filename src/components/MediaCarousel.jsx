@@ -57,8 +57,8 @@ export default function MediaCarousel({ media, height = '48vh', minHeight = 340 
             onPointerDown={(e) => { e.stopPropagation(); prev() }}
             className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-full"
             style={{
-              width: 56,
-              height: 56,
+              width: 64,
+              height: 64,
               background: 'rgba(35,60,100,0.65)',
               border: '2.5px solid rgba(240,200,50,0.6)',
               boxShadow: '0 10px 36px rgba(0,0,0,0.4), 0 0 28px rgba(240,200,50,0.22), inset 0 1px 1px rgba(255,255,255,0.15)',
@@ -68,7 +68,7 @@ export default function MediaCarousel({ media, height = '48vh', minHeight = 340 
             }}
             aria-label="Anterior"
           >
-            <svg width="26" height="26" viewBox="0 0 20 20" fill="none">
+            <svg width="30" height="30" viewBox="0 0 20 20" fill="none">
               <path d="M13 4L7 10L13 16" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
@@ -76,8 +76,8 @@ export default function MediaCarousel({ media, height = '48vh', minHeight = 340 
             onPointerDown={(e) => { e.stopPropagation(); next() }}
             className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-full"
             style={{
-              width: 56,
-              height: 56,
+              width: 64,
+              height: 64,
               background: 'rgba(35,60,100,0.65)',
               border: '2.5px solid rgba(240,200,50,0.6)',
               boxShadow: '0 10px 36px rgba(0,0,0,0.4), 0 0 28px rgba(240,200,50,0.22), inset 0 1px 1px rgba(255,255,255,0.15)',
@@ -87,7 +87,7 @@ export default function MediaCarousel({ media, height = '48vh', minHeight = 340 
             }}
             aria-label="Próximo"
           >
-            <svg width="26" height="26" viewBox="0 0 20 20" fill="none">
+            <svg width="30" height="30" viewBox="0 0 20 20" fill="none">
               <path d="M7 4L13 10L7 16" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
