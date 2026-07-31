@@ -40,7 +40,7 @@ const FOCUS_WIDTH    = CARD_TOTAL * 0.8   // largura da zona de foco
 // Desaceleração suave perto do centro: o track anda mais devagar
 // quando um card está centralizado, criando a sensação de "respiro".
 const SLOWDOWN_MAX   = 0.55       // 0 = sem freio, 1 = para totalmente no centro
-const BASE_SPEED     = 1.2        // velocidade base do auto-scroll
+const BASE_SPEED     = 1.3        // velocidade base do auto-scroll
 
 // ─── Lightbox ──────────────────────────────────────────────────────────────
 function Lightbox({ item, onClose, onPrev, onNext }) {
