@@ -86,11 +86,11 @@ export default function CTASection() {
                 className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
                 style={{ background: 'rgba(35,60,100,0.5)', border: '1px solid rgba(240,200,50,0.35)' }}
               >
-                <svg width="25" height="25" viewBox="0 0 24 24" fill="none" aria-label="Instagram">
-                  <rect x="3" y="3" width="18" height="18" rx="5" stroke="#f0c832" strokeWidth="1.8" />
-                  <circle cx="12" cy="12" r="4" stroke="#f0c832" strokeWidth="1.8" />
-                  <circle cx="17.4" cy="6.7" r="1" fill="#f0c832" />
-                </svg>
+                <img
+                  src="/images/ICON_INSTAGRAM.png"
+                  alt="Instagram"
+                  style={{ width: '28px', height: '28px', objectFit: 'contain' }}
+                />
               </div>
             </div>
             <div className="text-left">
