@@ -56,20 +56,38 @@ export default function MediaCarousel({ media, height = '48vh', minHeight = 340 
           <button
             onPointerDown={(e) => { e.stopPropagation(); prev() }}
             className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-full"
-            style={{ width: 48, height: 48, background: 'rgba(0,0,0,0.45)', border: '1px solid rgba(255,255,255,0.25)', zIndex: 2 }}
+            style={{
+              width: 56,
+              height: 56,
+              background: 'rgba(35,60,100,0.65)',
+              border: '2.5px solid rgba(240,200,50,0.6)',
+              boxShadow: '0 10px 36px rgba(0,0,0,0.4), 0 0 28px rgba(240,200,50,0.22), inset 0 1px 1px rgba(255,255,255,0.15)',
+              backdropFilter: 'blur(20px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+              zIndex: 2,
+            }}
             aria-label="Anterior"
           >
-            <svg width="22" height="22" viewBox="0 0 20 20" fill="none">
+            <svg width="26" height="26" viewBox="0 0 20 20" fill="none">
               <path d="M13 4L7 10L13 16" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
           <button
             onPointerDown={(e) => { e.stopPropagation(); next() }}
             className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-full"
-            style={{ width: 48, height: 48, background: 'rgba(0,0,0,0.45)', border: '1px solid rgba(255,255,255,0.25)', zIndex: 2 }}
+            style={{
+              width: 56,
+              height: 56,
+              background: 'rgba(35,60,100,0.65)',
+              border: '2.5px solid rgba(240,200,50,0.6)',
+              boxShadow: '0 10px 36px rgba(0,0,0,0.4), 0 0 28px rgba(240,200,50,0.22), inset 0 1px 1px rgba(255,255,255,0.15)',
+              backdropFilter: 'blur(20px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+              zIndex: 2,
+            }}
             aria-label="Próximo"
           >
-            <svg width="22" height="22" viewBox="0 0 20 20" fill="none">
+            <svg width="26" height="26" viewBox="0 0 20 20" fill="none">
               <path d="M7 4L13 10L7 16" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
