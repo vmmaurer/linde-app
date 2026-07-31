@@ -12,9 +12,7 @@ export const products = [
     // type: 'video' ou 'image'. Pode misturar na ordem que quiser.
     media: [
       { type: 'image', src: '/images/laminado1.png' },
-      {type: 'image', src: '/images/LAMINADO-1.png'},
       { type: 'image', src: '/images/LAMINADO-2.png' },
-      { type: 'image', src: '/images/LAMINADO-3.png' },
       { type: 'image', src: '/images/LAMINADO-5.png' },
 
       // { type: 'video', src: '/images/seu_video.mp4' },
@@ -27,6 +25,27 @@ export const products = [
       'Guarda-corpos e corrimãos',
       'Fachadas e vitrines',
       'Coberturas e claraboias',
+    ],
+  },
+  {
+    id: 14,
+    slug: 'laminado-temperado',
+    title: 'Laminado Temperado',
+    subtitle: 'Segurança e resistência',
+    image: '/images/LAMINADO-1.png',
+    modalImage: '/images/LAMINADO-1.png',
+    brandLogo: '',
+    media: [
+      { type: 'image', src: '/images/LAMINADO-1.png' },
+      { type: 'image', src: '/images/LAMINADO-3.png' },
+    ],
+    color: 'from-cyan-900/80 to-navy-950/90',
+    description:
+      'O vidro laminado temperado combina a resistência do processo de têmpera com a segurança da laminação. Em caso de quebra, seus fragmentos permanecem aderidos à camada intermediária, oferecendo proteção reforçada para aplicações que exigem alto desempenho.',
+    applications: [
+      'Fachadas e vitrines',
+      'Guarda-corpos e corrimãos',
+      'Coberturas e estruturas especiais',
     ],
   },
   {
