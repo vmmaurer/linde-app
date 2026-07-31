@@ -25,6 +25,9 @@ const milestones = [
 const CARD_WIDTH = 480
 const CARD_GAP   = 180
 const CARD_TOTAL = CARD_WIDTH + CARD_GAP
+// Mantém pontos suficientes calculados fora da tela para a curva já chegar
+// pronta às bordas do viewport, inclusive no início de cada ciclo.
+const LINE_OVERSCAN = CARD_TOTAL * 2
 
 // ── Parâmetros do destaque central ────────────────────────────────────────
 // A fileira fica reta e estável; SÓ o card que chega ao centro ganha realce:
@@ -299,7 +302,7 @@ export default function LinhaDoTempo() {
         // ponto da linha: MEDIDO na posição real do ponto dourado deste card,
         // já refletindo escala e lift. A linha passa exatamente pelos pontos,
         // com uma pequena folga acima para nunca tocar os cards.
-        if (cardCenter > -CARD_TOTAL && cardCenter < vp.clientWidth + CARD_TOTAL) {
+        if (cardCenter > -LINE_OVERSCAN && cardCenter < vp.clientWidth + LINE_OVERSCAN) {
           const dot = el.querySelector('.connector-dot')
           if (dot) {
             const dRect = dot.getBoundingClientRect()
