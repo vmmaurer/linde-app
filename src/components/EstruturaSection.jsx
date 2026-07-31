@@ -7,7 +7,7 @@ import EstruturaModal from './EstruturaModal';
 const features = [
   {
     tag: 'Fábrica',
-    title: 'Sede Industrial',
+    title: 'Fábrica 1',
     desc: 'Planta própria estruturada para produzir com agilidade em grande escala.',
     longDesc: 'Nossa planta sede reúne produção, estoque e administração em um só complexo, com espaço para receber cargas, manobrar caminhões e crescer junto com a demanda. É daqui que sai cada projeto que leva o nome Linde Vidros.',
     highlights: [
@@ -23,7 +23,7 @@ const features = [
   },
   {
     tag: 'Produção',
-    title: 'Parque de Máquinas',
+    title: 'Fábrica 2',
     desc: 'Equipamentos de ponta para corte, têmpera e beneficiamento do vidro.',
     longDesc: 'Investimos continuamente em maquinário para acompanhar a evolução do setor: linhas de corte, têmpera e beneficiamento que garantem precisão milimétrica e acabamento de alto padrão em cada chapa de vidro.',
     highlights: [
@@ -35,22 +35,6 @@ const features = [
     media: [
       { type: 'video', src: '/images/siregrafia-maquina.mp4' },
       { type: 'image', src: '/images/IMG_6240.JPG' },
-    ],
-  },
-  {
-    tag: 'Logística',
-    title: 'Estoque Próprio',
-    desc: 'Matéria-prima sempre disponível, pronta para entrar em produção.',
-    longDesc: 'Mantemos um estoque próprio e organizado por lote, garantindo que a matéria-prima certa esteja sempre disponível assim que um pedido entra em produção — sem depender de terceiros nem atrasar prazos.',
-    highlights: [
-      'Matéria-prima sempre disponível',
-      'Organização por lote e rastreabilidade',
-      'Redução real nos prazos de entrega',
-    ],
-    image: '/images/ESTOQUE.JPG',
-    media: [
-      { type: 'image', src: '/images/ESTOQUE.JPG' },
-      { type: 'image', src: '/images/IMG_5735.JPG' },
     ],
   },
   {
@@ -66,6 +50,22 @@ const features = [
     image: '/images/FROTA.jpg',
     media: [
       { type: 'image', src: '/images/FROTA.jpg' },
+    ],
+  },
+  {
+    tag: 'Qualidade',
+    title: 'Diferenciais',
+    desc: 'Qualidade, agilidade e controle em todas as etapas do processo.',
+    longDesc: 'A Linde Vidros reúne estrutura, tecnologia e experiência para oferecer soluções com qualidade, precisão e agilidade, acompanhando cada projeto desde a seleção da matéria-prima até a entrega.',
+    highlights: [
+      'Matéria-prima selecionada e rastreável',
+      'Controle de qualidade em todas as etapas',
+      'Agilidade na produção e no atendimento',
+    ],
+    image: '/images/ESTOQUE.JPG',
+    media: [
+      { type: 'image', src: '/images/ESTOQUE.JPG' },
+      { type: 'image', src: '/images/IMG_5735.JPG' },
     ],
   },
 ];
