@@ -9,10 +9,10 @@ function QRCode() {
       style={{ background: 'white', boxShadow: '0 20px 60px rgba(0,0,0,0.4)' }}
     >
       <img
-        src="/images/qrcode_whatsapp_linde_mensagem.png"
-        alt="QR Code WhatsApp Linde Vidros"
+        src="/images/qrcode_linktree_totem.png"
+        alt="QR Code para acessar o WhatsApp e o Instagram da Linde Vidros"
         className="object-contain"
-        style={{ width: '180px', height: '180px' }}
+        style={{ width: '200px', height: '200px' }}
       />
     </div>
   )
@@ -67,30 +67,42 @@ export default function CTASection() {
           em seu negócio? Entre em contato agora mesmo.
         </h2>
 
-        {/* Bloco WhatsApp + QR */}
+        {/* Bloco de canais + QR */}
         <div className="flex flex-col items-center mb-10">
-          {/* WhatsApp header */}
+          {/* WhatsApp e Instagram */}
           <div className="flex items-center gap-3 mb-4">
-            <div
-              className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden"
-              style={{ background: 'rgba(35,60,100,0.5)', border: '1px solid rgba(95,130,155,0.3)' }}
-            >
-              <img
-                src="/images/ICON_WHATS.png"
-                alt="WhatsApp"
-                style={{ width: '28px', height: '28px', objectFit: 'contain' }}
-              />
+            <div className="flex items-center" style={{ gap: 8 }}>
+              <div
+                className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden"
+                style={{ background: 'rgba(35,60,100,0.5)', border: '1px solid rgba(95,130,155,0.3)' }}
+              >
+                <img
+                  src="/images/ICON_WHATS.png"
+                  alt="WhatsApp"
+                  style={{ width: '28px', height: '28px', objectFit: 'contain' }}
+                />
+              </div>
+              <div
+                className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ background: 'rgba(35,60,100,0.5)', border: '1px solid rgba(240,200,50,0.35)' }}
+              >
+                <svg width="25" height="25" viewBox="0 0 24 24" fill="none" aria-label="Instagram">
+                  <rect x="3" y="3" width="18" height="18" rx="5" stroke="#f0c832" strokeWidth="1.8" />
+                  <circle cx="12" cy="12" r="4" stroke="#f0c832" strokeWidth="1.8" />
+                  <circle cx="17.4" cy="6.7" r="1" fill="#f0c832" />
+                </svg>
+              </div>
             </div>
             <div className="text-left">
-              <p style={{ color: '#5f829b' }} className="text-xs font-medium tracking-wider uppercase">WhatsApp</p>
-              <p style={{ color: 'rgba(240,240,240,0.85)' }} className="text-sm font-medium">Acesse pelo QR Code abaixo</p>
+              <p style={{ color: '#f0c832' }} className="text-xs font-semibold tracking-wider uppercase">WhatsApp + Instagram</p>
+              <p style={{ color: 'rgba(240,240,240,0.85)' }} className="text-sm font-medium">Um QR Code, dois caminhos para falar com a Linde</p>
             </div>
           </div>
 
           <QRCode />
 
           <p style={{ color: '#f0c832' }} className="text-sm font-medium mt-3">
-            Escaneie e entre em contato
+            Escaneie, escolha seu canal e entre para o universo Linde
           </p>
         </div>
 
