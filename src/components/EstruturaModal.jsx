@@ -88,9 +88,11 @@ export default function EstruturaModal({ feature, onClose }) {
           <MediaCarousel media={feature.media} height="52vh" minHeight={380} />
 
           <div className="p-8 md:p-10 flex flex-col gap-6">
-            <p className="text-white/75 text-lg leading-relaxed">
-              {feature.longDesc}
-            </p>
+            {feature.longDesc && (
+              <p className="text-white/75 text-lg leading-relaxed">
+                {feature.longDesc}
+              </p>
+            )}
 
             <div>
               <h3 className="text-glass-300 text-xs font-semibold tracking-widest uppercase mb-3">

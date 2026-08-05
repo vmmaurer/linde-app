@@ -56,7 +56,6 @@ const features = [
     tag: 'Qualidade',
     title: 'Diferenciais',
     desc: 'Certificações reconhecidas, tecnologia própria e um catálogo completo de soluções em vidro.',
-    longDesc: 'Com 24 mil m² de área fabril e certificações Inmetro, CEBRACE e Guardian - Processador Select, a Linde Vidros reúne estrutura, tecnologia e experiência para oferecer soluções com qualidade, precisão e agilidade, do processamento de vidros finos e grossos à entrega com frota própria.',
     highlights: [
       'Certificação Inmetro',
       'Certificação CEBRACE para processamento de vidros especiais',

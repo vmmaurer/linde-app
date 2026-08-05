@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom'
 // Midnight #323232 · Off-white #f0f0f0
 
 const milestones = [
-  { image: '/images/abahistoriacard1966.jpeg', year: '1966', desc: 'Em 1966 teve início a história da Linde Vidros, fundada com o propósito de oferecer qualidade, confiança e soluções para o setor vidreiro.' },
+  { image: '/images/abahistoriacard1966.jpeg', imagePosition: 'center 80%', year: '1966', desc: 'Em 1966 teve início a história da Linde Vidros, fundada com o propósito de oferecer qualidade, confiança e soluções para o setor vidreiro.' },
   { image: '/images/linde_1989.jpeg', year: '1989', desc: 'Fundação da Linde Vidros, iniciando uma trajetória de inovação e qualidade no setor vidreiro.' },
   { image: '/images/linde_1991.jpg',  year: '1991', desc: 'Em agosto de 1991 foi fundada uma filial na cidade de Rio Negro – PR para a distribuição em chapas de vidros em geral, atendendo outras regiões.' },
   { image: '/images/linde_1993.jpg',  year: '1993', desc: 'Nos últimos anos, a unidade de Rio Negro vem investindo em máquinas de última geração para melhor corte e acabamento.' },
@@ -92,7 +92,7 @@ function Lightbox({ item, onClose, onPrev, onNext }) {
       >
         <div style={{ position: 'relative', maxHeight: 420, overflow: 'hidden' }}>
           <img src={item.image} alt={item.year}
-            style={{ width: '100%', maxHeight: 420, objectFit: 'cover', display: 'block' }} />
+            style={{ width: '100%', maxHeight: 420, objectFit: 'cover', objectPosition: item.imagePosition || 'center', display: 'block' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(4,11,25,1) 0%,rgba(4,11,25,.3) 50%,transparent 100%)' }} />
           <div style={{ position: 'absolute', bottom: 20, left: 24, display: 'flex', alignItems: 'center', gap: 10 }}>
             <span style={{ background: '#f0c832', color: '#040b19', fontWeight: 800, fontSize: 22, padding: '6px 18px', borderRadius: 8 }}>
@@ -212,7 +212,7 @@ function Card({ item, onOpen, dragInfoRef, cardRef, bookend }) {
       >
         <div style={{ position: 'relative', height: 300, overflow: 'hidden' }}>
           <img src={item.image} alt={item.year} draggable={false}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: item.imagePosition || 'center', display: 'block' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(4,11,25,.85) 0%,transparent 55%)' }} />
         </div>
         <div style={{ padding: '22px 26px', height: 150, boxSizing: 'border-box', overflow: 'hidden' }}>
