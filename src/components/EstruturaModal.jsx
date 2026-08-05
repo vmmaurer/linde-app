@@ -83,12 +83,6 @@ export default function EstruturaModal({ feature, onClose }) {
                 {feature.title}
               </h2>
             </div>
-            <span style={{
-              color: '#f0c832', fontSize: 34, fontWeight: 800, flexShrink: 0,
-              textShadow: '0 2px 10px rgba(0,0,0,0.4)',
-            }}>
-              {String(feature.index + 1).padStart(2, '0')}
-            </span>
           </div>
 
           <MediaCarousel media={feature.media} height="52vh" minHeight={380} />

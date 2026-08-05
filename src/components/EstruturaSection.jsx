@@ -55,12 +55,19 @@ const features = [
   {
     tag: 'Qualidade',
     title: 'Diferenciais',
-    desc: 'Qualidade, agilidade e controle em todas as etapas do processo.',
-    longDesc: 'A Linde Vidros reúne estrutura, tecnologia e experiência para oferecer soluções com qualidade, precisão e agilidade, acompanhando cada projeto desde a seleção da matéria-prima até a entrega.',
+    desc: 'Certificações reconhecidas, tecnologia própria e um catálogo completo de soluções em vidro.',
+    longDesc: 'Com 24 mil m² de área fabril e certificações Inmetro, CEBRACE e Guardian - Processador Select, a Linde Vidros reúne estrutura, tecnologia e experiência para oferecer soluções com qualidade, precisão e agilidade, do processamento de vidros finos e grossos à entrega com frota própria.',
     highlights: [
-      'Matéria-prima selecionada e rastreável',
-      'Controle de qualidade em todas as etapas',
-      'Agilidade na produção e no atendimento',
+      'Certificação Inmetro',
+      'Certificação CEBRACE para processamento de vidros especiais',
+      'Certificação Guardian - Processador Select',
+      'Associados à ABRAVIDRO, participando das revisões das normas do setor vidreiro',
+      '24 mil m² de área fabril',
+      'Processamento de vidros finos e grossos',
+      'Linha de laminação própria',
+      'Modelação com CNC e medições de precisão com equipamento Proliner',
+      'Frota própria com mais de 20 caminhões',
+      'Amplo catálogo: espelhos, temperados, laminados comuns e temperados, insulados para engenharia e para refrigeração',
     ],
     image: '/images/ESTOQUE.JPG',
     media: [
@@ -70,7 +77,7 @@ const features = [
   },
 ];
 
-function FeatureCard({ index, tag, title, desc, image, onOpen }) {
+function FeatureCard({ tag, title, desc, image, onOpen }) {
   return (
     <div
       onClick={(e) => { e.stopPropagation(); onOpen() }}
@@ -96,15 +103,6 @@ function FeatureCard({ index, tag, title, desc, image, onOpen }) {
         position: 'absolute', inset: 0,
         background: 'linear-gradient(to top, rgba(4,11,25,0.94) 0%, rgba(35,60,100,0.28) 55%, rgba(4,11,25,0.05) 100%)',
       }} />
-
-      {/* Número — mesmo padrão dos marcadores da Galeria */}
-      <span style={{
-        position: 'absolute', top: 14, left: 16,
-        color: '#f0c832', fontSize: 'clamp(20px, 2.6vw, 30px)', fontWeight: 800,
-        textShadow: '0 2px 10px rgba(0,0,0,0.85)',
-      }}>
-        {String(index + 1).padStart(2, '0')}
-      </span>
 
       {/* Indicador de expandir — avisa que o card é clicável */}
       <div style={{
