@@ -73,6 +73,10 @@ const features = [
       { type: 'image', src: '/images/ESTOQUE.JPG' },
       { type: 'image', src: '/images/IMG_5735.JPG' },
     ],
+    // Lista de destaques é longa — imagem menor para o pop-up caber
+    // inteiro sem precisar rolar.
+    mediaHeight: '28vh',
+    mediaMinHeight: 200,
   },
 ];
 
