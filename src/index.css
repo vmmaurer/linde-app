@@ -3,16 +3,135 @@
 @tailwind utilities;
 
 /* ══════════════════════════════════════════════════════════════
-   FONTE ROTUNDA VARIABLE
-   Coloque o arquivo da fonte em: public/fonts/
-   Se o nome do arquivo for diferente, ajuste o src abaixo.
+   FONTE ROTUNDA — família única com pesos 100–900 + itálicos.
+   Arquivos em: public/font/ (servidos em /font/...)
+   O navegador escolhe automaticamente o peso mais próximo do
+   font-weight pedido em cada componente (400, 500, 700, 800, 900…).
 ══════════════════════════════════════════════════════════════ */
 @font-face {
-  font-family: 'Rotunda Variable';
-  src: url('/fonts/RotundaVariable.woff2') format('woff2-variations'),
-       url('/fonts/RotundaVariable.woff2') format('woff2');
-  font-weight: 100 900;
+  font-family: 'Rotunda';
+  src: url('/font/Rotunda-Thin.woff2') format('woff2'),
+       url('/font/Rotunda-Thin.woff') format('woff'),
+       url('/font/Rotunda-Thin.ttf') format('truetype');
+  font-weight: 100;
   font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Rotunda';
+  src: url('/font/Rotunda-ThinItalic.woff2') format('woff2'),
+       url('/font/Rotunda-ThinItalic.woff') format('woff'),
+       url('/font/Rotunda-ThinItalic.ttf') format('truetype');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Rotunda';
+  src: url('/font/Rotunda-Light.woff2') format('woff2'),
+       url('/font/Rotunda-Light.woff') format('woff'),
+       url('/font/Rotunda-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Rotunda';
+  src: url('/font/Rotunda-LightItalic.woff2') format('woff2'),
+       url('/font/Rotunda-LightItalic.woff') format('woff'),
+       url('/font/Rotunda-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Rotunda';
+  src: url('/font/Rotunda-Regular.woff2') format('woff2'),
+       url('/font/Rotunda-Regular.woff') format('woff'),
+       url('/font/Rotunda-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Rotunda';
+  src: url('/font/Rotunda-RegularItalic.woff2') format('woff2'),
+       url('/font/Rotunda-RegularItalic.woff') format('woff'),
+       url('/font/Rotunda-RegularItalic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Rotunda';
+  src: url('/font/Rotunda-Medium.woff2') format('woff2'),
+       url('/font/Rotunda-Medium.woff') format('woff'),
+       url('/font/Rotunda-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Rotunda';
+  src: url('/font/Rotunda-MediumItalic.woff2') format('woff2'),
+       url('/font/Rotunda-MediumItalic.woff') format('woff'),
+       url('/font/Rotunda-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Rotunda';
+  src: url('/font/Rotunda-Bold.woff2') format('woff2'),
+       url('/font/Rotunda-Bold.woff') format('woff'),
+       url('/font/Rotunda-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Rotunda';
+  src: url('/font/Rotunda-BoldItalic.woff2') format('woff2'),
+       url('/font/Rotunda-BoldItalic.woff') format('woff'),
+       url('/font/Rotunda-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Rotunda';
+  src: url('/font/Rotunda-ExtraBold.woff2') format('woff2'),
+       url('/font/Rotunda-ExtraBold.woff') format('woff'),
+       url('/font/Rotunda-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Rotunda';
+  src: url('/font/Rotunda-ExtraBoldItalic.woff2') format('woff2'),
+       url('/font/Rotunda-ExtraBoldItalic.woff') format('woff'),
+       url('/font/Rotunda-ExtraBoldItalic.ttf') format('truetype');
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Rotunda';
+  src: url('/font/Rotunda-Black.woff2') format('woff2'),
+       url('/font/Rotunda-Black.woff') format('woff'),
+       url('/font/Rotunda-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Rotunda';
+  src: url('/font/Rotunda-BlackItalic.woff2') format('woff2'),
+       url('/font/Rotunda-BlackItalic.woff') format('woff'),
+       url('/font/Rotunda-BlackItalic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
   font-display: swap;
 }
 
@@ -29,6 +148,11 @@
     -webkit-tap-highlight-color: transparent;
     box-sizing: border-box;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
 }
 
 html {
@@ -41,7 +165,7 @@ html {
 
 body {
   color: #f0f0f0;
-  font-family: 'Rotunda Variable', 'Inter', system-ui, sans-serif;
+  font-family: 'Rotunda', 'Inter', system-ui, sans-serif;
   overflow-x: hidden;
   cursor: default;
   user-select: none;
