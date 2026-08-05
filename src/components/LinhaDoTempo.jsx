@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom'
 // Midnight #323232 · Off-white #f0f0f0
 
 const milestones = [
-  { image: '/images/linde_1989.jpeg', year: '1966', desc: 'Em 1966 teve início a história da Linde Vidros, fundada com o propósito de oferecer qualidade, confiança e soluções para o setor vidreiro.' },
+  { image: '/images/abahistoriacard1966.jpeg', year: '1966', desc: 'Em 1966 teve início a história da Linde Vidros, fundada com o propósito de oferecer qualidade, confiança e soluções para o setor vidreiro.' },
   { image: '/images/linde_1989.jpeg', year: '1989', desc: 'Fundação da Linde Vidros, iniciando uma trajetória de inovação e qualidade no setor vidreiro.' },
   { image: '/images/linde_1991.jpg',  year: '1991', desc: 'Em agosto de 1991 foi fundada uma filial na cidade de Rio Negro – PR para a distribuição em chapas de vidros em geral, atendendo outras regiões.' },
   { image: '/images/linde_1993.jpg',  year: '1993', desc: 'Nos últimos anos, a unidade de Rio Negro vem investindo em máquinas de última geração para melhor corte e acabamento.' },
