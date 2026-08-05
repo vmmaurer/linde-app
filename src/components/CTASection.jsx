@@ -61,16 +61,19 @@ export default function CTASection() {
         </div>
 
         {/* Título com destaque em "grife dos vidros" */}
-        <h2 className="text-2xl md:text-3xl font-bold text-white leading-snug mb-8 max-w-xl">
+        <h2 className="text-2xl md:text-3xl font-bold text-white leading-snug mb-6 max-w-xl">
           Quer trabalhar com a{' '}
           <span style={{ color: '#f0c832' }}>grife dos vidros</span>{' '}
           em seu negócio? Entre em contato agora mesmo.
         </h2>
 
+        {/* Linha divisória — mesmo padrão usado abaixo dos títulos das outras abas */}
+        <div style={{ width: 48, height: 2, background: '#f0c832', margin: '0 auto 32px', borderRadius: 2 }} />
+
         {/* Bloco de canais + QR */}
-        <div className="flex flex-col items-center mb-10">
+        <div className="flex flex-col items-center mb-8">
           {/* WhatsApp e Instagram */}
-          <div className="flex items-center gap-3 mb-4">
+          <div className="flex items-center gap-3 mb-5">
             <div className="flex items-center" style={{ gap: 8 }}>
               <div
                 className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden"
@@ -101,13 +104,16 @@ export default function CTASection() {
 
           <QRCode />
 
-          <p style={{ color: '#f0c832' }} className="text-sm font-medium mt-3">
+          <p style={{ color: 'rgba(240,240,240,0.85)' }} className="text-sm font-medium mt-4">
             Escaneie, escolha seu canal e entre para o universo Linde
           </p>
         </div>
 
+        {/* Linha divisória entre o bloco do QR e a região de atuação */}
+        <div style={{ width: 48, height: 2, background: '#f0c832', margin: '0 auto 24px', borderRadius: 2 }} />
+
         {/* Região de atuação */}
-        <p style={{ color: 'rgba(240,240,240,0.85)' }} className="text-lg md:text-xl font-medium mb-4">
+        <p style={{ color: '#f0c832' }} className="text-lg md:text-xl font-medium mb-4">
           Confira nossa região de atuação:
         </p>
 
