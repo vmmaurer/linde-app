@@ -4,21 +4,48 @@ import React, { useRef, useState } from 'react'
 export default function MediaCarousel({ media, height = '48vh', minHeight = 340 }) {
   const [index, setIndex] = useState(0)
   const startX = useRef(null)
+  const startY = useRef(null)
+  const isSwiping = useRef(false)
   const count = media.length
 
   const go = (i) => setIndex(((i % count) + count) % count)
   const next = () => go(index + 1)
   const prev = () => go(index - 1)
 
-  const onPointerDown = (e) => { startX.current = e.clientX }
+  // Deslize (swipe) — restrito à própria área da mídia (este container),
+  // sem interferir nas setas/dots (que ficam por cima e usam stopPropagation).
+  const onPointerDown = (e) => {
+    startX.current = e.clientX
+    startY.current = e.clientY
+    isSwiping.current = true
+    try { e.currentTarget.setPointerCapture(e.pointerId) } catch (_) {}
+  }
+  const onPointerMove = (e) => {
+    if (!isSwiping.current || startX.current === null) return
+    const deltaX = e.clientX - startX.current
+    const deltaY = e.clientY - (startY.current ?? e.clientY)
+    // Só assume o gesto como horizontal (impedindo o scroll nativo de "puxar"
+    // a página) quando o movimento lateral já é claramente maior que o vertical.
+    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 10) e.preventDefault()
+  }
   const onPointerUp = (e) => {
-    if (startX.current === null) return
+    if (!isSwiping.current || startX.current === null) {
+      isSwiping.current = false
+      return
+    }
     const delta = e.clientX - startX.current
     if (Math.abs(delta) > 40) {
       if (delta < 0) next()
       else prev()
     }
+    isSwiping.current = false
     startX.current = null
+    startY.current = null
+  }
+  const onPointerCancel = () => {
+    isSwiping.current = false
+    startX.current = null
+    startY.current = null
   }
 
   const item = media[index]
@@ -26,9 +53,11 @@ export default function MediaCarousel({ media, height = '48vh', minHeight = 340 
   return (
     <div
       className="relative w-full flex-shrink-0 overflow-hidden"
-      style={{ height, minHeight, background: '#0b1426' }}
+      style={{ height, minHeight, background: '#0b1426', touchAction: 'pan-y' }}
       onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
+      onPointerCancel={onPointerCancel}
     >
       {item.type === 'video' ? (
         <video
@@ -45,6 +74,7 @@ export default function MediaCarousel({ media, height = '48vh', minHeight = 340 
           key={item.src}
           src={item.src}
           alt=""
+          draggable={false}
           className="w-full h-full object-cover"
         />
       )}

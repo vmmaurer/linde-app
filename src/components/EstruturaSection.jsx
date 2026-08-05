@@ -18,7 +18,6 @@ const features = [
     image: '/images/empresa-1.jpg',
     media: [
       { type: 'image', src: '/images/empresa-1.jpg' },
-      { type: 'image', src: '/images/empresa-2.jpg' },
     ],
   },
   {
@@ -31,10 +30,9 @@ const features = [
       'Fornos de têmpera para vidros de 2,8mm a 19mm',
       'Beneficiamento completo sob o mesmo teto',
     ],
-    image: '/images/IMG_6240.JPG',
+    image: '/images/empresa-2.jpg',
     media: [
-      { type: 'video', src: '/images/siregrafia-maquina.mp4' },
-      { type: 'image', src: '/images/IMG_6240.JPG' },
+      { type: 'image', src: '/images/empresa-2.jpg' },
     ],
   },
   {
@@ -91,8 +89,9 @@ function FeatureCard({ tag, title, desc, image, onOpen }) {
         transform: 'scale(0.94)',
         transformOrigin: 'top center',
         cursor: 'pointer',
-        border: '1px solid rgba(95,130,155,0.3)',
-        boxShadow: '0 16px 40px rgba(0,0,0,0.45)',
+        /* Mesma borda + brilho neon Sunshine dos cards ativos do carrossel de Produtos */
+        border: '1.5px solid rgba(240,200,50,0.55)',
+        boxShadow: '0 30px 80px rgba(0,0,0,0.65), 0 0 40px rgba(240,200,50,0.18)',
         background: '#0b1830',
       }}
     >
@@ -105,6 +104,12 @@ function FeatureCard({ tag, title, desc, image, onOpen }) {
       <div style={{
         position: 'absolute', inset: 0,
         background: 'linear-gradient(to top, rgba(4,11,25,0.94) 0%, rgba(35,60,100,0.28) 55%, rgba(4,11,25,0.05) 100%)',
+      }} />
+
+      {/* Glow interno da borda — idêntico ao card ativo do ArcCarousel */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        borderRadius: 22,
+        boxShadow: 'inset 0 0 0 1.5px rgba(240,200,50,0.5)',
       }} />
 
       {/* Indicador de expandir — avisa que o card é clicável */}
