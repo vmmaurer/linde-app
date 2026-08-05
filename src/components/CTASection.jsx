@@ -113,7 +113,7 @@ export default function CTASection() {
 
         <div style={{ width: '100%', maxWidth: '500px' }}>
           <img
-            src="/images/REGIÃO.gif"
+            src="/images/REGIAO-4.gif"
             alt="Mapa de atuação Linde Vidros"
             style={{ width: '100%', height: 'auto', objectFit: 'contain', display: 'block', margin: '0 auto' }}
           />
