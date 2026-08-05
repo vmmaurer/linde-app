@@ -258,7 +258,12 @@ export default function LinhaDoTempo() {
   }
 
   useEffect(() => {
-    offsetRef.current = loopWidth
+    // Começa com o card "Fundação" (1966) centralizado no viewport,
+    // em vez de apenas no início do 2º ciclo (que ficava deslocado à esquerda).
+    // Usa window.innerWidth em vez de viewportRef.clientWidth: no primeiro
+    // mount o layout ainda não estabilizou e o clientWidth vem quase zerado.
+    const centerXInit = window.innerWidth / 2
+    offsetRef.current = loopWidth + CARD_TOTAL / 2 - centerXInit
 
     const applyWave = () => {
       const vp = viewportRef.current

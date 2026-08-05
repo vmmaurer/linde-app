@@ -75,8 +75,8 @@ const features = [
     ],
     // Lista de destaques é longa — imagem menor para o pop-up caber
     // inteiro sem precisar rolar.
-    mediaHeight: '28vh',
-    mediaMinHeight: 200,
+    mediaHeight: '44vh',
+    mediaMinHeight: 320,
   },
 ];
 

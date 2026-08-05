@@ -59,17 +59,12 @@ export default function EstruturaModal({ feature, onClose }) {
       >
         <div className="flex flex-col overflow-y-auto" style={{ maxHeight: '82vh' }}>
 
-          {/* Nota de cabeçalho — mesma info do card (tag + título).
-              Padding vertical igual ao do bloco de texto abaixo (p-8/md:p-10),
-              para o espaço do topo até aqui ficar igual ao do fim do texto até a base. */}
-          <div
-            className="px-7 py-8 md:px-9 md:py-10"
-            style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16,
-              borderBottom: '1px solid rgba(255,255,255,0.14)',
-              background: 'rgba(4,11,25,0.18)',
-            }}
-          >
+          {/* Nota de cabeçalho — mesma info do card (tag + título) */}
+          <div style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16,
+            padding: '22px 28px', borderBottom: '1px solid rgba(255,255,255,0.14)',
+            background: 'rgba(4,11,25,0.18)',
+          }}>
             <div>
               <div
                 className="inline-flex items-center gap-1.5 rounded-full mb-2 font-medium tracking-wider uppercase"
