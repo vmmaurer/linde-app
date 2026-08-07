@@ -4,14 +4,13 @@ export const products = [
     slug: 'vidro-laminado',
     title: 'Vidro Laminado',
     subtitle: 'Laminado',
-    image: '/images/laminado1.webp',
-    modalImage: '/images/laminado1.webp',
+    image: '/images/LAMINADO-2.webp',
+    modalImage: '/images/LAMINADO-2.webp',
     // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.webp'
     brandLogo: '',
     // Para adicionar vídeo/fotos: preencha a lista media abaixo.
     // type: 'video' ou 'image'. Pode misturar na ordem que quiser.
     media: [
-      { type: 'image', src: '/images/laminado1.webp' },
       { type: 'image', src: '/images/LAMINADO-2.webp' },
       { type: 'image', src: '/images/LAMINADO-5.webp' },
       { type: 'image', src: '/images/LAMINADONOVO_1.webp' },
