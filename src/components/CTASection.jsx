@@ -126,18 +126,12 @@ export default function CTASection() {
         </p>
 
         <div style={{ width: '100%', maxWidth: '500px' }}>
-          <video
-            src="/images/REGIAO-4.webm"
-            aria-label="Mapa de atuação Linde Vidros"
+          <img
+            src="/images/REGIAO 4.gif"
+            alt="Mapa de atuação Linde Vidros"
             style={{ width: '100%', height: 'auto', objectFit: 'contain', display: 'block', margin: '0 auto' }}
-            autoPlay
-            loop
-            muted
-            playsInline
             draggable={false}
             onDragStart={(e) => e.preventDefault()}
-            onContextMenu={(e) => e.preventDefault()}
-            disablePictureInPicture
           />
         </div>
       </div>
