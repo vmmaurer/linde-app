@@ -172,7 +172,7 @@ export default function ArcCarousel({ items, onCardTap, paused = false }) {
               >
                 {/* Background image */}
                 <img src={item.image} alt={item.title}
-                  className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+                  className="absolute inset-0 w-full h-full object-cover" draggable={false} onDragStart={(e) => e.preventDefault()} />
 
                 {/* Gradient overlay — Sapphire */}
                 <div className="absolute inset-0" style={{

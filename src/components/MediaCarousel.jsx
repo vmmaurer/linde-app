@@ -68,6 +68,11 @@ export default function MediaCarousel({ media, height = '48vh', minHeight = 340 
           autoPlay
           muted
           playsInline
+          draggable={false}
+          onDragStart={(e) => e.preventDefault()}
+          onContextMenu={(e) => e.preventDefault()}
+          controlsList="nodownload noplaybackrate"
+          disablePictureInPicture
         />
       ) : (
         <img
@@ -75,6 +80,7 @@ export default function MediaCarousel({ media, height = '48vh', minHeight = 340 
           src={item.src}
           alt=""
           draggable={false}
+          onDragStart={(e) => e.preventDefault()}
           className="w-full h-full object-cover"
         />
       )}
