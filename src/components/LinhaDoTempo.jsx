@@ -239,6 +239,8 @@ export default function LinhaDoTempo() {
   const isDragging  = useRef(false)
   const lastX       = useRef(0)
   const resumeTimer = useRef(null)
+  // Maior "foco" medido no último frame, usado para desacelerar o track.
+  const maxFocusRef = useRef(0)
 
   // refs de cada card, para aplicar transform frame a frame
   const cardRefs = useRef([])
@@ -266,14 +268,43 @@ export default function LinhaDoTempo() {
     const centerXInit = window.innerWidth / 2
     offsetRef.current = loopWidth + CARD_TOTAL / 2 - centerXInit
 
+    // Cache dos filhos (.card-connector / .connector-dot) de cada card.
+    // Sem isto seriam 2 querySelector por card a cada frame (~84 buscas/frame).
+    // WeakMap: some sozinho quando o card é desmontado, sem vazar memória.
+    const partsCache = new WeakMap()
+    const getParts = (el) => {
+      let p = partsCache.get(el)
+      if (!p) {
+        p = { conn: el.querySelector('.card-connector'), dot: el.querySelector('.connector-dot') }
+        partsCache.set(el, p)
+      }
+      return p
+    }
+
+    // Reaproveitados entre frames para não gerar lixo a cada frame — importante
+    // num totem que fica ligado horas: menos alocação = menos pausas de GC.
+    const pts = []
+    const measureDots = []
+    const measureCycles = []
+
     const applyWave = () => {
       const vp = viewportRef.current
       if (!vp) return
       const vpRect = vp.getBoundingClientRect()
       const centerX = vp.clientWidth / 2
 
-      const pts = []   // pontos {x, y} da linha ondulada
+      pts.length = 0   // pontos {x, y} da linha ondulada
+      // Cards que precisam ser MEDIDOS depois que todas as escritas terminarem.
+      measureDots.length = 0
+      measureCycles.length = 0
+      let maxFocus = 0
 
+      // ── FASE 1: só ESCRITA de estilo. Nenhuma leitura de layout aqui. ──
+      // Escrita e leitura ficam separadas para não intercalar
+      // getBoundingClientRect com mudanças de estilo (padrão que evita
+      // layout thrashing). Aqui o ganho medido é pequeno, porque transform e
+      // opacity não sujam o layout — o ganho real vem do cache de
+      // querySelector e da remoção do laço duplicado de foco.
       for (let i = 0; i < cardRefs.current.length; i++) {
         const el = cardRefs.current[i]
         if (!el) continue
@@ -284,6 +315,7 @@ export default function LinhaDoTempo() {
 
         // foco (0..1): 1 quando centralizado, ~0 para os demais
         const focus = focusCurve(dist)
+        if (focus > maxFocus) maxFocus = focus
 
         // escala: normal fora, cresce só perto do centro
         const scale = SCALE_EDGE + (SCALE_CENTER - SCALE_EDGE) * focus
@@ -299,29 +331,38 @@ export default function LinhaDoTempo() {
         el.style.opacity   = opacity
         el.style.zIndex    = z
 
+        const { conn, dot } = getParts(el)
+
         // conector: leve realce no card central
-        const conn = el.querySelector('.card-connector')
         if (conn) {
           conn.style.opacity = (0.55 + 0.45 * focus).toFixed(2)
         }
 
-        // ponto da linha: MEDIDO na posição real do ponto dourado deste card,
-        // já refletindo escala e lift. A linha passa exatamente pelos pontos,
-        // com uma pequena folga acima para nunca tocar os cards.
-        if (cardCenter > -LINE_OVERSCAN && cardCenter < vp.clientWidth + LINE_OVERSCAN) {
-          const dot = el.querySelector('.connector-dot')
-          if (dot) {
-            const dRect = dot.getBoundingClientRect()
-            const LINE_GAP_ABOVE = 0  // ponto/linha centrados na ponta da haste
-            const x = dRect.left + dRect.width / 2 - vpRect.left
-            const y = dRect.top + dRect.height / 2 - vpRect.top - LINE_GAP_ABOVE
-            // cycle = qual repetição do array de milestones este card pertence.
-            // usado para NÃO conectar a linha entre o fim de um ciclo (2027)
-            // e o início do próximo (1966) — cada ciclo tem sua própria linha,
-            // do card "Fundação" até o card "Continua…".
-            pts.push({ x, y, cycle: Math.floor(i / milestones.length) })
-          }
+        if (dot && cardCenter > -LINE_OVERSCAN && cardCenter < vp.clientWidth + LINE_OVERSCAN) {
+          measureDots.push(dot)
+          measureCycles.push(Math.floor(i / milestones.length))
         }
+      }
+
+      // Velocidade do próximo frame usa o foco medido agora — equivale ao que
+      // o tick() calculava no início do frame seguinte, sem repetir o laço.
+      maxFocusRef.current = maxFocus
+
+      // ── FASE 2: só LEITURA, depois que todas as escritas já saíram. ──
+      // ponto da linha: MEDIDO na posição real do ponto dourado deste card,
+      // já refletindo escala e lift. A linha passa exatamente pelos pontos,
+      // com uma pequena folga acima para nunca tocar os cards.
+      for (let i = 0; i < measureDots.length; i++) {
+        const cycle = measureCycles[i]
+        const dRect = measureDots[i].getBoundingClientRect()
+        const LINE_GAP_ABOVE = 0  // ponto/linha centrados na ponta da haste
+        const x = dRect.left + dRect.width / 2 - vpRect.left
+        const y = dRect.top + dRect.height / 2 - vpRect.top - LINE_GAP_ABOVE
+        // cycle = qual repetição do array de milestones este card pertence.
+        // usado para NÃO conectar a linha entre o fim de um ciclo (2027)
+        // e o início do próximo (1966) — cada ciclo tem sua própria linha,
+        // do card "Fundação" até o card "Continua…".
+        pts.push({ x, y, cycle })
       }
 
       // desenha a linha amarela ligando os pontos dourados como curva suave,
@@ -381,17 +422,9 @@ export default function LinhaDoTempo() {
       if (!pausedRef.current && !isDragging.current) {
         // desaceleração suave: quando algum card está no centro,
         // reduz a velocidade proporcionalmente ao foco máximo.
-        const vp = viewportRef.current
-        let maxFocus = 0
-        if (vp) {
-          const centerX = vp.clientWidth / 2
-          for (let i = 0; i < cardRefs.current.length; i++) {
-            const cardCenter = (i * CARD_TOTAL) + CARD_TOTAL / 2 - offsetRef.current + CARD_GAP / 2
-            const f = focusCurve(cardCenter - centerX)
-            if (f > maxFocus) maxFocus = f
-          }
-        }
-        const speed = BASE_SPEED * (1 - SLOWDOWN_MAX * maxFocus)
+        // O foco vem do applyWave() do frame anterior — que o mediu com este
+        // mesmo offset —, evitando repetir o laço sobre todos os cards.
+        const speed = BASE_SPEED * (1 - SLOWDOWN_MAX * maxFocusRef.current)
         offsetRef.current = clamp(offsetRef.current + speed)
       }
 
@@ -404,7 +437,12 @@ export default function LinhaDoTempo() {
     }
 
     rafRef.current = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(rafRef.current)
+    return () => {
+      cancelAnimationFrame(rafRef.current)
+      // Evita que um resume agendado sobreviva à desmontagem da tela
+      // (o totem troca de tela sozinho a cada 30s de inatividade).
+      clearTimeout(resumeTimer.current)
+    }
   }, [loopWidth])
 
   useEffect(() => { if (selected !== null) pausedRef.current = true }, [selected])

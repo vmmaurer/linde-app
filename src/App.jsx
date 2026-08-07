@@ -5,8 +5,6 @@ import EstruturaSection from './components/EstruturaSection';
 import HistoriaSection from './components/HistoriaSection';
 import BottomNav from './components/BottomNav';
 
-const SCREENS = ['produtos', 'estrutura', 'historia', 'contato'];
-
 const App = () => {
   const [currentScreen, setCurrentScreen] = useState('produtos');
   const [modalOpen, setModalOpen] = useState(false);

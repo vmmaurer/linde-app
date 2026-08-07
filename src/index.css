@@ -10,126 +10,98 @@
 ══════════════════════════════════════════════════════════════ */
 @font-face {
   font-family: 'Rotunda';
-  src: url('/font/Rotunda-Thin.woff2') format('woff2'),
-       url('/font/Rotunda-Thin.woff') format('woff'),
-       url('/font/Rotunda-Thin.ttf') format('truetype');
+  src: url('/font/Rotunda-Thin.woff2') format('woff2');
   font-weight: 100;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Rotunda';
-  src: url('/font/Rotunda-ThinItalic.woff2') format('woff2'),
-       url('/font/Rotunda-ThinItalic.woff') format('woff'),
-       url('/font/Rotunda-ThinItalic.ttf') format('truetype');
+  src: url('/font/Rotunda-ThinItalic.woff2') format('woff2');
   font-weight: 100;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Rotunda';
-  src: url('/font/Rotunda-Light.woff2') format('woff2'),
-       url('/font/Rotunda-Light.woff') format('woff'),
-       url('/font/Rotunda-Light.ttf') format('truetype');
+  src: url('/font/Rotunda-Light.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Rotunda';
-  src: url('/font/Rotunda-LightItalic.woff2') format('woff2'),
-       url('/font/Rotunda-LightItalic.woff') format('woff'),
-       url('/font/Rotunda-LightItalic.ttf') format('truetype');
+  src: url('/font/Rotunda-LightItalic.woff2') format('woff2');
   font-weight: 300;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Rotunda';
-  src: url('/font/Rotunda-Regular.woff2') format('woff2'),
-       url('/font/Rotunda-Regular.woff') format('woff'),
-       url('/font/Rotunda-Regular.ttf') format('truetype');
+  src: url('/font/Rotunda-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Rotunda';
-  src: url('/font/Rotunda-RegularItalic.woff2') format('woff2'),
-       url('/font/Rotunda-RegularItalic.woff') format('woff'),
-       url('/font/Rotunda-RegularItalic.ttf') format('truetype');
+  src: url('/font/Rotunda-RegularItalic.woff2') format('woff2');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Rotunda';
-  src: url('/font/Rotunda-Medium.woff2') format('woff2'),
-       url('/font/Rotunda-Medium.woff') format('woff'),
-       url('/font/Rotunda-Medium.ttf') format('truetype');
+  src: url('/font/Rotunda-Medium.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Rotunda';
-  src: url('/font/Rotunda-MediumItalic.woff2') format('woff2'),
-       url('/font/Rotunda-MediumItalic.woff') format('woff'),
-       url('/font/Rotunda-MediumItalic.ttf') format('truetype');
+  src: url('/font/Rotunda-MediumItalic.woff2') format('woff2');
   font-weight: 500;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Rotunda';
-  src: url('/font/Rotunda-Bold.woff2') format('woff2'),
-       url('/font/Rotunda-Bold.woff') format('woff'),
-       url('/font/Rotunda-Bold.ttf') format('truetype');
+  src: url('/font/Rotunda-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Rotunda';
-  src: url('/font/Rotunda-BoldItalic.woff2') format('woff2'),
-       url('/font/Rotunda-BoldItalic.woff') format('woff'),
-       url('/font/Rotunda-BoldItalic.ttf') format('truetype');
+  src: url('/font/Rotunda-BoldItalic.woff2') format('woff2');
   font-weight: 700;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Rotunda';
-  src: url('/font/Rotunda-ExtraBold.woff2') format('woff2'),
-       url('/font/Rotunda-ExtraBold.woff') format('woff'),
-       url('/font/Rotunda-ExtraBold.ttf') format('truetype');
+  src: url('/font/Rotunda-ExtraBold.woff2') format('woff2');
   font-weight: 800;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Rotunda';
-  src: url('/font/Rotunda-ExtraBoldItalic.woff2') format('woff2'),
-       url('/font/Rotunda-ExtraBoldItalic.woff') format('woff'),
-       url('/font/Rotunda-ExtraBoldItalic.ttf') format('truetype');
+  src: url('/font/Rotunda-ExtraBoldItalic.woff2') format('woff2');
   font-weight: 800;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Rotunda';
-  src: url('/font/Rotunda-Black.woff2') format('woff2'),
-       url('/font/Rotunda-Black.woff') format('woff'),
-       url('/font/Rotunda-Black.ttf') format('truetype');
+  src: url('/font/Rotunda-Black.woff2') format('woff2');
   font-weight: 900;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Rotunda';
-  src: url('/font/Rotunda-BlackItalic.woff2') format('woff2'),
-       url('/font/Rotunda-BlackItalic.woff') format('woff'),
-       url('/font/Rotunda-BlackItalic.ttf') format('truetype');
+  src: url('/font/Rotunda-BlackItalic.woff2') format('woff2');
   font-weight: 900;
   font-style: italic;
   font-display: swap;

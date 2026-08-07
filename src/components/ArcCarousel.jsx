@@ -15,6 +15,7 @@ export default function ArcCarousel({ items, onCardTap, paused = false }) {
   const touchStartY     = useRef(null)
   const autoRotateTimer = useRef(null)
   const resumeTimer     = useRef(null)
+  const animTimer       = useRef(null)
   const dragStartX      = useRef(0)
   const containerRef    = useRef(null)
   const count = items.length
@@ -58,8 +59,16 @@ export default function ArcCarousel({ items, onCardTap, paused = false }) {
     if (isAnimating) return
     setCurrentIndex(((idx % count) + count) % count)
     setIsAnimating(true)
-    setTimeout(() => setIsAnimating(false), 500)
+    clearTimeout(animTimer.current)
+    animTimer.current = setTimeout(() => setIsAnimating(false), 500)
   }, [isAnimating, count])
+
+  // Garante que nenhum temporizador sobreviva à troca de tela do totem.
+  useEffect(() => () => {
+    clearTimeout(animTimer.current)
+    clearInterval(autoRotateTimer.current)
+    clearTimeout(resumeTimer.current)
+  }, [])
 
   const goNext = useCallback(() => { goTo(currentIndex + 1); pauseAndScheduleResume() }, [currentIndex, goTo, pauseAndScheduleResume])
   const goPrev = useCallback(() => { goTo(currentIndex - 1); pauseAndScheduleResume() }, [currentIndex, goTo, pauseAndScheduleResume])
@@ -122,6 +131,11 @@ export default function ArcCarousel({ items, onCardTap, paused = false }) {
       zIndex,
       pointerEvents: visible ? 'auto' : 'none',
       transition: isDragging ? 'none' : 'transform 0.55s cubic-bezier(0.22,1,0.36,1), opacity 0.4s ease',
+      // Só os cards da janela visível ganham camada de GPU. `visible` (|diff|<=3)
+      // é uma faixa MAIOR que a de opacidade (que zera em |diff|>2.5), então a
+      // camada já existe antes do card começar a aparecer — sem engasgo.
+      // Antes todos os cards ficavam promovidos o tempo todo, segurando VRAM à toa.
+      willChange: visible ? 'transform, opacity' : 'auto',
     }
   }
 
@@ -161,7 +175,6 @@ export default function ArcCarousel({ items, onCardTap, paused = false }) {
                     ? '1.5px solid rgba(240,200,50,0.55)'
                     : '1px solid rgba(95,130,155,0.25)',
                   ...cardStyle,
-                  willChange: 'transform, opacity',
                 }}
                 onClick={(e) => {
                   e.stopPropagation()

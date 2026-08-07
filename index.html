@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+
+    <!-- Pesos usados já na primeira tela (corpo 400/500, títulos 700/800).
+         Sem o preload o navegador só descobre a fonte depois de baixar o CSS,
+         e o font-display:swap troca a fonte no meio do caminho (texto "pula").
+         crossorigin é obrigatório em preload de fonte, mesmo na mesma origem. -->
+    <link rel="preload" href="/font/Rotunda-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/font/Rotunda-Medium.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/font/Rotunda-Bold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/font/Rotunda-ExtraBold.woff2" as="font" type="font/woff2" crossorigin />
     <title>Linde Vidros — Soluções em Vidro</title>
   </head>
   <body>

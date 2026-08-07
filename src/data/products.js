@@ -415,24 +415,3 @@ export const products = [
     ],
   },
 ]
-
-export const beforeAfterExamples = [
-  {
-    id: 1,
-    label: 'Escritório Corporativo',
-    before: '/images/casacolor13-vblack.webp',
-    after: '/images/casacolor13.webp',
-  },
-  {
-    id: 2,
-    label: 'Varanda Residencial',
-    before: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=900&q=80',
-    after: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=80',
-  },
-  {
-    id: 3,
-    label: 'Banheiro Moderno',
-    before: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=900&q=80',
-    after: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=900&q=80',
-  },
-]
