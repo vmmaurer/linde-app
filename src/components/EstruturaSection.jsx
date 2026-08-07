@@ -99,6 +99,7 @@ function FeatureCard({ tag, title, desc, image, onOpen }) {
         src={image}
         alt={title}
         draggable={false}
+        onDragStart={(e) => e.preventDefault()}
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
       />
       <div style={{
@@ -203,7 +204,7 @@ const EstruturaSection = () => {
             para sobrar espaço pra grade em telas curtas/paisagem) */}
         <div className="brand-masthead" style={{ textAlign: 'center', marginBottom: 32, flexShrink: 0 }}>
           <img src="/images/logonavbar.webp" alt="Linde Vidros"
-            className="brand-masthead__logo" />
+            className="brand-masthead__logo" draggable={false} onDragStart={(e) => e.preventDefault()} />
         </div>
 
         <div style={{ textAlign: 'center', marginBottom: 40, flexShrink: 0, position: 'relative', zIndex: 10 }}>

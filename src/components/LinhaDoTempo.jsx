@@ -92,6 +92,7 @@ function Lightbox({ item, onClose, onPrev, onNext }) {
       >
         <div style={{ position: 'relative', maxHeight: 420, overflow: 'hidden' }}>
           <img src={item.image} alt={item.year}
+            draggable={false} onDragStart={(e) => e.preventDefault()}
             style={{ width: '100%', maxHeight: 420, objectFit: 'cover', objectPosition: item.imagePosition || 'center', display: 'block' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(4,11,25,1) 0%,rgba(4,11,25,.3) 50%,transparent 100%)' }} />
           <div style={{ position: 'absolute', bottom: 20, left: 24, display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -211,7 +212,7 @@ function Card({ item, onOpen, dragInfoRef, cardRef, bookend }) {
         }}
       >
         <div style={{ position: 'relative', height: 300, overflow: 'hidden' }}>
-          <img src={item.image} alt={item.year} draggable={false}
+          <img src={item.image} alt={item.year} draggable={false} onDragStart={(e) => e.preventDefault()}
             style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: item.imagePosition || 'center', display: 'block' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(4,11,25,.85) 0%,transparent 55%)' }} />
         </div>
@@ -472,7 +473,7 @@ export default function LinhaDoTempo() {
         {/* Logo */}
         <div className="brand-masthead" style={{ textAlign: 'center', marginBottom: 32, position: 'relative', zIndex: 10, flexShrink: 0 }}>
           <img src="/images/logonavbar.webp" alt="Linde Vidros"
-            className="brand-masthead__logo" />
+            className="brand-masthead__logo" draggable={false} onDragStart={(e) => e.preventDefault()} />
         </div>
 
         {/* Cabeçalho */}

@@ -14,7 +14,7 @@ const HeroSection = () => {
       {/* grade de quadrados removida */}
 
       <div className="hero-content brand-masthead">
-        <img className="hero-logo brand-masthead__logo" src="/images/logonavbar.webp" alt="Linde Vidros" />
+        <img className="hero-logo brand-masthead__logo" src="/images/logonavbar.webp" alt="Linde Vidros" draggable={false} onDragStart={(e) => e.preventDefault()} />
 
         <div className="hero-title-block">
           {/* Label — Cold Steel */}

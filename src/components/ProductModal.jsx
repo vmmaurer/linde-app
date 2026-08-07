@@ -83,6 +83,8 @@ export default function ProductModal({ product, onClose }) {
                   alt=""
                   className="flex-shrink-0 object-contain"
                   style={{ height: '64px', width: 'auto', maxWidth: '160px' }}
+                  draggable={false}
+                  onDragStart={(e) => e.preventDefault()}
                 />
               )}
             </div>

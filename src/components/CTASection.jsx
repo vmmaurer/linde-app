@@ -13,6 +13,8 @@ function QRCode() {
         alt="QR Code para acessar o WhatsApp e o Instagram da Linde Vidros"
         className="object-contain"
         style={{ width: '200px', height: '200px' }}
+        draggable={false}
+        onDragStart={(e) => e.preventDefault()}
       />
     </div>
   )
@@ -44,6 +46,8 @@ export default function CTASection() {
             className="brand-masthead__logo"
             src="/images/logonavbar.webp"
             alt="Linde Vidros"
+            draggable={false}
+            onDragStart={(e) => e.preventDefault()}
           />
         </div>
 
@@ -83,6 +87,8 @@ export default function CTASection() {
                   src="/images/ICON_WHATS.webp"
                   alt="WhatsApp"
                   style={{ width: '28px', height: '28px', objectFit: 'contain' }}
+                  draggable={false}
+                  onDragStart={(e) => e.preventDefault()}
                 />
               </div>
               <div
@@ -93,6 +99,8 @@ export default function CTASection() {
                   src="/images/ICON_INSTAGRAM.webp"
                   alt="Instagram"
                   style={{ width: '28px', height: '28px', objectFit: 'contain' }}
+                  draggable={false}
+                  onDragStart={(e) => e.preventDefault()}
                 />
               </div>
             </div>
@@ -122,6 +130,8 @@ export default function CTASection() {
             src="/images/REGIAO-4.webp"
             alt="Mapa de atuação Linde Vidros"
             style={{ width: '100%', height: 'auto', objectFit: 'contain', display: 'block', margin: '0 auto' }}
+            draggable={false}
+            onDragStart={(e) => e.preventDefault()}
           />
         </div>
       </div>

@@ -153,7 +153,7 @@ const BottomNav = ({ currentScreen, onScreenChange }) => {
           $active={currentScreen === tab.id}
           onClick={() => onScreenChange(tab.id)}
         >
-          <img className="tab-icon" src={tab.icon} alt={tab.label} />
+          <img className="tab-icon" src={tab.icon} alt={tab.label} draggable={false} onDragStart={(e) => e.preventDefault()} />
           <span>{tab.label}</span>
         </TabButton>
       ))}

@@ -192,6 +192,19 @@ body {
   background: transparent;
 }
 
+img, video, picture {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 @layer components {
   .glass-card {
     @apply backdrop-blur-sm rounded-2xl;
