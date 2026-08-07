@@ -6,20 +6,20 @@ import { createPortal } from 'react-dom'
 // Midnight #323232 · Off-white #f0f0f0
 
 const milestones = [
-  { image: '/images/abahistoriacard1966.jpeg', imagePosition: 'center 80%', year: '1966', desc: 'Em 1966 teve início a história da Linde Vidros, fundada com o propósito de oferecer qualidade, confiança e soluções para o setor vidreiro.' },
-  { image: '/images/linde_1989.jpeg', year: '1989', desc: 'Fundação da Linde Vidros, iniciando uma trajetória de inovação e qualidade no setor vidreiro.' },
-  { image: '/images/linde_1991.jpg',  year: '1991', desc: 'Em agosto de 1991 foi fundada uma filial na cidade de Rio Negro – PR para a distribuição em chapas de vidros em geral, atendendo outras regiões.' },
-  { image: '/images/linde_1993.jpg',  year: '1993', desc: 'Nos últimos anos, a unidade de Rio Negro vem investindo em máquinas de última geração para melhor corte e acabamento.' },
-  { image: '/images/linde_1995.jpg',  year: '1995', desc: 'No ano 2000 foi instalado um forno de tempera vertical.' },
-  { image: '/images/linde_2004.jpg',  year: '2004', desc: 'A grande mudança ocorreu em 2003 com a aquisição de um forno de tempera horizontal para vidros de 2,8mm até 19mm.' },
-  { image: '/images/linde_2007.jpg',  year: '2007', desc: 'Em março de 2008 foi instalado seu segundo forno horizontal.' },
-  { image: '/images/linde_2009.jpg',  year: '2009', desc: 'Vidros insulados de alto desempenho para redução do consumo de energia.' },
-  { image: '/images/linde_2012.jpg',  year: '2012', desc: 'Segurança e design com múltiplas camadas de proteção.' },
-  { image: '/images/linde_2014.jpg',  year: '2014', desc: 'Resistência e durabilidade para aplicações de alto impacto.' },
-  { image: '/images/linde_2018.jpg',  year: '2018', desc: 'Isolamento térmico e acústico para maior conforto.' },
-  { image: '/images/linde_2025_1.jpg', year: '2025', label: 'Fábrica 1', desc: 'Personalização com impressão de alta qualidade.' },
-  { image: '/images/linde_2025_2.jpg', year: '2025', label: 'Fábrica 2', desc: 'Espelhos sob medida para todos os ambientes.' },
-  { image: '/images/totem.jpeg',       year: '2027', desc: 'A Linde Vidros segue em frente, com novas fábricas, tecnologias e soluções em vidro para os próximos capítulos da nossa história.' },
+  { image: '/images/abahistoriacard1966.webp', imagePosition: 'center 80%', year: '1966', desc: 'Em 1966 teve início a história da Linde Vidros, fundada com o propósito de oferecer qualidade, confiança e soluções para o setor vidreiro.' },
+  { image: '/images/linde_1989.webp', year: '1989', desc: 'Fundação da Linde Vidros, iniciando uma trajetória de inovação e qualidade no setor vidreiro.' },
+  { image: '/images/linde_1991.webp',  year: '1991', desc: 'Em agosto de 1991 foi fundada uma filial na cidade de Rio Negro – PR para a distribuição em chapas de vidros em geral, atendendo outras regiões.' },
+  { image: '/images/linde_1993.webp',  year: '1993', desc: 'Nos últimos anos, a unidade de Rio Negro vem investindo em máquinas de última geração para melhor corte e acabamento.' },
+  { image: '/images/linde_1995.webp',  year: '1995', desc: 'No ano 2000 foi instalado um forno de tempera vertical.' },
+  { image: '/images/linde_2004.webp',  year: '2004', desc: 'A grande mudança ocorreu em 2003 com a aquisição de um forno de tempera horizontal para vidros de 2,8mm até 19mm.' },
+  { image: '/images/linde_2007.webp',  year: '2007', desc: 'Em março de 2008 foi instalado seu segundo forno horizontal.' },
+  { image: '/images/linde_2009.webp',  year: '2009', desc: 'Vidros insulados de alto desempenho para redução do consumo de energia.' },
+  { image: '/images/linde_2012.webp',  year: '2012', desc: 'Segurança e design com múltiplas camadas de proteção.' },
+  { image: '/images/linde_2014.webp',  year: '2014', desc: 'Resistência e durabilidade para aplicações de alto impacto.' },
+  { image: '/images/linde_2018.webp',  year: '2018', desc: 'Isolamento térmico e acústico para maior conforto.' },
+  { image: '/images/linde_2025_1.webp', year: '2025', label: 'Fábrica 1', desc: 'Personalização com impressão de alta qualidade.' },
+  { image: '/images/linde_2025_2.webp', year: '2025', label: 'Fábrica 2', desc: 'Espelhos sob medida para todos os ambientes.' },
+  { image: '/images/totem.webp',       year: '2027', desc: 'A Linde Vidros segue em frente, com novas fábricas, tecnologias e soluções em vidro para os próximos capítulos da nossa história.' },
 ]
 
 const CARD_WIDTH = 480
@@ -471,7 +471,7 @@ export default function LinhaDoTempo() {
 
         {/* Logo */}
         <div className="brand-masthead" style={{ textAlign: 'center', marginBottom: 32, position: 'relative', zIndex: 10, flexShrink: 0 }}>
-          <img src="/images/logonavbar.png" alt="Linde Vidros"
+          <img src="/images/logonavbar.webp" alt="Linde Vidros"
             className="brand-masthead__logo" />
         </div>
 

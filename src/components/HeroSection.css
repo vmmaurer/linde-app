@@ -15,7 +15,7 @@
   padding: 0 2rem;
   box-sizing: border-box;
 
-  /* Fundo: imagem totem.jpeg (que já vem com degradê azul embutido)
+  /* Fundo: imagem totem.webp (que já vem com degradê azul embutido)
      + um véu azul leve por cima para garantir legibilidade do conteúdo.
      'cover' preenche a tela toda mantendo proporção. */
   background-image:
@@ -25,7 +25,7 @@
       rgba(35, 60, 100, 0.35) 45%,
       rgba(4, 11, 25, 0.65) 100%
     ),
-    url('/images/totem.jpeg');
+    url('/images/totem.webp');
   background-size: cover, cover;
   background-position: center, center;
   background-repeat: no-repeat, no-repeat;
