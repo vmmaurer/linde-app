@@ -63,7 +63,7 @@ export const products = [
     id: 2,
     slug: 'SentryGlas',
     title: 'SentryGlas',
-    subtitle: 'Maior resistência',
+    subtitle: '100X mais resistente',
     image: '/images/sentryglas.webp',
     modalImage: '/images/sentryglas.webp',
     // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.webp'
