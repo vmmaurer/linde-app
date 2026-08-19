@@ -41,7 +41,10 @@ export default function CTASection() {
       <div className="relative z-10 max-w-2xl mx-auto flex flex-col items-center text-center">
 
         {/* Logo Linde 60 anos — topo */}
-        <div className="brand-masthead" style={{ marginBottom: 14 }}>
+        {/* 67px em vez do --masthead-gap das outras abas: a pílula dourada é
+            mais alta que o label pequeno, e este desconto mantém o título
+            na mesma altura das demais telas. */}
+        <div className="brand-masthead" style={{ marginBottom: 67 }}>
           <img
             className="brand-masthead__logo"
             src="/images/logonavbar.webp"

@@ -81,14 +81,15 @@ Capturados em 1080×1920, fora do repositório:
 
 | Arquivo | Propriedade | Antes | Depois |
 |---|---|---|---|
-| `HeroSection.css` → `.brand-masthead` | `--masthead-top-offset` | `2cm` | `24px` |
-| `HeroSection.css` → `.brand-masthead` | — | — | novos tokens `--masthead-gap: 32px` e `--heading-gap: 40px` |
-| `HeroSection.css` → `.hero-title-block` | `margin-bottom` | `0` | `var(--heading-gap)` = 40px |
+| `HeroSection.css` → `:root` | `--masthead-top-offset` | `2cm` | `24px` |
+| `HeroSection.css` → `:root` | — | — | novos tokens `--masthead-logo-trim: 96px`, `--masthead-gap: 84px`, `--heading-gap: 84px` |
+| `HeroSection.css` → `.hero-title-block` | `margin-bottom` | `0` | `var(--heading-gap)` = 84px |
+| `HeroSection.css` → logo | `margin` | `0 auto` | `0 auto calc(-1 * var(--masthead-logo-trim))` |
 | `HeroSection.css` → `.carousel-wrapper` | `align-items` | `center` | `flex-start` |
 | `HeroSection.css` → `.carousel-wrapper` | `margin-top` | — | `-20px` (`--arc-overhang`) |
 | `EstruturaSection.jsx` → grade | `padding` | `0 24px 242px` | `0 24px 294px` |
 | `LinhaDoTempo.jsx` → palco | `flex` | `1` | `0 1 1120px` (`STAGE_HEIGHT`) |
-| `CTASection.jsx` → logo | `marginBottom` | `28` | `14` |
+| `CTASection.jsx` → logo | `marginBottom` | `28` | `67` |
 | `CTASection.jsx` → pílula | classe | `mb-6` | `mb-2` |
 
 Posições medidas DEPOIS (1080×1920):
@@ -96,8 +97,9 @@ Posições medidas DEPOIS (1080×1920):
 | Elemento | Produtos | Estrutura | História | Contato |
 |---|---|---|---|---|
 | Logo (topo) | 24 | 24 | 24 | 24 |
-| Título `h2` (topo) | 345 | 345 | 345 | 345 |
-| Início dos cards | 501 | 501 | 775 nominal / ~513 em foco | QR 618 |
+| Bloco de título (topo) | 272 | 272 | 272 | 255 |
+| Título `h2` (topo) | 301 | 301 | 301 | 302 |
+| Início dos cards | 501 | 501 | 775 nominal / ~513 em foco | QR 575 |
 | Navbar (topo) | 1693 | 1693 | 1693 | 1693 |
 
 Para subir ou descer TUDO de novo, basta mudar `--masthead-top-offset`

@@ -77,12 +77,21 @@
 /* ── Ritmo vertical compartilhado pelas 4 abas ──────────────────────────
    Todas as telas usam estas medidas para que logo, título, subtítulo e
    início dos cards fiquem na MESMA altura ao trocar de aba.
-   Para descer/subir o conjunto inteiro, mexa só em --masthead-top-offset. */
-.brand-masthead {
+   Para descer/subir o conjunto inteiro, mexa só em --masthead-top-offset.
+   --masthead-gap e --heading-gap são iguais de propósito: é o que deixa o
+   bloco de título opticamente centralizado entre a logo e os cards. */
+:root {
   --masthead-top-offset: 24px;   /* antes: 2cm (~76px) */
   --masthead-logo-height: 260px;
-  --masthead-gap: 32px;          /* logo → bloco de título */
-  --heading-gap: 40px;           /* texto de apoio → cards */
+  /* A arte da logo tem ~96px (nesta altura) de área transparente embaixo.
+     O desconto abaixo faz o espaçamento seguinte começar no fim VISÍVEL
+     do desenho, e não na borda invisível do arquivo. */
+  --masthead-logo-trim: 96px;
+  --masthead-gap: 84px;          /* fim visível da logo → bloco de título */
+  --heading-gap: 84px;           /* texto de apoio → cards */
+}
+
+.brand-masthead {
   padding-top: var(--masthead-top-offset);
 }
 
@@ -91,7 +100,7 @@
   height: var(--masthead-logo-height, 260px);
   width: auto;
   display: block;
-  margin: 0 auto;
+  margin: 0 auto calc(-1 * var(--masthead-logo-trim, 96px));
   object-fit: contain;
 }
 

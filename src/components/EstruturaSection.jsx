@@ -202,12 +202,12 @@ const EstruturaSection = () => {
 
         {/* Cabeçalho — mesmo padrão da tela História (alturas em clamp()
             para sobrar espaço pra grade em telas curtas/paisagem) */}
-        <div className="brand-masthead" style={{ textAlign: 'center', marginBottom: 32, flexShrink: 0 }}>
+        <div className="brand-masthead" style={{ textAlign: 'center', marginBottom: 'var(--masthead-gap)', flexShrink: 0 }}>
           <img src="/images/logonavbar.webp" alt="Linde Vidros"
             className="brand-masthead__logo" draggable={false} onDragStart={(e) => e.preventDefault()} />
         </div>
 
-        <div style={{ textAlign: 'center', marginBottom: 40, flexShrink: 0, position: 'relative', zIndex: 10 }}>
+        <div style={{ textAlign: 'center', marginBottom: 'var(--heading-gap)', flexShrink: 0, position: 'relative', zIndex: 10 }}>
           <p style={{ color: '#5f829b', fontSize: 11, fontWeight: 700, letterSpacing: '.4em', textTransform: 'uppercase', margin: '0 0 12px' }}>
             Como Trabalhamos
           </p>

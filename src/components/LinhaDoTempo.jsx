@@ -515,13 +515,13 @@ export default function LinhaDoTempo() {
         }} />
 
         {/* Logo */}
-        <div className="brand-masthead" style={{ textAlign: 'center', marginBottom: 32, position: 'relative', zIndex: 10, flexShrink: 0 }}>
+        <div className="brand-masthead" style={{ textAlign: 'center', marginBottom: 'var(--masthead-gap)', position: 'relative', zIndex: 10, flexShrink: 0 }}>
           <img src="/images/logonavbar.webp" alt="Linde Vidros"
             className="brand-masthead__logo" draggable={false} onDragStart={(e) => e.preventDefault()} />
         </div>
 
         {/* Cabeçalho */}
-        <div style={{ textAlign: 'center', marginBottom: 40, position: 'relative', zIndex: 10, flexShrink: 0 }}>
+        <div style={{ textAlign: 'center', marginBottom: 'var(--heading-gap)', position: 'relative', zIndex: 10, flexShrink: 0 }}>
           <p style={{ color: '#5f829b', fontSize: 11, fontWeight: 700, letterSpacing: '.4em', textTransform: 'uppercase', margin: '0 0 12px' }}>
             Quem Somos?
           </p>
