@@ -3,7 +3,7 @@ export const products = [
     id: 1,
     slug: 'vidro-laminado',
     title: 'Vidro Laminado',
-    subtitle: 'Laminado',
+    subtitle: 'Segurança e proteção UV',
     image: '/images/LAMINADO-2.webp',
     modalImage: '/images/LAMINADO-2.webp',
     // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.webp'
@@ -237,7 +237,7 @@ export const products = [
     id: 8,
     slug: 'multilaminado',
     title: 'Multilaminado',
-    subtitle: 'Multilaminado',
+    subtitle: 'Proteção reforçada',
     image: '/images/mutilaminado.webp',
     modalImage: '/images/mutilaminado.webp',
     // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.webp'
@@ -266,7 +266,7 @@ export const products = [
     id: 9,
     slug: 'Pinázio',
     title: 'Pinázio',
-    subtitle: 'Pinázio',
+    subtitle: 'Divisões com estilo',
     image: '/images/pinazio.webp',
     modalImage: '/images/pinazio.webp',
     // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.webp'
@@ -295,7 +295,7 @@ export const products = [
     id: 10,
     slug: 'persiana-integrada',
     title: 'Persiana Integrada',
-    subtitle: 'Persiana Integrada',
+    subtitle: 'Praticidade sem manutenção',
     image: '/images/PERSIANA_1.webp',
     modalImage: '/images/PERSIANA_1.webp',
     // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.webp'
@@ -324,7 +324,7 @@ export const products = [
     id: 11,
     slug: 'extra-clear',
     title: 'Extra Clear',
-    subtitle: 'Extra Clear',
+    subtitle: 'Transparência absoluta',
     image: '/images/extra-clear.webp',
     modalImage: '/images/extra-clear.webp',
     // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.webp'
@@ -354,7 +354,7 @@ export const products = [
     id: 12,
     slug: 'serigrafia',
     title: 'Serigrafia',
-    subtitle: 'Serigrafia',
+    subtitle: 'Acabamento personalizado',
     image: '/images/CARD-SERIGRAFIA.webp',
     modalImage: '/images/CARD-SERIGRAFIA.webp',
     // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.webp'
@@ -383,7 +383,7 @@ export const products = [
     id: 13,
     slug: 'Low-E',
     title: 'Low-E',
-    subtitle: 'Low-E',
+    subtitle: 'Eficiência energética',
     image: '/images/low-e-novo.webp',
     modalImage: '/images/low-e-novo.webp',
     // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.webp'
