@@ -74,9 +74,15 @@
   padding-top: var(--masthead-top-offset);
 }
 
+/* ── Ritmo vertical compartilhado pelas 4 abas ──────────────────────────
+   Todas as telas usam estas medidas para que logo, título, subtítulo e
+   início dos cards fiquem na MESMA altura ao trocar de aba.
+   Para descer/subir o conjunto inteiro, mexa só em --masthead-top-offset. */
 .brand-masthead {
-  --masthead-top-offset: 2cm;
+  --masthead-top-offset: 24px;   /* antes: 2cm (~76px) */
   --masthead-logo-height: 260px;
+  --masthead-gap: 32px;          /* logo → bloco de título */
+  --heading-gap: 40px;           /* texto de apoio → cards */
   padding-top: var(--masthead-top-offset);
 }
 
@@ -91,8 +97,9 @@
 
 .hero-title-block {
   text-align: center;
-  margin-top: 32px;
-  margin-bottom: 0;
+  margin-top: var(--masthead-gap, 32px);
+  /* mesmo respiro que Estrutura e História usam antes dos cards */
+  margin-bottom: var(--heading-gap, 40px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -119,10 +126,15 @@
 }
 
 .carousel-wrapper {
+  /* O palco do arco (CARD_H + 120, com padding 40 e margem -40) sobra 20px
+     acima do card. A margem negativa desconta essa folga para o TOPO DO CARD
+     cair exatamente na mesma altura dos cards das outras abas. */
+  --arc-overhang: 20px;
   flex: 1;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  margin-top: calc(-1 * var(--arc-overhang));
   width: 100%;
   position: relative;
   z-index: 2;

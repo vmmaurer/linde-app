@@ -224,7 +224,7 @@ const EstruturaSection = () => {
         <div style={{
           flex: 1, minHeight: 0, width: '100%', maxWidth: 1400, margin: '0 auto',
           display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gridTemplateRows: 'repeat(2, 1fr)',
-          gap: 18, padding: '0 24px 242px', boxSizing: 'border-box',
+          gap: 18, padding: '0 24px 294px', boxSizing: 'border-box',
         }}>
           {features.map((f, i) => (
             <FeatureCard key={f.title} index={i} {...f} onOpen={() => setSelected(i)} />

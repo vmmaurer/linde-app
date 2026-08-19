@@ -41,7 +41,7 @@ export default function CTASection() {
       <div className="relative z-10 max-w-2xl mx-auto flex flex-col items-center text-center">
 
         {/* Logo Linde 60 anos — topo */}
-        <div className="brand-masthead" style={{ marginBottom: 28 }}>
+        <div className="brand-masthead" style={{ marginBottom: 14 }}>
           <img
             className="brand-masthead__logo"
             src="/images/logonavbar.webp"
@@ -53,7 +53,7 @@ export default function CTASection() {
 
         {/* Tag — Sunshine */}
         <div
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold tracking-widest uppercase mb-6"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold tracking-widest uppercase mb-2"
           style={{
             background: 'rgba(240,200,50,0.12)',
             border: '1px solid rgba(240,200,50,0.35)',

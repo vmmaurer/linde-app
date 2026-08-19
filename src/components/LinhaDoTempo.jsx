@@ -32,6 +32,12 @@ const LINE_OVERSCAN = CARD_TOTAL * 2
 // ── Parâmetros do destaque central ────────────────────────────────────────
 // A fileira fica reta e estável; SÓ o card que chega ao centro ganha realce:
 // sobe um pouco (flutua) e cresce levemente.
+// Altura do palco do carrossel. O card (572px) fica centralizado nela, então
+// sobram ~274px acima — folga suficiente para o card em foco (scale 1.35 +
+// lift 110) e para a etiqueta "Fundação"/"Continua…", que fica acima dele,
+// não serem cortados pelo overflow. Diminuir este número sobe a linha do tempo.
+const STAGE_HEIGHT   = 1120
+
 const LIFT_AMOUNT    = 110        // quanto o card central sobe (px). 0 = não sobe
 const SCALE_CENTER   = 1.35       // escala do card centralizado (realce forte)
 const SCALE_EDGE     = 0.9        // demais cards levemente menores, reforçando o destaque
@@ -529,7 +535,12 @@ export default function LinhaDoTempo() {
         </div>
 
         {/* Carrossel */}
-        <div style={{ flex: 1, display: 'flex', alignItems: 'center', width: '100%', minHeight: 0 }}>
+        {/* Altura fixa do palco (STAGE_HEIGHT): é ela que mantém o topo dos
+            cards na mesma altura das outras abas. O que sobra na tela fica
+            embaixo, em vez de empurrar a linha do tempo para o meio.
+            flex-shrink continua ligado: em telas mais baixas o palco encolhe
+            em vez de estourar. */}
+        <div style={{ flex: `0 1 ${STAGE_HEIGHT}px`, display: 'flex', alignItems: 'center', width: '100%', minHeight: 0 }}>
           <div
             ref={viewportRef}
             style={{ position: 'relative', overflow: 'hidden', cursor: 'grab', width: '100%', height: '100%', touchAction: 'pan-y', display: 'flex', alignItems: 'center' }}
