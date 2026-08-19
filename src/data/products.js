@@ -236,9 +236,9 @@ export const products = [
   },
   {
     id: 8,
-    slug: 'Multi Laminado',
-    title: 'Multi Laminado',
-    subtitle: 'MultiLaminado',
+    slug: 'multilaminado',
+    title: 'Multilaminado',
+    subtitle: 'Multilaminado',
     image: '/images/mutilaminado.webp',
     modalImage: '/images/mutilaminado.webp',
     // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.webp'
