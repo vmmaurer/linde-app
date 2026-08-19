@@ -520,11 +520,11 @@ export default function LinhaDoTempo() {
             Quem Somos?
           </p>
           <h2 style={{ color: '#f0f0f0', fontSize: 44, fontWeight: 800, margin: '0 0 16px', letterSpacing: '-.02em' }}>
-            A Linde Vidros
+            Conheça Nossa História
           </h2>
           <div style={{ width: 48, height: 2, background: '#f0c832', margin: '0 auto 14px', borderRadius: 2 }} />
           <p style={{ color: 'rgba(240,240,240,.28)', fontSize: 12, margin: 0 }}>
-            Clique em um card para ver mais · Arraste para explorar
+            Arraste para explorar nossa trajetória
           </p>
         </div>
 

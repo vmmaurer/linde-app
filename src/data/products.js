@@ -16,7 +16,6 @@ export const products = [
       { type: 'image', src: '/images/LAMINADONOVO_1.webp' },
       { type: 'image', src: '/images/LAMINADONOVO_2.webp' },
       { type: 'image', src: '/images/LAMINADONOVO_3.webp' },
-      { type: 'image', src: '/images/LAMINADONOVO_4.webp' },
       { type: 'image', src: '/images/LAMINADONOVO_5.webp' },
       { type: 'image', src: '/images/LAMINADONOVO_6.webp' },
 
@@ -51,7 +50,6 @@ export const products = [
       { type: 'image', src: '/images/LAMINADOTEMPERADO_4.webp' },
       { type: 'image', src: '/images/LAMINADOTEMPERADO_5.webp' },
       { type: 'image', src: '/images/LAMINADOTEMPERADO_6.webp' },
-      { type: 'image', src: '/images/LAMINADOTEMPERADO_7.webp' },
     ],
     color: 'from-cyan-900/80 to-navy-950/90',
     description:
@@ -209,13 +207,13 @@ export const products = [
     slug: 'Temperado',
     title: 'Temperado',
     subtitle: 'Qualidade garantida',
-    image: '/images/temperado-novo.webp',
-    modalImage: '/images/temperado-novo.webp',
+    image: '/images/TEMPERADO-1.webp',
+    modalImage: '/images/TEMPERADO-1.webp',
     // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.webp'
     brandLogo: '',
     media: [
-      { type: 'image', src: '/images/temperado-novo.webp' },
       { type: 'image', src: '/images/TEMPERADO-1.webp' },
+      { type: 'image', src: '/images/temperado-novo.webp' },
       { type: 'image', src: '/images/TEMPERADO-4.webp' },
       { type: 'image', src: '/images/TEMPERADO-5.webp' },
       { type: 'image', src: '/images/TEMPERADO_NOVO_1.webp' },
@@ -251,13 +249,13 @@ export const products = [
         { type: 'image', src: '/images/MULTILAMINADO-2.webp' },
          { type: 'image', src: '/images/MULTILAMINADO-3.webp' },
           { type: 'image', src: '/images/MULTILAMINADO-4.webp' },
-           { type: 'image', src: '/images/MULTILAMINADO-5.webp' },
+          { type: 'image', src: '/images/LAMINADOTEMPERADO_7.webp' },
       // { type: 'video', src: '/images/seu_video.mp4' },
       // { type: 'image', src: '/images/outra_foto.jpg' },
     ],
     color: 'from-cyan-900/80 to-navy-950/90',
     description:
-      'O vidro multilaminado é composto por múltiplas lâminas de vidro unidas por camadas de PVB, oferecendo elevada resistência e segurança. Indicado para aplicações que exigem proteção reforçada contra impactos e tentativas de invasão.',
+      'O vidro multilaminado é composto por múltiplas lâminas de vidro unidas por camadas de PVB ou SentryGlas, oferecendo elevada resistência e segurança. Indicado para aplicações que exigem proteção reforçada contra impactos e tentativas de invasão.',
     applications: [
       'Agências bancárias e guaritas',
       'Vitrines e joalherias',
@@ -304,8 +302,6 @@ export const products = [
     brandLogo: '/images/ICON-SCREENLINE.webp',
     media: [
       { type: 'image', src: '/images/PERSIANA_1.webp' },
-      { type: 'image', src: '/images/persiana.webp' },
-      { type: 'image', src: '/images/PERSIANA_3.webp' },
       { type: 'image', src: '/images/PERSIANA_4.webp' },
       { type: 'image', src: '/images/PERSIANA_5.webp' },
       { type: 'image', src: '/images/PERSIANA_NOVO_1.webp' },
@@ -337,7 +333,6 @@ export const products = [
       { type: 'image', src: '/images/extra-clear.webp' },
        { type: 'image', src: '/images/EXTRACLEAR_1.webp' },
         { type: 'image', src: '/images/EXTRACLEAR_2.webp' },
-          { type: 'image', src: '/images/EXTRACLEAR_4.webp' },
            { type: 'image', src: '/images/EXTRACLEAR_5.webp' },
       { type: 'image', src: '/images/EXTRACLEAR_NOVO_1.webp' },
       { type: 'image', src: '/images/EXTRACLEAR_NOVO_2.webp' },
@@ -365,7 +360,6 @@ export const products = [
     // Logo de marca (opcional): preencha só onde precisar. Ex: '/images/ICON-SCREENLINE.webp'
     brandLogo: '',
     media: [
-      { type: 'video', src: '/images/siregrafia.webm' },
       { type: 'image', src: '/images/SERIGRAFIA-1.webp' },
        { type: 'image', src: '/images/SERIGRAFIA-2.webp' },
         { type: 'image', src: '/images/SERIGRAFIA-3.webp' },
