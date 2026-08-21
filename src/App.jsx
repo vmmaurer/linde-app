@@ -4,12 +4,19 @@ import CTASection from './components/CTASection';
 import EstruturaSection from './components/EstruturaSection';
 import HistoriaSection from './components/HistoriaSection';
 import BottomNav from './components/BottomNav';
+import { warmupAssets } from './utils/preloadAssets';
 
 const App = () => {
   const [currentScreen, setCurrentScreen] = useState('produtos');
   const [modalOpen, setModalOpen] = useState(false);
   const idleTimer = useRef(null);
   const navReturnTimer = useRef(null);
+
+  // Aquece as imagens assim que o totem sobe. Como ele fica ligado o dia
+  // inteiro, quando a primeira pessoa encosta na tela já está tudo
+  // decodificado em memória — a troca de tela não espera por disco nem por
+  // decodificação, que era a origem do engasgo.
+  useEffect(() => { warmupAssets(); }, []);
 
   const clearIdleTimer = () => {
     if (idleTimer.current) {
@@ -183,7 +190,11 @@ const App = () => {
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: '#000',
+        // Azul profundo em vez de preto: durante o fade a tela nova é
+        // translúcida por um instante e deixa esta cor aparecer. Com #000 dava
+        // um "piscar" escuro entre as telas; com o azul da paleta a passagem
+        // fica contínua.
+        backgroundColor: '#0b1426',
       }}
     >
       <style>{`
@@ -191,9 +202,27 @@ const App = () => {
           height: 100vh;
           height: 100dvh;
         }
+        /* Só opacidade: é a única propriedade que o compositor resolve na GPU
+           sem repintar a árvore inteira a cada frame. */
         @keyframes screenFade {
           from { opacity: 0; }
-          to { opacity: 1; }
+          to   { opacity: 1; }
+        }
+        .screen-swap {
+          flex: 1;
+          width: 100%;
+          height: 100%;
+          overflow-y: auto;
+          animation: screenFade 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+          /* Promove a tela à própria camada ANTES do fade começar. Sem isto o
+             Chromium só decide promover no primeiro frame da animação, e esse
+             frame sai atrasado — é o solavanco no início da transição. */
+          will-change: opacity;
+        }
+        /* Camada devolvida assim que o fade acaba: manter will-change para
+           sempre em 4 telas de 1080x1920 seguraria VRAM à toa. */
+        .screen-swap.is-settled {
+          will-change: auto;
         }
       `}</style>
 
@@ -202,13 +231,8 @@ const App = () => {
           e é desmontada ao sair — liberando memória. */}
       <div
         key={currentScreen}
-        style={{
-          flex: 1,
-          width: '100%',
-          height: '100%',
-          overflowY: 'auto',
-          animation: 'screenFade 0.35s ease',
-        }}
+        className="screen-swap"
+        onAnimationEnd={(e) => e.currentTarget.classList.add('is-settled')}
       >
         {renderScreen()}
       </div>

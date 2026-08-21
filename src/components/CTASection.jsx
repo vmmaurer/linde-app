@@ -9,7 +9,7 @@ function QRCode() {
       style={{ background: 'white', boxShadow: '0 20px 60px rgba(0,0,0,0.4)' }}
     >
       <img
-        src="/images/qrcode_linktree_totem.webp"
+        src="./images/qrcode_linktree_totem.webp"
         alt="QR Code para acessar o WhatsApp e o Instagram da Linde Vidros"
         className="object-contain"
         style={{ width: '200px', height: '200px' }}
@@ -27,7 +27,7 @@ export default function CTASection() {
       style={{
         /* Fundo: imagem do Contato (já vem com azul embutido) + véu leve */
         backgroundImage:
-          'linear-gradient(180deg, rgba(4,11,25,0.55) 0%, rgba(35,60,100,0.30) 45%, rgba(4,11,25,0.75) 100%), url(/images/FUNDO-PAGINA-CONTATO.webp)',
+          'linear-gradient(180deg, rgba(4,11,25,0.55) 0%, rgba(35,60,100,0.30) 45%, rgba(4,11,25,0.75) 100%), url(./images/FUNDO-PAGINA-CONTATO.webp)',
         backgroundSize: 'cover, cover',
         backgroundPosition: 'center, center',
         backgroundRepeat: 'no-repeat, no-repeat',
@@ -47,7 +47,7 @@ export default function CTASection() {
         <div className="brand-masthead" style={{ marginBottom: 67 }}>
           <img
             className="brand-masthead__logo"
-            src="/images/logonavbar.webp"
+            src="./images/logonavbar.webp"
             alt="Linde Vidros"
             draggable={false}
             onDragStart={(e) => e.preventDefault()}
@@ -87,7 +87,7 @@ export default function CTASection() {
                 style={{ background: 'rgba(35,60,100,0.5)', border: '1px solid rgba(95,130,155,0.3)' }}
               >
                 <img
-                  src="/images/ICON_WHATS.webp"
+                  src="./images/ICON_WHATS.webp"
                   alt="WhatsApp"
                   style={{ width: '28px', height: '28px', objectFit: 'contain' }}
                   draggable={false}
@@ -99,7 +99,7 @@ export default function CTASection() {
                 style={{ background: 'rgba(35,60,100,0.5)', border: '1px solid rgba(240,200,50,0.35)' }}
               >
                 <img
-                  src="/images/ICON_INSTAGRAM.webp"
+                  src="./images/ICON_INSTAGRAM.webp"
                   alt="Instagram"
                   style={{ width: '28px', height: '28px', objectFit: 'contain' }}
                   draggable={false}
@@ -130,7 +130,7 @@ export default function CTASection() {
 
         <div style={{ width: '100%', maxWidth: '500px' }}>
           <img
-            src="/images/REGIAO 4.gif"
+            src="./images/REGIAO 4.gif"
             alt="Mapa de atuação Linde Vidros"
             style={{ width: '100%', height: 'auto', objectFit: 'contain', display: 'block', margin: '0 auto' }}
             draggable={false}

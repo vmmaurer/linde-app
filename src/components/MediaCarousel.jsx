@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import { warmNeighbors } from '../utils/preloadAssets'
 
 // ── Carrossel de mídia (vídeo + fotos) usado dentro dos pop-ups de card ──
 export default function MediaCarousel({ media, height = '48vh', minHeight = 340 }) {
@@ -7,6 +8,15 @@ export default function MediaCarousel({ media, height = '48vh', minHeight = 340 
   const startY = useRef(null)
   const isSwiping = useRef(false)
   const count = media.length
+
+  // Decodifica o slide anterior e o próximo enquanto o atual está parado na
+  // tela. Assim a seta (ou o swipe) troca a foto no mesmo frame do toque, em
+  // vez de mostrar o quadro vazio enquanto o Chromium decodifica.
+  useEffect(() => {
+    if (count < 2) return
+    const around = [index + 1, index - 1].map((i) => media[((i % count) + count) % count])
+    warmNeighbors(around.filter((m) => m && m.type === 'image').map((m) => m.src))
+  }, [index, media, count])
 
   const go = (i) => setIndex(((i % count) + count) % count)
   const next = () => go(index + 1)

@@ -15,7 +15,7 @@ const HistoriaSection = () => {
         padding: 0,
         /* Fundo: imagem da História (já vem com azul embutido) + véu leve */
         backgroundImage:
-          'linear-gradient(180deg, rgba(4,11,25,0.55) 0%, rgba(35,60,100,0.30) 45%, rgba(4,11,25,0.75) 100%), url(/images/FUNDO-PAGINA-HISTORIA.webp)',
+          'linear-gradient(180deg, rgba(4,11,25,0.55) 0%, rgba(35,60,100,0.30) 45%, rgba(4,11,25,0.75) 100%), url(./images/FUNDO-PAGINA-HISTORIA.webp)',
         backgroundSize: 'cover, cover',
         backgroundPosition: 'center, center',
         backgroundRepeat: 'no-repeat, no-repeat',

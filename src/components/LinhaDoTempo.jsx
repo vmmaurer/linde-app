@@ -5,21 +5,21 @@ import { createPortal } from 'react-dom'
 // Sapphire Glass #233c64 · Cold Steel #5f829b · Sunshine #f0c832
 // Midnight #323232 · Off-white #f0f0f0
 
-const milestones = [
-  { image: '/images/abahistoriacard1966.webp', imagePosition: 'center 80%', year: '1966', desc: 'Em 1966 teve início a história da Linde Vidros, fundada com o propósito de oferecer qualidade, confiança e soluções para o setor vidreiro.' },
-  { image: '/images/linde_1989.webp', year: '1989', desc: 'Fundação da Linde Vidros, iniciando uma trajetória de inovação e qualidade no setor vidreiro.' },
-  { image: '/images/linde_1991.webp',  year: '1991', desc: 'Em agosto de 1991 foi fundada uma filial na cidade de Rio Negro – PR para a distribuição em chapas de vidros em geral, atendendo outras regiões.' },
-  { image: '/images/linde_1993.webp',  year: '1993', desc: 'Nos últimos anos, a unidade de Rio Negro vem investindo em máquinas de última geração para melhor corte e acabamento.' },
-  { image: '/images/linde_1995.webp',  year: '1995', desc: 'No ano 2000 foi instalado um forno de tempera vertical.' },
-  { image: '/images/linde_2004.webp',  year: '2004', desc: 'A grande mudança ocorreu em 2003 com a aquisição de um forno de tempera horizontal para vidros de 2,8mm até 19mm.' },
-  { image: '/images/linde_2007.webp',  year: '2007', desc: 'Em março de 2008 foi instalado seu segundo forno horizontal.' },
-  { image: '/images/linde_2009.webp',  year: '2009', desc: 'Vidros insulados de alto desempenho para redução do consumo de energia.' },
-  { image: '/images/linde_2012.webp',  year: '2012', desc: 'Segurança e design com múltiplas camadas de proteção.' },
-  { image: '/images/linde_2014.webp',  year: '2014', desc: 'Resistência e durabilidade para aplicações de alto impacto.' },
-  { image: '/images/linde_2018.webp',  year: '2018', desc: 'Isolamento térmico e acústico para maior conforto.' },
-  { image: '/images/linde_2025_1.webp', year: '2025', label: 'Fábrica 1', desc: 'Personalização com impressão de alta qualidade.' },
-  { image: '/images/linde_2025_2.webp', year: '2025', label: 'Fábrica 2', desc: 'Espelhos sob medida para todos os ambientes.' },
-  { image: '/images/totem.webp',       year: '2027', desc: 'A Linde Vidros segue em frente, com novas fábricas, tecnologias e soluções em vidro para os próximos capítulos da nossa história.' },
+export const milestones = [
+  { image: './images/abahistoriacard1966.webp', imagePosition: 'center 80%', year: '1966', desc: 'Em 1966 teve início a história da Linde Vidros, fundada com o propósito de oferecer qualidade, confiança e soluções para o setor vidreiro.' },
+  { image: './images/linde_1989.webp', year: '1989', desc: 'Fundação da Linde Vidros, iniciando uma trajetória de inovação e qualidade no setor vidreiro.' },
+  { image: './images/linde_1991.webp',  year: '1991', desc: 'Em agosto de 1991 foi fundada uma filial na cidade de Rio Negro – PR para a distribuição em chapas de vidros em geral, atendendo outras regiões.' },
+  { image: './images/linde_1993.webp',  year: '1993', desc: 'Nos últimos anos, a unidade de Rio Negro vem investindo em máquinas de última geração para melhor corte e acabamento.' },
+  { image: './images/linde_1995.webp',  year: '1995', desc: 'No ano 2000 foi instalado um forno de tempera vertical.' },
+  { image: './images/linde_2004.webp',  year: '2004', desc: 'A grande mudança ocorreu em 2003 com a aquisição de um forno de tempera horizontal para vidros de 2,8mm até 19mm.' },
+  { image: './images/linde_2007.webp',  year: '2007', desc: 'Em março de 2008 foi instalado seu segundo forno horizontal.' },
+  { image: './images/linde_2009.webp',  year: '2009', desc: 'Vidros insulados de alto desempenho para redução do consumo de energia.' },
+  { image: './images/linde_2012.webp',  year: '2012', desc: 'Segurança e design com múltiplas camadas de proteção.' },
+  { image: './images/linde_2014.webp',  year: '2014', desc: 'Resistência e durabilidade para aplicações de alto impacto.' },
+  { image: './images/linde_2018.webp',  year: '2018', desc: 'Isolamento térmico e acústico para maior conforto.' },
+  { image: './images/linde_2025_1.webp', year: '2025', label: 'Fábrica 1', desc: 'Personalização com impressão de alta qualidade.' },
+  { image: './images/linde_2025_2.webp', year: '2025', label: 'Fábrica 2', desc: 'Espelhos sob medida para todos os ambientes.' },
+  { image: './images/totem.webp',       year: '2027', desc: 'A Linde Vidros segue em frente, com novas fábricas, tecnologias e soluções em vidro para os próximos capítulos da nossa história.' },
 ]
 
 const CARD_WIDTH = 480
@@ -28,6 +28,10 @@ const CARD_TOTAL = CARD_WIDTH + CARD_GAP
 // Mantém pontos suficientes calculados fora da tela para a curva já chegar
 // pronta às bordas do viewport, inclusive no início de cada ciclo.
 const LINE_OVERSCAN = CARD_TOTAL * 2
+// Faixa em que um card ganha camada própria de GPU. Um card inteiro de folga
+// de cada lado: a camada é criada antes de o card entrar na tela, então ele
+// nunca aparece no meio de uma promoção.
+const PROMOTE_MARGIN = CARD_TOTAL
 
 // ── Parâmetros do destaque central ────────────────────────────────────────
 // A fileira fica reta e estável; SÓ o card que chega ao centro ganha realce:
@@ -161,69 +165,44 @@ function Card({ item, onOpen, dragInfoRef, cardRef, bookend }) {
     if (dist < DRAG_THRESHOLD && elapsed < TIME_THRESHOLD) onOpen()
   }
 
+  // Tudo o que é fixo mora em .tl-* (bloco <style> do componente principal).
+  // A trilha monta 42 cards de uma vez; com os estilos inline o React fazia
+  // ~12 mil escritas de propriedade no CSSOM só para abrir a aba História, e
+  // era isso que deixava a entrada dela visivelmente mais lenta que as outras.
+  // Inline aqui sobra apenas o que muda de card para card.
   return (
-    <div
-      ref={cardRef}
-      style={{
-        width: CARD_WIDTH, flexShrink: 0,
-        display: 'flex', flexDirection: 'column', alignItems: 'center',
-        userSelect: 'none',
-        willChange: 'transform, opacity',
-        // transform/opacity/zIndex são escritos pelo loop de animação
-      }}
-    >
+    <div ref={cardRef} className="tl-card">
       {/* Conector: liga o topo do card até a linha central ondulada.
           O comprimento é ajustado pelo pai para acompanhar a onda. */}
-      <div className="card-connector" style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
+      <div className="card-connector">
         {bookend && (
-          <span style={{
-            position: 'absolute', bottom: '100%', left: '50%', transform: 'translateX(-50%)',
-            marginBottom: 8, whiteSpace: 'nowrap',
-            fontSize: 12, fontWeight: 800, letterSpacing: '.12em', textTransform: 'uppercase',
-            color: '#f0c832', background: 'rgba(240,200,50,.12)', border: '1px solid rgba(240,200,50,.35)',
-            borderRadius: 999, padding: '5px 14px',
-          }}>
+          <span className="tl-bookend">
             {bookend === 'start' ? 'Fundação' : 'Continua…'}
           </span>
         )}
-        <div className="connector-dot" style={{
-          width: 16, height: 16, borderRadius: '50%', flexShrink: 0,
-          background: 'transparent',
-        }} />
-        <div className="connector-line" style={{ width: 2, height: 42, background: 'rgba(95,130,155,.6)' }} />
+        <div className="connector-dot" />
+        <div className="connector-line" />
       </div>
 
       {/* Badge do ano */}
-      <div className="card-badge" style={{ textAlign: 'center', padding: '6px 0 10px', flexShrink: 0 }}>
-        <span style={{
-          display: 'inline-block', background: '#f0c832', color: '#040b19',
-          fontWeight: 800, fontSize: 20, letterSpacing: '.05em', padding: '8px 20px', borderRadius: 10,
-        }}>{item.year}</span>
-        {item.label && (
-          <p style={{ color: 'rgba(240,240,240,.5)', fontSize: 15, margin: '6px 0 0', fontWeight: 600 }}>{item.label}</p>
-        )}
+      <div className="card-badge">
+        <span className="tl-year">{item.year}</span>
+        {item.label && <p className="tl-label">{item.label}</p>}
       </div>
 
       {/* Visual do card */}
       <div
+        className="tl-frame"
         onPointerDown={(e) => handleDown(e.clientX, e.clientY)}
         onPointerUp={(e)   => handleUp(e.clientX, e.clientY)}
-        style={{
-          width: CARD_WIDTH, flexShrink: 0,
-          background: 'linear-gradient(180deg, #1a2e50 0%, #0f1e38 100%)',
-          border: '1px solid rgba(240,200,50,.55)',
-          borderRadius: 16, overflow: 'hidden',
-          boxShadow: '0 6px 30px rgba(0,0,0,.5)',
-          cursor: 'pointer',
-        }}
       >
-        <div style={{ position: 'relative', height: 300, overflow: 'hidden' }}>
+        <div className="tl-media">
           <img src={item.image} alt={item.year} draggable={false} onDragStart={(e) => e.preventDefault()}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: item.imagePosition || 'center', display: 'block' }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(4,11,25,.85) 0%,transparent 55%)' }} />
+            style={{ objectPosition: item.imagePosition || 'center' }} />
+          <div className="tl-veil" />
         </div>
-        <div style={{ padding: '22px 26px', height: 150, boxSizing: 'border-box', overflow: 'hidden' }}>
-          <p style={{ color: 'rgba(240,240,240,.65)', fontSize: 18, lineHeight: 1.6, margin: 0 }}>{item.desc}</p>
+        <div className="tl-body">
+          <p>{item.desc}</p>
         </div>
       </div>
     </div>
@@ -292,6 +271,9 @@ export default function LinhaDoTempo() {
     const pts = []
     const measureDots = []
     const measureCycles = []
+    // Estado atual de promoção de cada card (índice → bool), para não
+    // reescrever willChange em todo frame.
+    const promoted = []
 
     const applyWave = () => {
       const vp = viewportRef.current
@@ -336,6 +318,16 @@ export default function LinhaDoTempo() {
         el.style.transform = `translate3d(0, ${liftY}px, 0) scale(${scale})`
         el.style.opacity   = opacity
         el.style.zIndex    = z
+
+        // Promove a camada de GPU só na faixa que está perto da tela, e uma
+        // margem antes de entrar — assim a camada já existe quando o card
+        // começa a aparecer. Escrever willChange a cada frame sujaria o estilo
+        // à toa, então só tocamos na propriedade quando o valor muda.
+        const promote = cardCenter > -PROMOTE_MARGIN && cardCenter < vp.clientWidth + PROMOTE_MARGIN
+        if (promoted[i] !== promote) {
+          el.style.willChange = promote ? 'transform, opacity' : 'auto'
+          promoted[i] = promote
+        }
 
         const { conn, dot } = getParts(el)
 
@@ -503,7 +495,103 @@ export default function LinhaDoTempo() {
       }}>
         <style>{`
           .timeline-track { will-change: transform; }
-          .wave-card { transition: none; }
+          .wave-card { transition: none; margin: 0 ${CARD_GAP / 2}px; }
+
+          /* Estilos fixos dos cards da trilha. Ficam aqui, e não em style={{}},
+             porque o navegador casa uma regra de classe uma vez por elemento,
+             enquanto o React grava propriedade por propriedade em cada um dos
+             42 cards na montagem. transform/opacity/zIndex continuam sendo
+             escritos pelo applyWave(), que precisa deles frame a frame. */
+          .tl-card {
+            width: ${CARD_WIDTH}px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            user-select: none;
+          }
+          .card-connector {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+          }
+          .tl-bookend {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 8px;
+            white-space: nowrap;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: #f0c832;
+            background: rgba(240,200,50,.12);
+            border: 1px solid rgba(240,200,50,.35);
+            border-radius: 999px;
+            padding: 5px 14px;
+          }
+          .connector-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            background: transparent;
+          }
+          .connector-line {
+            width: 2px;
+            height: 42px;
+            background: rgba(95,130,155,.6);
+          }
+          .card-badge { text-align: center; padding: 6px 0 10px; flex-shrink: 0; }
+          .tl-year {
+            display: inline-block;
+            background: #f0c832;
+            color: #040b19;
+            font-weight: 800;
+            font-size: 20px;
+            letter-spacing: .05em;
+            padding: 8px 20px;
+            border-radius: 10px;
+          }
+          .tl-label {
+            color: rgba(240,240,240,.5);
+            font-size: 15px;
+            margin: 6px 0 0;
+            font-weight: 600;
+          }
+          .tl-frame {
+            width: ${CARD_WIDTH}px;
+            flex-shrink: 0;
+            background: linear-gradient(180deg, #1a2e50 0%, #0f1e38 100%);
+            border: 1px solid rgba(240,200,50,.55);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 30px rgba(0,0,0,.5);
+            cursor: pointer;
+          }
+          .tl-media { position: relative; height: 300px; overflow: hidden; }
+          .tl-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+          }
+          .tl-veil {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(4,11,25,.85) 0%, transparent 55%);
+          }
+          .tl-body { padding: 22px 26px; height: 150px; box-sizing: border-box; overflow: hidden; }
+          .tl-body p {
+            color: rgba(240,240,240,.65);
+            font-size: 18px;
+            line-height: 1.6;
+            margin: 0;
+          }
         `}</style>
 
         {/* Glow — Sapphire */}
@@ -516,7 +604,7 @@ export default function LinhaDoTempo() {
 
         {/* Logo */}
         <div className="brand-masthead" style={{ textAlign: 'center', marginBottom: 'var(--masthead-gap)', position: 'relative', zIndex: 10, flexShrink: 0 }}>
-          <img src="/images/logonavbar.webp" alt="Linde Vidros"
+          <img src="./images/logonavbar.webp" alt="Linde Vidros"
             className="brand-masthead__logo" draggable={false} onDragStart={(e) => e.preventDefault()} />
         </div>
 
@@ -590,7 +678,7 @@ export default function LinhaDoTempo() {
                 const mIdx = i % milestones.length
                 const bookend = mIdx === 0 ? 'start' : mIdx === milestones.length - 1 ? 'end' : null
                 return (
-                  <div key={i} className="wave-card" style={{ margin: `0 ${CARD_GAP / 2}px` }}>
+                  <div key={i} className="wave-card">
                     <Card
                       item={item}
                       onOpen={() => openCard(i)}

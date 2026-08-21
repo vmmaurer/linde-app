@@ -4,7 +4,7 @@ import EstruturaModal from './EstruturaModal';
 
 // ── Paleta: Sapphire #233c64 · Cold Steel #5f829b · Sunshine #f0c832 · Off-white #f0f0f0
 
-const features = [
+export const features = [
   {
     tag: 'Fábrica',
     title: 'Fábrica 1',
@@ -15,9 +15,9 @@ const features = [
       'Estrutura preparada para expansão',
       'Localização estratégica para distribuição regional',
     ],
-    image: '/images/empresa-1.webp',
+    image: './images/empresa-1.webp',
     media: [
-      { type: 'image', src: '/images/empresa-1.webp' },
+      { type: 'image', src: './images/empresa-1.webp' },
     ],
   },
   {
@@ -30,9 +30,9 @@ const features = [
       'Fornos de têmpera para vidros de 2,8mm a 19mm',
       'Beneficiamento completo sob o mesmo teto',
     ],
-    image: '/images/empresa-2.webp',
+    image: './images/empresa-2.webp',
     media: [
-      { type: 'image', src: '/images/empresa-2.webp' },
+      { type: 'image', src: './images/empresa-2.webp' },
     ],
   },
   {
@@ -45,9 +45,9 @@ const features = [
       'Veículos preparados para carga de vidro',
       'Cobertura em toda a região de atuação',
     ],
-    image: '/images/FROTA.webp',
+    image: './images/FROTA.webp',
     media: [
-      { type: 'image', src: '/images/FROTA.webp' },
+      { type: 'image', src: './images/FROTA.webp' },
     ],
   },
   {
@@ -66,10 +66,10 @@ const features = [
       'Frota própria com mais de 20 caminhões',
       'Amplo catálogo: espelhos, temperados, laminados comuns e temperados, insulados para engenharia e para refrigeração',
     ],
-    image: '/images/ESTOQUE.webp',
+    image: './images/ESTOQUE.webp',
     media: [
-      { type: 'image', src: '/images/ESTOQUE.webp' },
-      { type: 'image', src: '/images/IMG_5735.webp' },
+      { type: 'image', src: './images/ESTOQUE.webp' },
+      { type: 'image', src: './images/IMG_5735.webp' },
     ],
     // Lista de destaques é longa — imagem menor para o pop-up caber
     // inteiro sem precisar rolar.
@@ -169,7 +169,7 @@ const EstruturaSection = () => {
         overflow: 'hidden',
         padding: 0,
         backgroundImage:
-          'linear-gradient(180deg, rgba(4,11,25,0.55) 0%, rgba(35,60,100,0.30) 45%, rgba(4,11,25,0.75) 100%), url(/images/FUNDO-PAGINA-ESTRUTURA1.webp)',
+          'linear-gradient(180deg, rgba(4,11,25,0.55) 0%, rgba(35,60,100,0.30) 45%, rgba(4,11,25,0.75) 100%), url(./images/FUNDO-PAGINA-ESTRUTURA1.webp)',
         backgroundSize: 'cover, cover',
         backgroundPosition: 'center, center',
         backgroundRepeat: 'no-repeat, no-repeat',
@@ -203,7 +203,7 @@ const EstruturaSection = () => {
         {/* Cabeçalho — mesmo padrão da tela História (alturas em clamp()
             para sobrar espaço pra grade em telas curtas/paisagem) */}
         <div className="brand-masthead" style={{ textAlign: 'center', marginBottom: 'var(--masthead-gap)', flexShrink: 0 }}>
-          <img src="/images/logonavbar.webp" alt="Linde Vidros"
+          <img src="./images/logonavbar.webp" alt="Linde Vidros"
             className="brand-masthead__logo" draggable={false} onDragStart={(e) => e.preventDefault()} />
         </div>
 

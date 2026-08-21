@@ -84,10 +84,10 @@ const TabButton = styled.button`
 `;
 
 const tabs = [
-  { id: 'produtos',  label: 'Produtos',  icon: '/images/NAV-FLAT-PRODUTOS.webp'  },
-  { id: 'estrutura', label: 'Estrutura', icon: '/images/NAV-FLAT-ESTRUTURA.webp' },
-  { id: 'historia',  label: 'História',  icon: '/images/NAV-FLAT-EMPRESA.webp'  },
-  { id: 'contato',   label: 'Contato',   icon: '/images/NAV FLAT CONTATO.webp'   },
+  { id: 'produtos',  label: 'Produtos',  icon: './images/NAV-FLAT-PRODUTOS.webp'  },
+  { id: 'estrutura', label: 'Estrutura', icon: './images/NAV-FLAT-ESTRUTURA.webp' },
+  { id: 'historia',  label: 'História',  icon: './images/NAV-FLAT-EMPRESA.webp'  },
+  { id: 'contato',   label: 'Contato',   icon: './images/NAV FLAT CONTATO.webp'   },
 ];
 
 const BottomNav = ({ currentScreen, onScreenChange }) => {
