@@ -4,7 +4,8 @@ const {
   ipcMain,
   protocol,
   session,
-  Menu
+  Menu,
+  screen
 } = require("electron");
 
 const path = require("path");
@@ -14,25 +15,45 @@ const fsp = require("fs/promises");
 const DIST = path.join(__dirname, "..", "dist");
 
 // ---------------------------------------------------------------------------
-// Máquina dedicada: o totem não divide CPU/GPU com nada. Estas flags desligam
-// as economias que o Chromium faz pensando em notebook com bateria e em aba
-// de fundo.
+// Máquina dedicada: evita economias do Chromium que podem prejudicar
+// animações e timers em um totem que fica ligado continuamente.
 // ---------------------------------------------------------------------------
-app.commandLine.appendSwitch("disk-cache-size", String(512 * 1024 * 1024));
-app.commandLine.appendSwitch("disable-background-timer-throttling");
-app.commandLine.appendSwitch("disable-renderer-backgrounding");
-app.commandLine.appendSwitch("disable-backgrounding-occluded-windows");
+app.commandLine.appendSwitch(
+  "disk-cache-size",
+  String(512 * 1024 * 1024)
+);
+
+app.commandLine.appendSwitch(
+  "disable-background-timer-throttling"
+);
+
+app.commandLine.appendSwitch(
+  "disable-renderer-backgrounding"
+);
+
+app.commandLine.appendSwitch(
+  "disable-backgrounding-occluded-windows"
+);
+
 app.commandLine.appendSwitch(
   "disable-features",
   "CalculateNativeWinOcclusion"
 );
-app.commandLine.appendSwitch("force_high_performance_gpu");
-app.commandLine.appendSwitch("autoplay-policy", "no-user-gesture-required");
+
+app.commandLine.appendSwitch(
+  "force_high_performance_gpu"
+);
+
+app.commandLine.appendSwitch(
+  "autoplay-policy",
+  "no-user-gesture-required"
+);
 
 // ---------------------------------------------------------------------------
 // Impede duas instâncias do totem ao mesmo tempo.
 // ---------------------------------------------------------------------------
-const temInstanciaUnica = app.requestSingleInstanceLock();
+const temInstanciaUnica =
+  app.requestSingleInstanceLock();
 
 if (!temInstanciaUnica) {
   app.quit();
@@ -44,6 +65,7 @@ if (!temInstanciaUnica) {
 protocol.registerSchemesAsPrivileged([
   {
     scheme: "app",
+
     privileges: {
       standard: true,
       secure: true,
@@ -56,18 +78,28 @@ protocol.registerSchemesAsPrivileged([
 // ---------------------------------------------------------------------------
 // Cache de arquivos em RAM.
 // ---------------------------------------------------------------------------
-const CACHE_LIMIT = 512 * 1024 * 1024;
+const CACHE_LIMIT =
+  512 * 1024 * 1024;
 
 const cache = new Map();
 
 let cachedBytes = 0;
 
 const MIME = {
-  ".html": "text/html; charset=utf-8",
-  ".js": "text/javascript; charset=utf-8",
-  ".mjs": "text/javascript; charset=utf-8",
-  ".css": "text/css; charset=utf-8",
-  ".json": "application/json; charset=utf-8",
+  ".html":
+    "text/html; charset=utf-8",
+
+  ".js":
+    "text/javascript; charset=utf-8",
+
+  ".mjs":
+    "text/javascript; charset=utf-8",
+
+  ".css":
+    "text/css; charset=utf-8",
+
+  ".json":
+    "application/json; charset=utf-8",
 
   ".webp": "image/webp",
   ".avif": "image/avif",
@@ -87,10 +119,11 @@ const MIME = {
 };
 
 const mimeOf = (rel) =>
-  MIME[path.extname(rel).toLowerCase()] ||
+  MIME[
+    path.extname(rel).toLowerCase()
+  ] ||
   "application/octet-stream";
 
-// index.html e manifesto podem mudar entre builds.
 const isVolatile = (rel) =>
   rel === "index.html" ||
   rel === "images-manifest.json";
@@ -98,37 +131,50 @@ const isVolatile = (rel) =>
 function put(rel, buf) {
   if (
     cache.has(rel) ||
-    cachedBytes + buf.length > CACHE_LIMIT
+    cachedBytes + buf.length >
+      CACHE_LIMIT
   ) {
     return;
   }
 
   cache.set(rel, buf);
+
   cachedBytes += buf.length;
 }
 
 // ---------------------------------------------------------------------------
-// Pré-carrega dist/ para RAM.
+// Pré-carrega dist/ em RAM.
 // ---------------------------------------------------------------------------
-async function prefill(dir = DIST, base = "") {
+async function prefill(
+  dir = DIST,
+  base = ""
+) {
   let entries;
 
   try {
-    entries = await fsp.readdir(dir, {
-      withFileTypes: true
-    });
+    entries =
+      await fsp.readdir(
+        dir,
+        {
+          withFileTypes: true
+        }
+      );
   } catch {
     return;
   }
 
   for (const entry of entries) {
-    const rel = base
-      ? `${base}/${entry.name}`
-      : entry.name;
+    const rel =
+      base
+        ? `${base}/${entry.name}`
+        : entry.name;
 
     if (entry.isDirectory()) {
       await prefill(
-        path.join(dir, entry.name),
+        path.join(
+          dir,
+          entry.name
+        ),
         rel
       );
 
@@ -142,88 +188,116 @@ async function prefill(dir = DIST, base = "") {
     try {
       put(
         rel,
+
         await fsp.readFile(
-          path.join(dir, entry.name)
+          path.join(
+            dir,
+            entry.name
+          )
         )
       );
     } catch {
-      // Arquivo ilegível não interrompe o restante.
+      // Arquivo ilegível não
+      // interrompe o restante.
     }
   }
 }
 
 // ---------------------------------------------------------------------------
-// Limpa cache do Chromium quando houver um build novo.
+// Limpa cache quando detectar build novo.
 // ---------------------------------------------------------------------------
 async function invalidateOnNewBuild() {
-  const stampFile = path.join(
-    app.getPath("userData"),
-    "build-stamp"
-  );
+  const stampFile =
+    path.join(
+      app.getPath("userData"),
+      "build-stamp"
+    );
 
   let current = "dev";
 
   try {
-    const st = fs.statSync(
-      path.join(DIST, "index.html")
-    );
+    const st =
+      fs.statSync(
+        path.join(
+          DIST,
+          "index.html"
+        )
+      );
 
-    current = `${st.mtimeMs}:${st.size}`;
+    current =
+      `${st.mtimeMs}:${st.size}`;
+
   } catch {
-    // Sem dist, o erro aparecerá no carregamento.
+    // Sem dist, o erro aparecerá
+    // durante o carregamento.
   }
 
   let previous = null;
 
   try {
-    previous = fs.readFileSync(
-      stampFile,
-      "utf8"
-    );
+    previous =
+      fs.readFileSync(
+        stampFile,
+        "utf8"
+      );
+
   } catch {
     // Primeira execução.
   }
 
   if (previous !== current) {
-    await session.defaultSession.clearCache();
+    await session
+      .defaultSession
+      .clearCache();
 
     try {
       fs.writeFileSync(
         stampFile,
         current
       );
+
     } catch {
-      // Caso userData esteja somente leitura.
+      // Caso userData esteja
+      // somente leitura.
     }
   }
 }
 
 // ---------------------------------------------------------------------------
-// Registra o protocolo app://
+// Registra protocolo app://
 // ---------------------------------------------------------------------------
 function registerProtocol() {
   protocol.handle(
     "app",
-    async (request) => {
-      const url = new URL(request.url);
 
-      let rel = decodeURIComponent(
-        url.pathname
-      ).replace(/^\/+/, "");
+    async (request) => {
+      const url =
+        new URL(request.url);
+
+      let rel =
+        decodeURIComponent(
+          url.pathname
+        ).replace(
+          /^\/+/,
+          ""
+        );
 
       if (!rel) {
         rel = "index.html";
       }
 
-      const abs = path.resolve(
-        DIST,
-        rel
-      );
+      const abs =
+        path.resolve(
+          DIST,
+          rel
+        );
 
-      // Impede acesso fora de dist/.
+      // Impede sair de dist/.
       if (
         abs !== DIST &&
-        !abs.startsWith(DIST + path.sep)
+        !abs.startsWith(
+          DIST + path.sep
+        )
       ) {
         return new Response(
           "Forbidden",
@@ -233,13 +307,18 @@ function registerProtocol() {
         );
       }
 
-      let buf = cache.get(rel);
+      let buf =
+        cache.get(rel);
 
       if (!buf) {
         try {
-          buf = await fsp.readFile(abs);
+          buf =
+            await fsp.readFile(
+              abs
+            );
 
           put(rel, buf);
+
         } catch {
           return new Response(
             "Not found",
@@ -250,27 +329,33 @@ function registerProtocol() {
         }
       }
 
-      return new Response(buf, {
-        status: 200,
+      return new Response(
+        buf,
+        {
+          status: 200,
 
-        headers: {
-          "Content-Type": mimeOf(rel),
+          headers: {
+            "Content-Type":
+              mimeOf(rel),
 
-          "Content-Length":
-            String(buf.length),
+            "Content-Length":
+              String(
+                buf.length
+              ),
 
-          "Cache-Control":
-            isVolatile(rel)
-              ? "no-cache"
-              : "public, max-age=31536000, immutable"
+            "Cache-Control":
+              isVolatile(rel)
+                ? "no-cache"
+                : "public, max-age=31536000, immutable"
+          }
         }
-      });
+      );
     }
   );
 }
 
 // ---------------------------------------------------------------------------
-// Janela principal.
+// Estado global da janela.
 // ---------------------------------------------------------------------------
 let win = null;
 
@@ -280,12 +365,65 @@ let quitting = false;
 
 let recoveries = [];
 
-app.on("before-quit", () => {
-  quitting = true;
-});
+app.on(
+  "before-quit",
+  () => {
+    quitting = true;
+  }
+);
 
 // ---------------------------------------------------------------------------
-// Exibe a janela somente depois do aquecimento inicial.
+// Força a janela a ocupar TODO o monitor.
+//
+// Isso não depende mais de 1080x1920.
+// Pega automaticamente resolução, escala e orientação reais do Windows.
+// ---------------------------------------------------------------------------
+function aplicarTelaCheia() {
+  if (
+    !win ||
+    win.isDestroyed()
+  ) {
+    return;
+  }
+
+  const display =
+    screen.getPrimaryDisplay();
+
+  const bounds =
+    display.bounds;
+
+  // Tamanho EXATO do monitor,
+  // incluindo a região normalmente
+  // ocupada pela barra de tarefas.
+  win.setBounds(
+    {
+      x: bounds.x,
+      y: bounds.y,
+      width: bounds.width,
+      height: bounds.height
+    },
+    false
+  );
+
+  // Ativa novamente o modo kiosk.
+  win.setKiosk(true);
+
+  // Garante fullscreen.
+  win.setFullScreen(true);
+
+  // A janela fica acima inclusive
+  // da barra de tarefas.
+  win.setAlwaysOnTop(
+    true,
+    "screen-saver"
+  );
+
+  // Traz para o topo.
+  win.moveTop();
+}
+
+// ---------------------------------------------------------------------------
+// Exibe a janela somente depois do aquecimento.
 // ---------------------------------------------------------------------------
 function reveal(origem) {
   if (
@@ -302,105 +440,193 @@ function reveal(origem) {
     `[totem] janela visível (${origem})`
   );
 
+  // Antes de mostrar, já força
+  // posição/tamanho corretos.
+  aplicarTelaCheia();
+
   win.show();
+
+  // Reforça novamente depois
+  // que o Windows realmente
+  // tornou a janela visível.
+  aplicarTelaCheia();
+
   win.focus();
+
+  win.moveTop();
 }
 
 // ---------------------------------------------------------------------------
 // Criação da janela.
 // ---------------------------------------------------------------------------
 function createWindow() {
-  win = new BrowserWindow({
+  const display =
+    screen.getPrimaryDisplay();
 
-    // ---------------------------------------------------------------
-    // TAMANHO DO TOTEM
-    // ---------------------------------------------------------------
-    width: 1080,
-    height: 1920,
+  const {
+    x,
+    y,
+    width,
+    height
+  } = display.bounds;
 
-    // ---------------------------------------------------------------
-    // MODO TOTEM / KIOSK
-    // ---------------------------------------------------------------
+  console.log(
+    `[totem] monitor: ${width}x${height} em ${x},${y}`
+  );
 
-    // Kiosk é mais restritivo que apenas fullscreen.
-    kiosk: true,
+  win =
+    new BrowserWindow({
+      // ---------------------------------------------------------------
+      // USA A RESOLUÇÃO REAL DO MONITOR
+      // ---------------------------------------------------------------
+      x,
+      y,
+      width,
+      height,
 
-    fullscreen: true,
+      // ---------------------------------------------------------------
+      // MODO TOTEM
+      // ---------------------------------------------------------------
+      kiosk: true,
 
-    // Remove completamente a moldura do Windows.
-    frame: false,
+      fullscreen: true,
 
-    // Nenhuma barra de menus.
-    autoHideMenuBar: true,
+      frame: false,
 
-    // Usuário touch não pode alterar tamanho da janela.
-    resizable: false,
+      autoHideMenuBar: true,
 
-    // Impede minimizar por controles da própria janela.
-    minimizable: false,
+      resizable: false,
 
-    // Impede maximizar/restaurar por controles da janela.
-    maximizable: false,
+      minimizable: false,
 
-    // A janela continua escondida durante o aquecimento.
-    show: false,
+      maximizable: false,
 
-    backgroundColor: "#0b1426",
+      // Não mostra o aplicativo
+      // como botão normal da barra.
+      skipTaskbar: true,
 
-    webPreferences: {
-      preload: path.join(
-        __dirname,
-        "preload.cjs"
-      ),
+      // Mantém acima da taskbar.
+      alwaysOnTop: true,
 
-      contextIsolation: true,
+      // Continua invisível
+      // enquanto ocorre o preload.
+      show: false,
 
-      nodeIntegration: false,
+      backgroundColor:
+        "#0b1426",
 
-      // Mantém animações/timers ativos normalmente.
-      backgroundThrottling: false
-    }
-  });
+      webPreferences: {
+        preload:
+          path.join(
+            __dirname,
+            "preload.cjs"
+          ),
+
+        contextIsolation: true,
+
+        nodeIntegration: false,
+
+        backgroundThrottling:
+          false
+      }
+    });
 
   // -----------------------------------------------------------------
-  // REMOVE MENU DO ELECTRON
+  // REMOVE COMPLETAMENTE MENU DO ELECTRON
   // -----------------------------------------------------------------
-  Menu.setApplicationMenu(null);
+  Menu.setApplicationMenu(
+    null
+  );
 
-  win.setMenuBarVisibility(false);
+  win.setMenu(
+    null
+  );
+
+  win.setMenuBarVisibility(
+    false
+  );
+
+  // -----------------------------------------------------------------
+  // FORÇA O NÍVEL DA JANELA ACIMA DA TASKBAR
+  // -----------------------------------------------------------------
+  win.setAlwaysOnTop(
+    true,
+    "screen-saver"
+  );
+
+  // -----------------------------------------------------------------
+  // FORÇA TELA CHEIA REAL
+  // -----------------------------------------------------------------
+  aplicarTelaCheia();
 
   // -----------------------------------------------------------------
   // BLOQUEIA MENU DE CONTEXTO
-  //
-  // Evita menu ao:
-  // - segurar o dedo;
-  // - clique direito;
-  // - long press.
-  //
-  // Não interfere em clique normal, scroll ou touch do site.
   // -----------------------------------------------------------------
   win.webContents.on(
     "context-menu",
+
     (event) => {
       event.preventDefault();
     }
   );
 
   // -----------------------------------------------------------------
-  // IMPORTANTE:
+  // NÃO BLOQUEAMOS TECLADO.
   //
-  // NÃO estamos bloqueando atalhos de teclado.
-  //
-  // Portanto um técnico ainda poderá usar teclado físico para manutenção.
+  // Assim, teclado físico continua
+  // disponível para manutenção.
   // -----------------------------------------------------------------
+
+  // -----------------------------------------------------------------
+  // Quando o Windows mostrar a janela,
+  // reforça novamente o modo fullscreen.
+  // -----------------------------------------------------------------
+  win.on(
+    "show",
+    () => {
+      aplicarTelaCheia();
+    }
+  );
+
+  // -----------------------------------------------------------------
+  // Quando recuperar foco, reforça novamente.
+  // -----------------------------------------------------------------
+  win.on(
+    "focus",
+    () => {
+      aplicarTelaCheia();
+    }
+  );
+
+  // -----------------------------------------------------------------
+  // Se por algum motivo o fullscreen for perdido,
+  // força novamente.
+  // -----------------------------------------------------------------
+  win.on(
+    "leave-full-screen",
+    () => {
+      if (!quitting) {
+        setTimeout(
+          () => {
+            aplicarTelaCheia();
+          },
+          50
+        );
+      }
+    }
+  );
 
   // -----------------------------------------------------------------
   // Watchdog de inicialização.
   // -----------------------------------------------------------------
-  const watchdog = setTimeout(
-    () => reveal("watchdog"),
-    12000
-  );
+  const watchdog =
+    setTimeout(
+      () =>
+        reveal(
+          "watchdog"
+        ),
+      12000
+    );
 
   ipcMain.removeAllListeners(
     "kiosk:ready"
@@ -408,55 +634,68 @@ function createWindow() {
 
   ipcMain.on(
     "kiosk:ready",
-    () => {
-      clearTimeout(watchdog);
 
-      reveal("aquecimento");
+    () => {
+      clearTimeout(
+        watchdog
+      );
+
+      reveal(
+        "aquecimento"
+      );
     }
   );
 
   // -----------------------------------------------------------------
   // Recuperação automática do renderer.
   // -----------------------------------------------------------------
-  const recover = (motivo) => {
-    if (quitting) {
-      return;
-    }
+  const recover =
+    (motivo) => {
+      if (quitting) {
+        return;
+      }
 
-    const agora = Date.now();
+      const agora =
+        Date.now();
 
-    recoveries =
-      recoveries.filter(
-        (t) =>
-          agora - t <
-          5 * 60 * 1000
+      recoveries =
+        recoveries.filter(
+          (t) =>
+            agora - t <
+            5 * 60 * 1000
+        );
+
+      recoveries.push(
+        agora
       );
 
-    recoveries.push(agora);
+      console.error(
+        `[totem] recuperando de: ${motivo} (${recoveries.length}/5)`
+      );
 
-    console.error(
-      `[totem] recuperando de: ${motivo} (${recoveries.length}/5)`
-    );
+      if (
+        recoveries.length > 5
+      ) {
+        app.relaunch();
 
-    if (recoveries.length > 5) {
-      app.relaunch();
-      app.exit(0);
+        app.exit(0);
 
-      return;
-    }
+        return;
+      }
 
-    shown = false;
+      shown = false;
 
-    if (
-      win &&
-      !win.isDestroyed()
-    ) {
-      win.reload();
-    }
-  };
+      if (
+        win &&
+        !win.isDestroyed()
+      ) {
+        win.reload();
+      }
+    };
 
   win.webContents.on(
     "render-process-gone",
+
     (_e, details) => {
       if (
         details.reason ===
@@ -473,17 +712,24 @@ function createWindow() {
 
   win.webContents.on(
     "unresponsive",
+
     () => {
-      recover("unresponsive");
+      recover(
+        "unresponsive"
+      );
     }
   );
 
   // -----------------------------------------------------------------
-  // Encaminha logs [totem] do renderer para o processo principal.
+  // Encaminha logs [totem].
   // -----------------------------------------------------------------
   win.webContents.on(
     "console-message",
-    (evento, ...resto) => {
+
+    (
+      evento,
+      ...resto
+    ) => {
       const mensagem =
         typeof evento?.message ===
         "string"
@@ -497,7 +743,9 @@ function createWindow() {
           "[totem]"
         )
       ) {
-        console.log(mensagem);
+        console.log(
+          mensagem
+        );
       }
     }
   );
@@ -505,51 +753,98 @@ function createWindow() {
   // -----------------------------------------------------------------
   // CARREGA O SITE
   // -----------------------------------------------------------------
-  win.loadURL("app://linde/");
+  win.loadURL(
+    "app://linde/"
+  );
 }
 
 // ---------------------------------------------------------------------------
-// Se tentarem abrir o aplicativo novamente, traz o atual para frente.
+// Segunda instância: traz a janela atual de volta.
 // ---------------------------------------------------------------------------
 app.on(
   "second-instance",
+
   () => {
     if (
       win &&
       !win.isDestroyed()
     ) {
-      if (win.isMinimized()) {
+      if (
+        win.isMinimized()
+      ) {
         win.restore();
       }
 
+      aplicarTelaCheia();
+
+      win.show();
+
       win.focus();
+
+      win.moveTop();
     }
   }
 );
 
 // ---------------------------------------------------------------------------
+// Se resolução, orientação ou escala do monitor mudar,
+// recalcula automaticamente a tela cheia.
+// ---------------------------------------------------------------------------
+function monitorarTela() {
+  screen.on(
+    "display-metrics-changed",
+
+    (
+      _event,
+      display
+    ) => {
+      if (
+        display.id ===
+        screen
+          .getPrimaryDisplay()
+          .id
+      ) {
+        setTimeout(
+          () => {
+            aplicarTelaCheia();
+          },
+          100
+        );
+      }
+    }
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Inicialização.
 // ---------------------------------------------------------------------------
-if (temInstanciaUnica) {
+if (
+  temInstanciaUnica
+) {
   app.whenReady().then(
     async () => {
-      // Remove menu global do aplicativo.
-      Menu.setApplicationMenu(null);
+      Menu.setApplicationMenu(
+        null
+      );
 
       registerProtocol();
 
       await invalidateOnNewBuild();
 
+      monitorarTela();
+
       createWindow();
 
-      // Preenche cache depois da janela existir.
-      prefill().then(() => {
-        console.log(
-          `[totem] ${cache.size} arquivos em RAM (${(
-            cachedBytes / 1048576
-          ).toFixed(1)} MB)`
-        );
-      });
+      prefill().then(
+        () => {
+          console.log(
+            `[totem] ${cache.size} arquivos em RAM (${(
+              cachedBytes /
+              1048576
+            ).toFixed(1)} MB)`
+          );
+        }
+      );
     }
   );
 }
@@ -559,6 +854,7 @@ if (temInstanciaUnica) {
 // ---------------------------------------------------------------------------
 app.on(
   "window-all-closed",
+
   () => {
     if (
       process.platform !==
