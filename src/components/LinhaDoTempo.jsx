@@ -6,20 +6,18 @@ import { createPortal } from 'react-dom'
 // Midnight #323232 · Off-white #f0f0f0
 
 export const milestones = [
-  { image: './images/abahistoriacard1966.webp', imagePosition: 'center 80%', year: '1966', desc: 'Em 1966 teve início a história da Linde Vidros, fundada com o propósito de oferecer qualidade, confiança e soluções para o setor vidreiro.' },
-  { image: './images/linde_1989.webp', year: '1989', desc: 'Fundação da Linde Vidros, iniciando uma trajetória de inovação e qualidade no setor vidreiro.' },
-  { image: './images/linde_1991.webp',  year: '1991', desc: 'Em agosto de 1991 foi fundada uma filial na cidade de Rio Negro – PR para a distribuição em chapas de vidros em geral, atendendo outras regiões.' },
-  { image: './images/linde_1993.webp',  year: '1993', desc: 'Nos últimos anos, a unidade de Rio Negro vem investindo em máquinas de última geração para melhor corte e acabamento.' },
-  { image: './images/linde_1995.webp',  year: '1995', desc: 'No ano 2000 foi instalado um forno de tempera vertical.' },
-  { image: './images/linde_2004.webp',  year: '2004', desc: 'A grande mudança ocorreu em 2003 com a aquisição de um forno de tempera horizontal para vidros de 2,8mm até 19mm.' },
-  { image: './images/linde_2007.webp',  year: '2007', desc: 'Em março de 2008 foi instalado seu segundo forno horizontal.' },
-  { image: './images/linde_2009.webp',  year: '2009', desc: 'Vidros insulados de alto desempenho para redução do consumo de energia.' },
-  { image: './images/linde_2012.webp',  year: '2012', desc: 'Segurança e design com múltiplas camadas de proteção.' },
-  { image: './images/linde_2014.webp',  year: '2014', desc: 'Resistência e durabilidade para aplicações de alto impacto.' },
-  { image: './images/linde_2018.webp',  year: '2018', desc: 'Isolamento térmico e acústico para maior conforto.' },
-  { image: './images/linde_2025_1.webp', year: '2025', label: 'Fábrica 1', desc: 'Personalização com impressão de alta qualidade.' },
-  { image: './images/linde_2025_2.webp', year: '2025', label: 'Fábrica 2', desc: 'Espelhos sob medida para todos os ambientes.' },
-  { image: './images/totem.webp',       year: '2027', desc: 'A Linde Vidros segue em frente, com novas fábricas, tecnologias e soluções em vidro para os próximos capítulos da nossa história.' },
+  { image: './images/abahistoriacard1966.webp', imagePosition: 'center 80%', year: '1966', desc: 'Em 1966, Fundada pelo Sr. Pedro Vanderlinde a Vidraçaria Linde da inicio em Mafra-SC, entregando vidros de bicicleta no inicio  do negocio.'},
+  { image: './images/linde_1991.webp',  year: '1991', desc: 'Criada a sede em Rio Negro-PR, iniciando a participação direta dos nossos diretores Gláucio, Daniel e Rafael. Entrando no mercado moveleiro e distribuição de chapas.' },
+  { image: './images/linde_1993.webp',  year: '2000', desc: 'Instalação da tempera vertical. Entrando no mercado do vidro temperado para construção civil e ampliando o mercado moveleiro.' },
+  { image: './images/linde_2004.webp',  year: '2003', desc: 'Aquisição da 1° tempera horizontal  aumentado capacidade de tempera para 26 mil m²  mês. Ampliação do parque fabril e compra do terreno vizinho.' },
+  { image: './images/linde_2009.webp',  year: '2007', desc: 'Ano em que ocorreu a conquista do selo do INMETRO, sendo a 1° empresa do Brasil a conseguir a certificação para vidros 3mm.' },
+  { image: './images/linde_2009.webp',  year: '2008', desc: 'Aquisição da 2° tempera  expandindo nossa capacidade para 70 mil m² mês, houve também a expansão do galpão da fábrica 01.' },
+  { image: './images/linde_2012.webp',  year: '2010', desc: 'Aquisição das mesas de corte laminado e ampliação da capacidade de lapidação. Implantação do ERP (GlassControl).' },
+  { image: './images/2016.webp',  year: '2016', desc: 'Construção da fábrica 02 com 11 mil m²,  e compra da linha de laminação com foco em laminação de chapas e laminados temperados.' },
+  { image: './images/linde_2018.webp',  year: '2020', desc: 'A Linde bate a sua maior produção da historia passando os 1,2 milhões de m² de vidros processados.' },
+  { image: './images/linde_2025_1.webp', year: '2026', label: 'Fábrica 1', desc: 'Atualmente somos uma das maiores empresas de têmpera do Sul do Brasil, com ampla estrutura fabril e atuação nos principais projetos de engenharia civil da região.' },
+  { image: './images/linde_2025_2.webp', year: '2026', label: 'Fábrica 2', desc: 'Nossa segunda unidade é especializada nos setores moveleiro e de refrigeração, atendendo as mais exigentes marcas do mercado.' },
+  { image: './images/totem.webp',       year: '2027', desc: 'A Linde Vidros segue em frente, com nova fábrica, tecnologias e soluções em vidro para os próximos capítulos da nossa história.' },
 ]
 
 const CARD_WIDTH = 480

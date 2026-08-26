@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+
+    <!-- Pesos usados já na primeira tela (corpo 400/500, títulos 700/800).
+         Sem o preload o navegador só descobre a fonte depois de baixar o CSS,
+         e o font-display:swap troca a fonte no meio do caminho (texto "pula").
+         crossorigin é obrigatório em preload de fonte, mesmo na mesma origem. -->
+    <link rel="preload" href="./font/Rotunda-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="./font/Rotunda-Medium.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="./font/Rotunda-Bold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="./font/Rotunda-ExtraBold.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Fundo e logo da PRIMEIRA tela (Produtos). Sem estas duas linhas eles
+         só começam a carregar depois que o bundle JS baixa, executa e o React
+         monta — o totem abre com a tela azul vazia por um instante. Com elas,
+         imagem e JS descem em paralelo. O preloader de src/utils/preloadAssets.js
+         cuida das outras telas depois que esta já está de pé. -->
+    <link rel="preload" href="./images/totem.webp" as="image" type="image/webp" fetchpriority="high" />
+    <link rel="preload" href="./images/logonavbar.webp" as="image" type="image/webp" />
+
+    <title>Linde Vidros — Soluções em Vidro</title>
+    <script type="module" crossorigin src="./assets/index-DIpXgzh-.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CT8RYMZd.css">
+  </head>
+  <body>
+    <div id="modal-root"></div>
+    <div id="root"></div>
+  </body>
+</html>

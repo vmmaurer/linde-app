@@ -47,7 +47,13 @@ export const features = [
     ],
     image: './images/FROTA.webp',
     media: [
-      { type: 'image', src: './images/FROTA.webp' },
+      { type: 'image', src: './images/frota1.webp' },
+      { type: 'image', src: './images/frota2.webp' },
+      { type: 'image', src: './images/frota3.webp' },
+      { type: 'image', src: './images/frota4.webp' },
+      { type: 'image', src: './images/frota5.webp' },
+      { type: 'image', src: './images/frota6.webp' },
+
     ],
   },
   {
@@ -66,10 +72,11 @@ export const features = [
       'Frota própria com mais de 20 caminhões',
       'Amplo catálogo: espelhos, temperados, laminados comuns e temperados, insulados para engenharia e para refrigeração',
     ],
-    image: './images/ESTOQUE.webp',
+    image: './images/casacolor13.webp',
     media: [
-      { type: 'image', src: './images/ESTOQUE.webp' },
+      { type: 'image', src: './images/GLEBA-PALHANO.webp' },
       { type: 'image', src: './images/IMG_5735.webp' },
+      { type: 'image', src: './images/celo-imetro.webp' },
     ],
     // Lista de destaques é longa — imagem menor para o pop-up caber
     // inteiro sem precisar rolar.

@@ -1,8 +1,2 @@
-/dist/
-/node_modules/
-/release/
-/.playwright-mcp/
-
-# Originais das imagens, guardados por scripts/optimize-images.mjs.
-# Ficam fora do repo (72 MB) — sao a fonte para reotimizar ou restaurar.
-/image-originals/
+node_modules/
+.env
