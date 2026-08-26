@@ -148,6 +148,9 @@ export const products = [
   {
     id: 5,
     slug: 'vidro-habitat',
+    // Ficha técnica (chave em src/data/fichaTecnica.js) — só quem tem este
+    // campo mostra o botão "Ficha Técnica" dentro do card.
+    ficha: 'habitat',
     title: 'Vidro Habitat',
     subtitle: 'Proteção Solar',
     image: './images/protecaosolar.webp',
@@ -323,7 +326,7 @@ export const products = [
   {
     id: 11,
     slug: 'extra-clear',
-    title: 'Extra Clear',
+    title: 'Extra Claros',
     subtitle: 'Transparência absoluta',
     image: './images/extra-clear.webp',
     modalImage: './images/extra-clear.webp',
@@ -406,6 +409,73 @@ export const products = [
       'Vidros insulados de alto desempenho',
       'Fachadas residenciais e comerciais',
       'Ambientes climatizados com foco em eficiência energética',
+    ],
+  },
+  {
+    id: 15,
+    slug: 'smart-glass',
+    title: 'Smart Glass',
+    subtitle: 'Privacidade sob controle',
+    // ATENÇÃO: imagens temporárias (banco gratuito Pexels) até chegarem as
+    // fotos da Linde. Trocar os arquivos SMARTGLASS_*.webp em public/images.
+    image: './images/SMARTGLASS_1.webp',
+    modalImage: './images/SMARTGLASS_1.webp',
+    brandLogo: '',
+    media: [
+      { type: 'image', src: './images/SMARTGLASS_1.webp' },
+      { type: 'image', src: './images/SMARTGLASS_2.webp' },
+    ],
+    color: 'from-slate-800/80 to-navy-950/90',
+    description:
+      'O Smart Glass é um vidro laminado com película inteligente que alterna entre transparente e opaco ao toque de um botão. Em segundos o ambiente ganha privacidade total, sem cortinas ou persianas, preservando a entrada de luz natural e o visual limpo do vidro.',
+    applications: [
+      'Salas de reunião e ambientes corporativos',
+      'Consultórios, clínicas e hospitais',
+      'Divisórias e áreas íntimas residenciais',
+    ],
+  },
+  {
+    id: 16,
+    slug: 'pelicula-seguranca',
+    title: 'Película de Segurança',
+    subtitle: 'Proteção sem trocar o vidro',
+    // Imagens temporárias — trocar PELICULA_*.webp em public/images.
+    image: './images/PELICULA_1.webp',
+    modalImage: './images/PELICULA_1.webp',
+    brandLogo: '',
+    media: [
+      { type: 'image', src: './images/PELICULA_1.webp' },
+      { type: 'image', src: './images/PELICULA_2.webp' },
+    ],
+    color: 'from-blue-900/80 to-navy-950/90',
+    description:
+      'A película de segurança é aplicada sobre o vidro já instalado e mantém os fragmentos unidos em caso de quebra, reduzindo o risco de acidentes. Também filtra raios UV e auxilia no controle de calor e ofuscamento, sendo a solução mais rápida para reforçar vidros existentes.',
+    applications: [
+      'Vitrines e fachadas comerciais',
+      'Portas e janelas residenciais',
+      'Reforço de vidros já instalados',
+    ],
+  },
+  {
+    id: 17,
+    slug: 'anti-chama',
+    title: 'Anti Chama',
+    subtitle: 'Resistência ao fogo',
+    // Imagens temporárias — trocar ANTICHAMA_*.webp em public/images.
+    image: './images/ANTICHAMA_1.webp',
+    modalImage: './images/ANTICHAMA_1.webp',
+    brandLogo: '',
+    media: [
+      { type: 'image', src: './images/ANTICHAMA_1.webp' },
+      { type: 'image', src: './images/ANTICHAMA_2.webp' },
+    ],
+    color: 'from-orange-900/80 to-navy-950/90',
+    description:
+      'Os vidros resistentes ao fogo formam uma barreira contra fumaça, chamas e gases tóxicos por até 120 minutos, reduzindo o calor irradiado e garantindo tempo para a evacuação. São vidros de segurança temperados e laminados, estáveis aos raios UV, com classificações de E/EW30 a EW120 e de EI30 a EI120 conforme o nível de proteção exigido.',
+    applications: [
+      'Portas e paredes corta-fogo',
+      'Visores em drywall e alvenaria',
+      'Fachadas, claraboias e rotas de fuga',
     ],
   },
 ]

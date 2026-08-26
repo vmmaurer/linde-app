@@ -1,9 +1,12 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import MediaCarousel from './MediaCarousel'
+import FichaTecnicaModal from './FichaTecnicaModal'
+import { fichasTecnicas } from '../data/fichaTecnica'
 
 export default function ProductModal({ product, onClose }) {
   const overlayRef = useRef(null)
+  const [fichaAberta, setFichaAberta] = useState(false)
 
   useEffect(() => {
     const handleKey = (e) => {
@@ -32,6 +35,10 @@ export default function ProductModal({ product, onClose }) {
     if (product.modalVideo) mediaList.push({ type: 'video', src: product.modalVideo })
     if (product.modalImage) mediaList.push({ type: 'image', src: product.modalImage })
   }
+
+  // Só os produtos com o campo `ficha` (hoje: Vidro Habitat) ganham o
+  // botão que abre o pop-up com as tabelas de desempenho.
+  const ficha = product.ficha ? fichasTecnicas[product.ficha] : null
 
   return createPortal(
     <div
@@ -93,23 +100,44 @@ export default function ProductModal({ product, onClose }) {
               {product.description}
             </p>
 
-            {/* Applications — apenas ícone + texto, sem caixa clicável */}
-            <div>
-              <h3 className="text-glass-300 text-xs font-semibold tracking-widest uppercase mb-3">
-                Aplicações
-              </h3>
-              <div className="flex flex-col gap-3">
-                {product.applications.map((app, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    {/* Ícone de marcador (localização) */}
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="flex-shrink-0">
-                      <path d="M9 1.5c-2.9 0-5.25 2.35-5.25 5.25 0 3.94 5.25 9.75 5.25 9.75s5.25-5.81 5.25-9.75C14.25 3.85 11.9 1.5 9 1.5z" stroke="#75c2ff" strokeWidth="1.6" strokeLinejoin="round"/>
-                      <circle cx="9" cy="6.75" r="1.9" stroke="#75c2ff" strokeWidth="1.6"/>
-                    </svg>
-                    <span className="text-white/85 text-base">{app}</span>
-                  </div>
-                ))}
+            {/* Applications — apenas ícone + texto, sem caixa clicável.
+                Quando o produto tem ficha técnica, o botão dela ocupa a
+                coluna da direita, alinhado à base da lista. */}
+            <div className="flex items-end justify-between gap-6">
+              <div className="flex-1 min-w-0">
+                <h3 className="text-glass-300 text-xs font-semibold tracking-widest uppercase mb-3">
+                  Aplicações
+                </h3>
+                <div className="flex flex-col gap-3">
+                  {product.applications.map((app, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      {/* Ícone de marcador (localização) */}
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="flex-shrink-0">
+                        <path d="M9 1.5c-2.9 0-5.25 2.35-5.25 5.25 0 3.94 5.25 9.75 5.25 9.75s5.25-5.81 5.25-9.75C14.25 3.85 11.9 1.5 9 1.5z" stroke="#75c2ff" strokeWidth="1.6" strokeLinejoin="round"/>
+                        <circle cx="9" cy="6.75" r="1.9" stroke="#75c2ff" strokeWidth="1.6"/>
+                      </svg>
+                      <span className="text-white/85 text-base">{app}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
+
+              {ficha && (
+                <button
+                  onPointerDown={(e) => { e.stopPropagation(); setFichaAberta(true) }}
+                  aria-label="Abrir ficha técnica"
+                  className="ficha-btn"
+                >
+                  <span className="ficha-btn__glow" aria-hidden />
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="flex-shrink-0">
+                    <path d="M11.5 2H5.5A1.5 1.5 0 0 0 4 3.5v13A1.5 1.5 0 0 0 5.5 18h9a1.5 1.5 0 0 0 1.5-1.5V6.5L11.5 2Z"
+                      stroke="#f0c832" strokeWidth="1.5" strokeLinejoin="round" />
+                    <path d="M11.5 2v4.5H16" stroke="#f0c832" strokeWidth="1.5" strokeLinejoin="round" />
+                    <path d="M7 10.5h6M7 13.5h4" stroke="#f0c832" strokeWidth="1.5" strokeLinecap="round" />
+                  </svg>
+                  <span className="ficha-btn__label">Ficha Técnica</span>
+                </button>
+              )}
             </div>
 
             {/* Seção Diferenciais removida conforme solicitado */}
@@ -118,8 +146,20 @@ export default function ProductModal({ product, onClose }) {
       </div>
 
       {/* Espaçador inferior — centraliza o botão fechar entre o fim
-          do card e o fim da tela (mesmo flex-grow do espaçador superior) */}
-      <div className="w-full flex items-center justify-center" style={{ flex: '1 1 0%', minHeight: 0, zIndex: 1 }}>
+          do card e o fim da tela (mesmo flex-grow do espaçador superior).
+          Com a ficha técnica aberta o botão some (só a opacidade, para não
+          mexer no espaçamento) e quem fecha é o botão da ficha. */}
+      <div
+        className="w-full flex items-center justify-center"
+        style={{
+          flex: '1 1 0%',
+          minHeight: 0,
+          zIndex: 1,
+          opacity: fichaAberta ? 0 : 1,
+          pointerEvents: fichaAberta ? 'none' : 'auto',
+          transition: 'opacity 0.25s ease',
+        }}
+      >
         <button
           onPointerDown={onClose}
           aria-label="Fechar"
@@ -145,11 +185,89 @@ export default function ProductModal({ product, onClose }) {
         </button>
       </div>
 
+      {/* Pop-up da ficha técnica — abre por cima deste card */}
+      {ficha && fichaAberta && (
+        <FichaTecnicaModal ficha={ficha} onClose={() => setFichaAberta(false)} />
+      )}
+
       <style>{`
         @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
         @keyframes modalScale {
           from { opacity: 0; transform: scale(0.92) translateY(20px); }
           to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* ── Botão "Ficha Técnica" ──
+           Preto fosco com borda Sunshine (#f0c832) em neon. O brilho
+           respira devagar para chamar o toque sem competir com o card. */
+        .ficha-btn {
+          position: relative;
+          flex-shrink: 0;
+          display: inline-flex;
+          align-items: center;
+          gap: 11px;
+          padding: 17px 26px;
+          min-height: 58px;
+          border-radius: 99rem;
+          background: linear-gradient(160deg, rgba(16,18,24,0.95) 0%, rgba(8,10,14,0.97) 100%);
+          border: 2px solid rgba(240,200,50,0.75);
+          box-shadow: 0 8px 26px rgba(0,0,0,0.45),
+                      0 0 18px rgba(240,200,50,0.25),
+                      inset 0 1px 0 rgba(255,255,255,0.10);
+          color: #ffffff;
+          cursor: pointer;
+          touch-action: manipulation;
+          overflow: hidden;
+          transition: transform 0.18s cubic-bezier(0.22,1,0.36,1),
+                      box-shadow 0.25s ease,
+                      border-color 0.25s ease;
+          animation: fichaBtnIn 0.5s cubic-bezier(0.22,1,0.36,1) 0.25s both;
+        }
+        .ficha-btn:active {
+          transform: scale(0.955);
+          border-color: rgba(240,200,50,1);
+          box-shadow: 0 4px 14px rgba(0,0,0,0.5),
+                      0 0 30px rgba(240,200,50,0.45),
+                      inset 0 1px 0 rgba(255,255,255,0.12);
+        }
+        .ficha-btn__label {
+          font-size: 15px;
+          font-weight: 700;
+          letter-spacing: .13em;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+        /* Halo pulsante por trás da borda */
+        .ficha-btn__glow {
+          position: absolute;
+          inset: -2px;
+          border-radius: 99rem;
+          border: 2px solid rgba(240,200,50,0.55);
+          pointer-events: none;
+          animation: fichaBtnPulse 2.8s ease-in-out infinite;
+        }
+        /* Reflexo que atravessa o botão de tempos em tempos */
+        .ficha-btn::after {
+          content: '';
+          position: absolute;
+          top: 0; bottom: 0;
+          left: -50%;
+          width: 45%;
+          background: linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(240,200,50,0.16) 50%, rgba(255,255,255,0) 100%);
+          pointer-events: none;
+          animation: fichaBtnShine 4.6s ease-in-out infinite;
+        }
+        @keyframes fichaBtnIn {
+          from { opacity: 0; transform: translateY(10px) scale(0.96); }
+          to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes fichaBtnPulse {
+          0%, 100% { opacity: 0.35; transform: scale(1); }
+          50%      { opacity: 0;    transform: scale(1.09); }
+        }
+        @keyframes fichaBtnShine {
+          0%, 58%   { transform: translateX(0) skewX(-18deg); }
+          86%, 100% { transform: translateX(380%) skewX(-18deg); }
         }
       `}</style>
     </div>,

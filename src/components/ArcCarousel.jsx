@@ -37,7 +37,7 @@ export default function ArcCarousel({ items, onCardTap, paused = false }) {
     clearInterval(autoRotateTimer.current)
     autoRotateTimer.current = setInterval(() => {
       setCurrentIndex(prev => (prev + 1) % count)
-    }, 4000)
+    }, 6000)
   }, [count])
 
   const pauseAndScheduleResume = useCallback(() => {
