@@ -157,15 +157,17 @@ export const products = [
     modalImage: './images/protecaosolar.webp',
     // Logo de marca (opcional): preencha só onde precisar. Ex: './images/ICON-SCREENLINE.webp'
     brandLogo: './images/ICON-HABITAT.webp',
+    // `caption` = linha Habitat que a foto representa. O ProductModal mostra
+    // essa legenda em amarelo ao lado do título e troca junto com a foto.
+    // A capa (protecaosolar.webp, campo `image` acima) fica só no card da
+    // roleta — aqui entram apenas as fotos das seis linhas.
     media: [
-      { type: 'image', src: './images/protecaosolar.webp' },
-      { type: 'image', src: './images/HABITAT_1.jpg.webp' },
-      { type: 'image', src: './images/HABITAT_2.jpg.webp' },
-      { type: 'image', src: './images/HABITAT_3.webp' },
-      { type: 'image', src: './images/HABITAT_4.webp' },
-      { type: 'image', src: './images/HABITAT_5.webp' },
-      // { type: 'video', src: './images/seu_video.mp4' },
-      // { type: 'image', src: './images/outra_foto.jpg' },
+      { type: 'image', src: './images/HABITAT_NEUTRO_CINZA.webp', caption: 'Neutro Cinza' },
+      { type: 'image', src: './images/HABITAT_NEUTRO_CINZA_CLARO.webp', caption: 'Neutro Cinza Claro' },
+      { type: 'image', src: './images/HABITAT_NEUTRO_INCOLOR.webp', caption: 'Neutro Incolor' },
+      { type: 'image', src: './images/HABITAT_REFLETIVO_CINZA.webp', caption: 'Refletivo Cinza' },
+      { type: 'image', src: './images/HABITAT_REFLETIVO_ESMERALDA.webp', caption: 'Refletivo Esmeralda' },
+      { type: 'image', src: './images/HABITAT_REFLETIVO_CHAMPANHE.webp', caption: 'Refletivo Champanhe' },
     ],
     color: 'from-amber-900/80 to-navy-950/90',
     description:

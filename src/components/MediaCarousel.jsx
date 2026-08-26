@@ -2,7 +2,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import { warmNeighbors } from '../utils/preloadAssets'
 
 // ── Carrossel de mídia (vídeo + fotos) usado dentro dos pop-ups de card ──
-export default function MediaCarousel({ media, height = '48vh', minHeight = 340 }) {
+// `onIndexChange` avisa o pop-up qual mídia está na tela — é o que permite
+// ao ProductModal trocar a legenda (ex.: "Refletivo Cinza") junto com a foto.
+export default function MediaCarousel({ media, height = '48vh', minHeight = 340, onIndexChange }) {
   const [index, setIndex] = useState(0)
   const startX = useRef(null)
   const startY = useRef(null)
@@ -18,7 +20,11 @@ export default function MediaCarousel({ media, height = '48vh', minHeight = 340 
     warmNeighbors(around.filter((m) => m && m.type === 'image').map((m) => m.src))
   }, [index, media, count])
 
-  const go = (i) => setIndex(((i % count) + count) % count)
+  const go = (i) => {
+    const alvo = ((i % count) + count) % count
+    setIndex(alvo)
+    onIndexChange?.(alvo)
+  }
   const next = () => go(index + 1)
   const prev = () => go(index - 1)
 

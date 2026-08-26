@@ -7,6 +7,7 @@ import { fichasTecnicas } from '../data/fichaTecnica'
 export default function ProductModal({ product, onClose }) {
   const overlayRef = useRef(null)
   const [fichaAberta, setFichaAberta] = useState(false)
+  const [mediaIndex, setMediaIndex] = useState(0)
 
   useEffect(() => {
     const handleKey = (e) => {
@@ -40,6 +41,10 @@ export default function ProductModal({ product, onClose }) {
   // botão que abre o pop-up com as tabelas de desempenho.
   const ficha = product.ficha ? fichasTecnicas[product.ficha] : null
 
+  // Legenda da foto atual (ex.: "Refletivo Cinza"). Só as mídias que têm
+  // `caption` mostram algo — a capa, por exemplo, não tem.
+  const legenda = mediaList[mediaIndex]?.caption || null
+
   return createPortal(
     <div
       ref={overlayRef}
@@ -70,16 +75,28 @@ export default function ProductModal({ product, onClose }) {
         onPointerDown={(e) => e.stopPropagation()}
       >
         <div className="flex flex-col overflow-y-auto" style={{ maxHeight: '78vh' }}>
-          <MediaCarousel media={mediaList} />
+          <MediaCarousel media={mediaList} onIndexChange={setMediaIndex} />
 
           <div className="p-8 md:p-10 flex flex-col gap-6">
             <div className="flex items-start justify-between gap-4">
-              <div>
+              <div className="min-w-0">
                 <p className="text-glass-300 text-sm font-medium tracking-widest uppercase mb-2">
                   {product.subtitle}
                 </p>
-                <h2 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight">
-                  {product.title}
+                <h2
+                  className="font-display text-4xl md:text-5xl font-bold text-white leading-tight"
+                  style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}
+                >
+                  <span>{product.title}</span>
+
+                  {/* Legenda da foto — a key força o replay da animação
+                      a cada troca de imagem no carrossel */}
+                  {legenda && (
+                    <span key={legenda} className="legenda-media">
+                      <span className="legenda-media__barra" aria-hidden />
+                      <span className="legenda-media__txt">{legenda}</span>
+                    </span>
+                  )}
                 </h2>
               </div>
 
@@ -195,6 +212,45 @@ export default function ProductModal({ product, onClose }) {
         @keyframes modalScale {
           from { opacity: 0; transform: scale(0.92) translateY(20px); }
           to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* ── Legenda da foto, ao lado do título ──
+           Título fica branco; a linha do Habitat (Neutro/Refletivo + tom)
+           entra em Sunshine (#f0c832). A troca é anunciada: a barra cresce,
+           o texto chega desfocado da esquerda e dá um flash antes de assentar. */
+        .legenda-media {
+          display: inline-flex;
+          align-items: center;
+          gap: 14px;
+          flex-shrink: 0;
+        }
+        .legenda-media__barra {
+          width: 3px;
+          height: 32px;
+          border-radius: 2px;
+          background: #f0c832;
+          box-shadow: 0 0 16px rgba(240,200,50,0.65);
+          animation: legendaBarra 0.55s cubic-bezier(0.22,1,0.36,1) both;
+        }
+        .legenda-media__txt {
+          font-size: 25px;
+          font-weight: 800;
+          letter-spacing: -0.005em;
+          color: #f0c832;
+          white-space: nowrap;
+          animation: legendaTexto 0.6s cubic-bezier(0.22,1,0.36,1) both;
+        }
+        @keyframes legendaBarra {
+          0%   { transform: scaleY(0);    opacity: 0; }
+          55%  { transform: scaleY(1.28); opacity: 1; }
+          100% { transform: scaleY(1);    opacity: 1; }
+        }
+        @keyframes legendaTexto {
+          0%   { opacity: 0; transform: translateX(-14px); filter: blur(6px);
+                 text-shadow: 0 0 28px rgba(240,200,50,0.95); }
+          55%  { opacity: 1; filter: blur(0); }
+          100% { opacity: 1; transform: translateX(0); filter: blur(0);
+                 text-shadow: 0 0 0 rgba(240,200,50,0); }
         }
 
         /* ── Botão "Ficha Técnica" ──
