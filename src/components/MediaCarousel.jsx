@@ -80,7 +80,7 @@ export default function MediaCarousel({ media, height = '48vh', minHeight = 340,
           key={item.src}
           src={item.src}
           className="w-full h-full"
-          style={{ objectFit: 'cover', objectPosition: 'center' }}
+          style={{ objectFit: 'cover', objectPosition: item.position || 'center' }}
           autoPlay
           muted
           playsInline
@@ -98,6 +98,7 @@ export default function MediaCarousel({ media, height = '48vh', minHeight = 340,
           draggable={false}
           onDragStart={(e) => e.preventDefault()}
           className="w-full h-full object-cover"
+          style={{ objectPosition: item.position || 'center' }}
         />
       )}
 

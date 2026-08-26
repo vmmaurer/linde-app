@@ -161,13 +161,16 @@ export const products = [
     // essa legenda em amarelo ao lado do título e troca junto com a foto.
     // A capa (protecaosolar.webp, campo `image` acima) fica só no card da
     // roleta — aqui entram apenas as fotos das seis linhas.
+    // `position` = object-position da foto. As fotos são verticais e a área
+    // do carrossel é mais larga; sem isso o corte fica no meio e sobra céu.
+    // O valor foi ajustado foto a foto para a construção aparecer inteira.
     media: [
-      { type: 'image', src: './images/HABITAT_NEUTRO_CINZA.webp', caption: 'Neutro Cinza' },
-      { type: 'image', src: './images/HABITAT_NEUTRO_CINZA_CLARO.webp', caption: 'Neutro Cinza Claro' },
-      { type: 'image', src: './images/HABITAT_NEUTRO_INCOLOR.webp', caption: 'Neutro Incolor' },
-      { type: 'image', src: './images/HABITAT_REFLETIVO_CINZA.webp', caption: 'Refletivo Cinza' },
-      { type: 'image', src: './images/HABITAT_REFLETIVO_ESMERALDA.webp', caption: 'Refletivo Esmeralda' },
-      { type: 'image', src: './images/HABITAT_REFLETIVO_CHAMPANHE.webp', caption: 'Refletivo Champanhe' },
+      { type: 'image', src: './images/HABITAT_NEUTRO_CINZA.webp', caption: 'Neutro Cinza', position: 'center 90%' },
+      { type: 'image', src: './images/HABITAT_NEUTRO_CINZA_CLARO.webp', caption: 'Neutro Cinza Claro', position: 'center 85%' },
+      { type: 'image', src: './images/HABITAT_NEUTRO_INCOLOR.webp', caption: 'Neutro Incolor', position: 'center 100%' },
+      { type: 'image', src: './images/HABITAT_REFLETIVO_CINZA.webp', caption: 'Refletivo Cinza', position: 'center 85%' },
+      { type: 'image', src: './images/HABITAT_REFLETIVO_ESMERALDA.webp', caption: 'Refletivo Esmeralda', position: 'center 70%' },
+      { type: 'image', src: './images/HABITAT_REFLETIVO_CHAMPANHE.webp', caption: 'Refletivo Champanhe', position: 'center 100%' },
     ],
     color: 'from-amber-900/80 to-navy-950/90',
     description:
