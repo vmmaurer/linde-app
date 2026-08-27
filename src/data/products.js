@@ -444,13 +444,14 @@ export const products = [
     slug: 'pelicula-seguranca',
     title: 'Película de Segurança',
     subtitle: 'Proteção sem trocar o vidro',
-    // Imagens temporárias — trocar PELICULA_*.webp em public/images.
+    // PELICULA_1 é imagem de banco, mantida só como capa do card até chegar
+    // uma foto da Linde. No carrossel entram apenas os dois vídeos.
     image: './images/PELICULA_1.webp',
     modalImage: './images/PELICULA_1.webp',
     brandLogo: '',
     media: [
-      { type: 'image', src: './images/PELICULA_1.webp' },
-      { type: 'image', src: './images/PELICULA_2.webp' },
+      { type: 'video', src: './images/PELICULA_VIDEO_1.webm' },
+      { type: 'video', src: './images/PELICULA_VIDEO_2.webm' },
     ],
     color: 'from-blue-900/80 to-navy-950/90',
     description:
@@ -466,13 +467,16 @@ export const products = [
     slug: 'anti-chama',
     title: 'Anti Chama',
     subtitle: 'Resistência ao fogo',
-    // Imagens temporárias — trocar ANTICHAMA_*.webp em public/images.
-    image: './images/ANTICHAMA_1.webp',
-    modalImage: './images/ANTICHAMA_1.webp',
+    image: './images/FOGO_4_CAPA.webp',
+    modalImage: './images/FOGO_4_CAPA.webp',
     brandLogo: '',
+    // A FOGO_4_CAPA fica só como capa do card (não entra no carrossel),
+    // mesmo padrão do Vidro Habitat.
     media: [
-      { type: 'image', src: './images/ANTICHAMA_1.webp' },
-      { type: 'image', src: './images/ANTICHAMA_2.webp' },
+      { type: 'image', src: './images/FOGO_1.webp', position: 'center 35%' },
+      { type: 'image', src: './images/FOGO_2.webp' },
+      { type: 'image', src: './images/FOGO_3.webp' },
+      { type: 'image', src: './images/FOGO_5.webp', position: 'center 40%' },
     ],
     color: 'from-orange-900/80 to-navy-950/90',
     description:
