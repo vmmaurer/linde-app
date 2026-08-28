@@ -123,7 +123,7 @@ export default function ProductModal({ product, onClose }) {
             <div className="flex items-end justify-between gap-6">
               <div className="flex-1 min-w-0">
                 <h3 className="text-glass-300 text-xs font-semibold tracking-widest uppercase mb-3">
-                  Aplicações
+                  {product.applicationsTitle || 'Aplicações'}
                 </h3>
                 <div className="flex flex-col gap-3">
                   {product.applications.map((app, i) => (

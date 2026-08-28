@@ -102,6 +102,20 @@ export default function MediaCarousel({ media, height = '48vh', minHeight = 340,
         />
       )}
 
+      {/* Selo de destaque — só as mídias que trazem `badge` mostram algo.
+          A key força a animação de entrada a repetir a cada vez que a foto
+          volta a aparecer no carrossel. */}
+      {item.badge && (
+        <div key={`selo-${item.src}`} className="media-selo" aria-label={item.badge}>
+          <span className="media-selo__brilho" aria-hidden />
+          <svg width="17" height="17" viewBox="0 0 18 18" fill="none" style={{ flexShrink: 0, zIndex: 1 }}>
+            <path d="M9 1.6l1.9 4.3 4.7.5-3.5 3.2 1 4.6L9 11.9l-4.1 2.3 1-4.6L2.4 6.4l4.7-.5z"
+              stroke="#f0c832" strokeWidth="1.5" strokeLinejoin="round" />
+          </svg>
+          <span className="media-selo__txt">{item.badge}</span>
+        </div>
+      )}
+
       <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-navy-950/60 to-transparent pointer-events-none" />
 
       {count > 1 && (
@@ -161,6 +175,61 @@ export default function MediaCarousel({ media, height = '48vh', minHeight = 340,
           </div>
         </>
       )}
+
+      <style>{`
+        /* ── Selo de destaque no topo da mídia ── */
+        .media-selo {
+          position: absolute;
+          top: 20px;
+          left: 50%;
+          z-index: 2;
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          padding: 11px 24px;
+          border-radius: 99rem;
+          overflow: hidden;
+          pointer-events: none;
+          white-space: nowrap;
+          color: #f0c832;
+          background: linear-gradient(150deg, rgba(9,17,32,0.9) 0%, rgba(6,12,24,0.92) 100%);
+          border: 2px solid rgba(240,200,50,0.85);
+          box-shadow: 0 10px 30px rgba(0,0,0,0.5),
+                      0 0 28px rgba(240,200,50,0.32),
+                      inset 0 1px 0 rgba(255,255,255,0.12);
+          backdrop-filter: blur(14px) saturate(160%);
+          -webkit-backdrop-filter: blur(14px) saturate(160%);
+          animation: seloEntra 0.6s cubic-bezier(0.22,1,0.36,1) 0.12s both;
+        }
+        .media-selo__txt {
+          position: relative;
+          z-index: 1;
+          font-size: 15px;
+          font-weight: 800;
+          letter-spacing: .16em;
+          text-transform: uppercase;
+          text-shadow: 0 0 14px rgba(240,200,50,0.5);
+        }
+        /* reflexo que atravessa o selo de tempos em tempos */
+        .media-selo__brilho {
+          position: absolute;
+          top: 0; bottom: 0; left: -45%;
+          width: 38%;
+          background: linear-gradient(100deg,
+                      rgba(255,255,255,0) 0%,
+                      rgba(255,242,190,0.34) 50%,
+                      rgba(255,255,255,0) 100%);
+          animation: seloBrilho 3.8s ease-in-out infinite 0.9s;
+        }
+        @keyframes seloEntra {
+          from { opacity: 0; transform: translateX(-50%) translateY(-16px) scale(0.94); }
+          to   { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+        }
+        @keyframes seloBrilho {
+          0%, 52%   { transform: translateX(0) skewX(-16deg); }
+          82%, 100% { transform: translateX(430%) skewX(-16deg); }
+        }
+      `}</style>
     </div>
   )
 }

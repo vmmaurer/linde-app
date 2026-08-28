@@ -65,7 +65,7 @@ export const features = [
       'Certificação CEBRACE para processamento de vidros especiais',
       'Certificação Guardian - Processador Select',
       'Associados à ABRAVIDRO, participando das revisões das normas do setor vidreiro',
-      '24 mil m² de área fabril',
+      '30 mil m² de área fabril',
       'Processamento de vidros finos e grossos',
       'Linha de laminação própria',
       'Modelação com CNC e medições de precisão com equipamento Proliner',

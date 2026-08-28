@@ -165,6 +165,8 @@ export const products = [
     // do carrossel é mais larga; sem isso o corte fica no meio e sobra céu.
     // O valor foi ajustado foto a foto para a construção aparecer inteira.
     media: [
+      // `badge` = selo que aparece no topo da foto (só esta tem)
+      { type: 'image', src: './images/HABITAT_NEUTRO_BRONZE.webp', caption: 'Neutro Bronze', badge: 'Lançamento Fesqua 2026' },
       { type: 'image', src: './images/HABITAT_NEUTRO_CINZA.webp', caption: 'Neutro Cinza', position: 'center 90%' },
       { type: 'image', src: './images/HABITAT_NEUTRO_CINZA_CLARO.webp', caption: 'Neutro Cinza Claro', position: 'center 85%' },
       { type: 'image', src: './images/HABITAT_NEUTRO_INCOLOR.webp', caption: 'Neutro Incolor', position: 'center 100%' },
@@ -351,10 +353,13 @@ export const products = [
     color: 'from-cyan-900/80 to-navy-950/90',
     description:
       'O vidro extra clear possui elevada transparência e neutralidade, proporcionando maior fidelidade às cores e uma visualização mais nítida dos ambientes e objetos. Versátil, pode ser utilizado em diferentes composições e transformações, agregando sofisticação aos projetos.',
+    // Este card lista as linhas que a Linde trabalha, não aplicações —
+    // por isso o título próprio. Sem este campo, o pop-up escreve "Aplicações".
+    applicationsTitle: 'Trabalhamos com:',
     applications: [
-      'Vitrines e fachadas comerciais',
-      'Guarda-corpos e divisórias',
-      'Móveis e peças decorativas de alto padrão',
+      'Extra Clear',
+      'SuperClear',
+      'CristalClear',
     ],
   },
   

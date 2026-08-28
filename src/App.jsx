@@ -4,11 +4,17 @@ import CTASection from './components/CTASection';
 import EstruturaSection from './components/EstruturaSection';
 import HistoriaSection from './components/HistoriaSection';
 import BottomNav from './components/BottomNav';
+import SorteioButton from './components/SorteioButton';
+import SorteioModal from './components/SorteioModal';
 import { warmupAssets } from './utils/preloadAssets';
 
 const App = () => {
   const [currentScreen, setCurrentScreen] = useState('produtos');
   const [modalOpen, setModalOpen] = useState(false);
+  // O pop-up do sorteio vive aqui, e não dentro do SorteioButton: ao abrir,
+  // ele dispara modal-open e o botão é desmontado — se o estado morasse lá,
+  // o pop-up sumiria junto.
+  const [sorteioAberto, setSorteioAberto] = useState(false);
   const idleTimer = useRef(null);
   const navReturnTimer = useRef(null);
 
@@ -236,6 +242,17 @@ const App = () => {
       >
         {renderScreen()}
       </div>
+
+      {/* Atalho do sorteio — mesma regra da navbar: some enquanto um card
+          está aberto, para não competir com o pop-up. */}
+      {!modalOpen && (
+        <SorteioButton
+          label={'Clique aqui para\nconcorrer a prêmios!'}
+          onPress={() => { setSorteioAberto(true); resetIdleTimer(); }}
+        />
+      )}
+
+      {sorteioAberto && <SorteioModal onClose={() => setSorteioAberto(false)} />}
 
       {!modalOpen && (
         <BottomNav
