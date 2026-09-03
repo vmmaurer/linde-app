@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 /**
  * Trilha A–Z fixa na lateral esquerda (a barrinha do rascunho).
@@ -41,10 +41,17 @@ export default function TrilhaAlfabetica({ letras, ativa, onEscolher }) {
     onEscolher(letra)
   }
 
+  const aoSoltar = useCallback(() => {
+    setArrastando(false)
+    ultima.current = null
+  }, [])
+
   const aoDescer = (e) => {
     setArrastando(true)
     ultima.current = null
-    e.currentTarget.setPointerCapture(e.pointerId)
+    // O Chrome recusa a captura se o ponteiro já não estiver ativo; sem o
+    // try/catch o erro estourava no meio do gesto e deixava a bolha presa.
+    try { e.currentTarget.setPointerCapture(e.pointerId) } catch (_) {}
     aplicar(e.clientY)
   }
   const aoMover = (e) => {
@@ -52,10 +59,24 @@ export default function TrilhaAlfabetica({ letras, ativa, onEscolher }) {
     e.preventDefault()
     aplicar(e.clientY)
   }
-  const aoSoltar = () => {
-    setArrastando(false)
-    ultima.current = null
-  }
+
+  // Rede de segurança da bolha: o `pointerup` nem sempre chega à trilha —
+  // dedo que sai pela borda da tela, botão do mouse solto fora da janela,
+  // aba que perde o foco. Enquanto arrasta, o fim do gesto é ouvido na
+  // janela inteira, então a bolha nunca fica esquecida na tela.
+  useEffect(() => {
+    if (!arrastando) return
+    window.addEventListener('pointerup', aoSoltar)
+    window.addEventListener('pointercancel', aoSoltar)
+    window.addEventListener('touchend', aoSoltar)
+    window.addEventListener('blur', aoSoltar)
+    return () => {
+      window.removeEventListener('pointerup', aoSoltar)
+      window.removeEventListener('pointercancel', aoSoltar)
+      window.removeEventListener('touchend', aoSoltar)
+      window.removeEventListener('blur', aoSoltar)
+    }
+  }, [arrastando, aoSoltar])
 
   return (
     <>
@@ -67,6 +88,7 @@ export default function TrilhaAlfabetica({ letras, ativa, onEscolher }) {
         onPointerMove={aoMover}
         onPointerUp={aoSoltar}
         onPointerCancel={aoSoltar}
+        onLostPointerCapture={aoSoltar}
       >
         {letras.map((letra, i) => (
           <button

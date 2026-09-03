@@ -21,9 +21,8 @@ const ORDENADOS = [...products].sort((a, b) =>
   normalizar(a.title).localeCompare(normalizar(b.title), 'pt-BR'),
 )
 
-/** Texto onde a busca procura: nome, chamada, descrição e aplicações. */
-const indiceDe = (p) =>
-  normalizar([p.title, p.subtitle, p.description, ...(p.applications || [])].join(' '))
+/** Texto onde a busca procura: só o nome do vidro, como aparece no card. */
+const indiceDe = (p) => normalizar(p.title)
 
 const BUSCAVEIS = new Map(ORDENADOS.map((p) => [p.slug, indiceDe(p)]))
 
@@ -177,7 +176,7 @@ export default function App() {
             autoComplete="off"
             autoCorrect="off"
             spellCheck={false}
-            placeholder="Buscar vidro, uso ou característica"
+            placeholder="Buscar vidro pelo nome"
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
             onFocus={() => setFocoBusca(true)}
@@ -211,9 +210,9 @@ export default function App() {
             <SemResultado />
             <p className="cat-vazio__titulo">Nada com “{busca}”</p>
             <p className="cat-vazio__txt">
-              Tente o nome do vidro (temperado, insulado)
+              A busca é pelo nome do vidro.
               <br />
-              ou o que o cliente pediu (acústico, segurança).
+              Tente “temperado”, “laminado” ou “espelho”.
             </p>
           </div>
         )}

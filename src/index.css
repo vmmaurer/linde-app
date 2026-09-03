@@ -358,6 +358,9 @@ video {
   letter-spacing: 0.02em;
   cursor: pointer;
   padding: 0;
+  /* Herdar o toque da trilha: sem isto o navegador entende o arrasto que
+     começa em cima de uma letra como rolagem e cancela o gesto no meio. */
+  touch-action: none;
   transition: color 0.18s ease, background 0.18s ease, transform 0.18s ease;
 }
 .cat-trilha__letra--ativa {
@@ -409,16 +412,17 @@ video {
   color: rgba(117, 194, 255, 0.72);
 }
 
+/* Sem faixa de fundo: o fundo da tela clareia lá em cima (o brilho do
+   topo), então qualquer cor fixa atrás da letra virava um retângulo escuro
+   visível — parecia sombra suja. A letra e o filete bastam para separar as
+   seções. Também não gruda no topo: com `overflow-x: hidden` no html/body
+   o `position: sticky` não funciona, e a faixa só existia por causa dele. */
 .cat-secao__letra {
-  position: sticky;
-  top: calc(var(--cat-topo) - 1px);
-  z-index: 10;
   display: flex;
   align-items: center;
   gap: 10px;
   margin: 18px 0 9px;
   padding: 5px 0;
-  background: linear-gradient(180deg, var(--cat-fundo) 60%, rgba(11, 21, 38, 0) 100%);
   font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.22em;
