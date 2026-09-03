@@ -1,267 +1,313 @@
-import React, { useState, useEffect, useRef } from 'react';
-import HeroSection from './components/HeroSection';
-import CTASection from './components/CTASection';
-import EstruturaSection from './components/EstruturaSection';
-import HistoriaSection from './components/HistoriaSection';
-import BottomNav from './components/BottomNav';
-import SorteioButton from './components/SorteioButton';
-import SorteioModal from './components/SorteioModal';
-import { warmupAssets } from './utils/preloadAssets';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { products } from './data/products'
+import { fichasTecnicas } from './data/fichaTecnica'
+import TrilhaAlfabetica from './components/TrilhaAlfabetica'
+import ProdutoDetalhe from './components/ProdutoDetalhe'
+import FichaMobile from './components/FichaMobile'
+import { Chevron, Documento, Lupa, SemResultado, Xis } from './components/icones'
+import { fatiarBusca, inicial, normalizar } from './utils/texto'
 
-const App = () => {
-  const [currentScreen, setCurrentScreen] = useState('produtos');
-  const [modalOpen, setModalOpen] = useState(false);
-  // O pop-up do sorteio vive aqui, e não dentro do SorteioButton: ao abrir,
-  // ele dispara modal-open e o botão é desmontado — se o estado morasse lá,
-  // o pop-up sumiria junto.
-  const [sorteioAberto, setSorteioAberto] = useState(false);
-  const idleTimer = useRef(null);
-  const navReturnTimer = useRef(null);
+// ══════════════════════════════════════════════════════════════
+//  CATÁLOGO DO VENDEDOR
+//  ─────────────────────────────────────────────────────────────
+//  Tela única do app: lista alfabética dos vidros, busca e trilha A–Z,
+//  com cada item abrindo em tela cheia. Nenhum texto de produto é
+//  escrito aqui — quem manda é src/data/products.js (e fichaTecnica.js
+//  para os que têm ficha). Vidro novo lá dentro aparece sozinho aqui.
+// ══════════════════════════════════════════════════════════════
 
-  // Aquece as imagens assim que o totem sobe. Como ele fica ligado o dia
-  // inteiro, quando a primeira pessoa encosta na tela já está tudo
-  // decodificado em memória — a troca de tela não espera por disco nem por
-  // decodificação, que era a origem do engasgo.
-  useEffect(() => { warmupAssets(); }, []);
+/** Lista ordenada pelo nome que aparece no card, ignorando acento. */
+const ORDENADOS = [...products].sort((a, b) =>
+  normalizar(a.title).localeCompare(normalizar(b.title), 'pt-BR'),
+)
 
-  const clearIdleTimer = () => {
-    if (idleTimer.current) {
-      clearTimeout(idleTimer.current);
-      idleTimer.current = null;
+/** Texto onde a busca procura: nome, chamada, descrição e aplicações. */
+const indiceDe = (p) =>
+  normalizar([p.title, p.subtitle, p.description, ...(p.applications || [])].join(' '))
+
+const BUSCAVEIS = new Map(ORDENADOS.map((p) => [p.slug, indiceDe(p)]))
+
+export default function App() {
+  const [busca, setBusca] = useState('')
+  const [focoBusca, setFocoBusca] = useState(false)
+  const [letraAtiva, setLetraAtiva] = useState(null)
+  const [produto, setProduto] = useState(null)
+  const [fichaAberta, setFichaAberta] = useState(false)
+
+  const topoRef = useRef(null)
+  const secoesRef = useRef({})
+  const produtoRef = useRef(null)
+
+  // ── Altura real do cabeçalho fixo ───────────────────────────
+  // O recuo da lista, o topo da trilha e o "gruda" das letras dependem
+  // dela. Medir evita chutar um valor que muda com a fonte do sistema.
+  useLayoutEffect(() => {
+    const medir = () => {
+      const alt = topoRef.current?.offsetHeight
+      if (alt) document.documentElement.style.setProperty('--cat-topo', `${alt}px`)
     }
-  };
-
-  const resetIdleTimer = () => {
-    clearIdleTimer();
-
-    // Consulta apenas os vídeos que realmente estão na página. Assim, um
-    // vídeo removido ao fechar o modal ou trocar de mídia nunca deixa a
-    // contagem de inatividade bloqueada.
-    const hasPlayingVideo = Array.from(document.querySelectorAll('video'))
-      .some((video) => !video.paused && !video.ended);
-    if (hasPlayingVideo) return;
-
-    // O timer roda SEMPRE (inclusive com card aberto). Numa feira, se
-    // alguém abre e abandona, após 30s o card fecha e volta pra tela
-    // inicial. Qualquer toque na tela reinicia esta contagem.
-    idleTimer.current = setTimeout(() => {
-      // fecha qualquer modal/card aberto (o ProductModal escuta este evento)
-      window.dispatchEvent(new CustomEvent('force-close-modal'));
-      setCurrentScreen('produtos');
-    }, 30000);
-  };
-
-  useEffect(() => {
-    const handleVideoPlaying = (event) => {
-      if (!(event.target instanceof HTMLVideoElement)) return;
-      clearIdleTimer();
-    };
-
-    const handleVideoStopped = (event) => {
-      if (!(event.target instanceof HTMLVideoElement)) return;
-      resetIdleTimer();
-    };
-
-    const removedVideoObserver = new MutationObserver((mutations) => {
-      const removedVideo = mutations.some((mutation) =>
-        Array.from(mutation.removedNodes).some((node) =>
-          node instanceof HTMLVideoElement
-          || (node instanceof Element && node.querySelector('video'))
-        )
-      );
-
-      if (removedVideo) resetIdleTimer();
-    });
-
-    window.addEventListener('mousedown', resetIdleTimer);
-    window.addEventListener('touchstart', resetIdleTimer);
-    // Eventos de mídia não sobem pela árvore; a captura permite cobrir todos
-    // os vídeos atuais e futuros do site sem acoplar a regra aos componentes.
-    document.addEventListener('playing', handleVideoPlaying, true);
-    document.addEventListener('pause', handleVideoStopped, true);
-    document.addEventListener('ended', handleVideoStopped, true);
-    document.addEventListener('emptied', handleVideoStopped, true);
-    document.addEventListener('error', handleVideoStopped, true);
-    removedVideoObserver.observe(document.body, { childList: true, subtree: true });
-    resetIdleTimer();
-
+    medir()
+    const ro = new ResizeObserver(medir)
+    if (topoRef.current) ro.observe(topoRef.current)
+    window.addEventListener('orientationchange', medir)
     return () => {
-      window.removeEventListener('mousedown', resetIdleTimer);
-      window.removeEventListener('touchstart', resetIdleTimer);
-      document.removeEventListener('playing', handleVideoPlaying, true);
-      document.removeEventListener('pause', handleVideoStopped, true);
-      document.removeEventListener('ended', handleVideoStopped, true);
-      document.removeEventListener('emptied', handleVideoStopped, true);
-      document.removeEventListener('error', handleVideoStopped, true);
-      removedVideoObserver.disconnect();
-      clearIdleTimer();
-    };
-  }, []);
+      ro.disconnect()
+      window.removeEventListener('orientationchange', medir)
+    }
+  }, [])
 
-  // Controla o modal e o reaparecimento da navbar.
-  //  - Ao ABRIR: navbar some na hora.
-  //  - Ao FECHAR: a navbar só volta após um pequeno atraso (400ms). Isso
-  //    evita que o mesmo toque que fecha o card (no botão X, que fica no
-  //    lugar da navbar) atinja a navbar recém-reaparecida e troque de tela.
+  // ── Resultado da busca, agrupado por letra ──────────────────
+  const secoes = useMemo(() => {
+    const alvo = normalizar(busca)
+    if (alvo) {
+      // Resultado de busca não se separa por letra: a ordem que importa é a
+      // do que foi encontrado, e um cabeçalho por item deixaria a lista picada.
+      const achados = ORDENADOS.filter((p) => BUSCAVEIS.get(p.slug).includes(alvo))
+      return achados.length ? [{ letra: 'busca', itens: achados }] : []
+    }
+
+    const lista = ORDENADOS
+    const grupos = []
+    lista.forEach((p) => {
+      const letra = inicial(p.title)
+      const ultimo = grupos[grupos.length - 1]
+      if (ultimo && ultimo.letra === letra) ultimo.itens.push(p)
+      else grupos.push({ letra, itens: [p] })
+    })
+    return grupos
+  }, [busca])
+
+  const letras = useMemo(() => secoes.map((s) => s.letra), [secoes])
+  const totalItens = useMemo(() => secoes.reduce((n, s) => n + s.itens.length, 0), [secoes])
+
+  // ── Qual letra está passando sob o cabeçalho ────────────────
   useEffect(() => {
-    const open = () => {
-      if (navReturnTimer.current) clearTimeout(navReturnTimer.current);
-      setModalOpen(true);
-    };
-    const close = () => {
-      if (navReturnTimer.current) clearTimeout(navReturnTimer.current);
-      navReturnTimer.current = setTimeout(() => setModalOpen(false), 400);
-    };
-    window.addEventListener('modal-open', open);
-    window.addEventListener('modal-close', close);
-    return () => {
-      window.removeEventListener('modal-open', open);
-      window.removeEventListener('modal-close', close);
-      if (navReturnTimer.current) clearTimeout(navReturnTimer.current);
-    };
-  }, []);
+    if (letras.length === 0) return
 
-  // Bloqueia zoom por pinça, duplo-toque e Ctrl+scroll (modo totem).
-  // Usa { capture: true } para interceptar o gesto de pinça ANTES dos
-  // componentes internos (carrossel da História, galeria da Estrutura),
-  // garantindo que funcione em TODAS as telas.
-  useEffect(() => {
-    const prevent = (e) => e.preventDefault();
-
-    const onTouchStart = (e) => {
-    if (e.touches.length > 1) e.preventDefault();
-    };
-    const onTouchMove = (e) => {
-      if (e.touches.length > 1) {
-        e.preventDefault();
-        e.stopPropagation();
+    let agendado = false
+    const conferir = () => {
+      agendado = false
+      const limite = (topoRef.current?.offsetHeight || 132) + 24
+      let atual = letras[0]
+      for (const letra of letras) {
+        const el = secoesRef.current[letra]
+        if (el && el.getBoundingClientRect().top <= limite) atual = letra
       }
-    };
+      setLetraAtiva(atual)
+    }
 
-    let lastTouchEnd = 0;
-    const onTouchEnd = (e) => {
-      const now = Date.now();
-      // Duplo-toque em menos de 300ms = zoom → bloqueia
-      if (now - lastTouchEnd <= 300) e.preventDefault();
-      lastTouchEnd = now;
-    };
+    const aoRolar = () => {
+      if (agendado) return
+      agendado = true
+      requestAnimationFrame(conferir)
+    }
 
-    const onWheel = (e) => { if (e.ctrlKey) e.preventDefault(); };
-    const onKeyDown = (e) => {
-      if (e.ctrlKey && ['+', '-', '=', '0'].includes(e.key)) e.preventDefault();
-    };
+    conferir()
+    window.addEventListener('scroll', aoRolar, { passive: true })
+    return () => window.removeEventListener('scroll', aoRolar)
+  }, [letras])
 
-    // capture:true => intercepta na descida do evento, antes dos filhos
-    const optsCapture = { passive: false, capture: true };
+  const irParaLetra = useCallback((letra) => {
+    const el = secoesRef.current[letra]
+    if (!el) return
+    const alturaTopo = topoRef.current?.offsetHeight || 132
+    const y = el.getBoundingClientRect().top + window.scrollY - alturaTopo - 8
+    window.scrollTo({ top: Math.max(0, y), behavior: 'instant' })
+    setLetraAtiva(letra)
+  }, [])
 
-    document.addEventListener('gesturestart', prevent, optsCapture);
-    document.addEventListener('gesturechange', prevent, optsCapture);
-    document.addEventListener('gestureend', prevent, optsCapture);
-    document.addEventListener('touchstart', onTouchStart, optsCapture);
-    document.addEventListener('touchmove', onTouchMove, optsCapture);
-    document.addEventListener('touchend', onTouchEnd, { passive: false });
-    document.addEventListener('wheel', onWheel, { passive: false });
-    document.addEventListener('keydown', onKeyDown);
+  // ── Navegação: cada tela é um passo no histórico ────────────
+  // Com isso o "voltar" do Android (e o gesto de borda do iOS) fecha a
+  // ficha, depois o produto, em vez de sair do catálogo de uma vez.
+  useEffect(() => {
+    const aoVoltar = (e) => {
+      const nivel = e.state?.catalogo ?? 0
+      setFichaAberta(nivel >= 2)
+      if (nivel === 0) {
+        setProduto(null)
+        produtoRef.current = null
+      } else if (produtoRef.current) {
+        setProduto(produtoRef.current)
+      }
+    }
+    window.addEventListener('popstate', aoVoltar)
+    return () => window.removeEventListener('popstate', aoVoltar)
+  }, [])
 
-    return () => {
-      document.removeEventListener('gesturestart', prevent, optsCapture);
-      document.removeEventListener('gesturechange', prevent, optsCapture);
-      document.removeEventListener('gestureend', prevent, optsCapture);
-      document.removeEventListener('touchstart', onTouchStart, optsCapture);
-      document.removeEventListener('touchmove', onTouchMove, optsCapture);
-      document.removeEventListener('touchend', onTouchEnd);
-      document.removeEventListener('wheel', onWheel);
-      document.removeEventListener('keydown', onKeyDown);
-    };
-  }, []);
+  // Trava a rolagem da lista enquanto uma tela cheia está por cima.
+  useEffect(() => {
+    document.body.style.overflow = produto ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [produto])
 
-  // Renderiza SÓ a tela ativa (em vez de manter as 4 montadas no slider).
-  // Isso evita que telas pesadas fiquem sempre carregadas, que era a
-  // causa da travada ao trocar de tela.
-  const renderScreen = () => {
-    switch (currentScreen) {
-      case 'produtos':  return <HeroSection />;
-      case 'estrutura': return <EstruturaSection />;
-      case 'historia':  return <HistoriaSection />;
-      case 'contato':   return <CTASection />;
-      default:          return <HeroSection />;
+  const abrirProduto = (p) => {
+    produtoRef.current = p
+    setProduto(p)
+    window.history.pushState({ catalogo: 1 }, '')
   }
-  };
+  const abrirFicha = () => {
+    setFichaAberta(true)
+    window.history.pushState({ catalogo: 2 }, '')
+  }
+  const voltar = () => window.history.back()
+
+  const ficha = produto?.ficha ? fichasTecnicas[produto.ficha] : null
 
   return (
-    <div
-      className="app-root-fullheight"
-      style={{
-        width: '100vw',
-        overflow: 'hidden',
-        display: 'flex',
-        flexDirection: 'column',
-        // Azul profundo em vez de preto: durante o fade a tela nova é
-        // translúcida por um instante e deixa esta cor aparecer. Com #000 dava
-        // um "piscar" escuro entre as telas; com o azul da paleta a passagem
-        // fica contínua.
-        backgroundColor: '#0b1426',
-      }}
-    >
-      <style>{`
-        .app-root-fullheight {
-          height: 100vh;
-          height: 100dvh;
-        }
-        /* Só opacidade: é a única propriedade que o compositor resolve na GPU
-           sem repintar a árvore inteira a cada frame. */
-        @keyframes screenFade {
-          from { opacity: 0; }
-          to   { opacity: 1; }
-        }
-        .screen-swap {
-          flex: 1;
-          width: 100%;
-          height: 100%;
-          overflow-y: auto;
-          animation: screenFade 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
-          /* Promove a tela à própria camada ANTES do fade começar. Sem isto o
-             Chromium só decide promover no primeiro frame da animação, e esse
-             frame sai atrasado — é o solavanco no início da transição. */
-          will-change: opacity;
-        }
-        /* Camada devolvida assim que o fade acaba: manter will-change para
-           sempre em 4 telas de 1080x1920 seguraria VRAM à toa. */
-        .screen-swap.is-settled {
-          will-change: auto;
-        }
-      `}</style>
+    <div className="cat">
+      {/* ══ Cabeçalho: marca + busca ══ */}
+      <header className="cat-topo" ref={topoRef}>
+        <div className="cat-marca">
+          <img
+            className="cat-marca__logo"
+            src="./images/logonavbar.webp"
+            alt="Linde Vidros"
+            draggable={false}
+          />
+          <span className="cat-marca__rotulo">Catálogo</span>
+        </div>
 
-      {/* key força o React a remontar (e animar) ao trocar de tela.
-          Como só a tela ativa existe, cada tela só monta quando entra
-          e é desmontada ao sair — liberando memória. */}
-      <div
-        key={currentScreen}
-        className="screen-swap"
-        onAnimationEnd={(e) => e.currentTarget.classList.add('is-settled')}
-      >
-        {renderScreen()}
-      </div>
+        <div className={`cat-busca${focoBusca || busca ? ' cat-busca--ativa' : ''}`}>
+          <Lupa cor={focoBusca || busca ? '#f0c832' : 'rgba(240,240,240,0.55)'} />
+          <input
+            className="cat-busca__campo"
+            type="text"
+            inputMode="search"
+            enterKeyHint="search"
+            autoComplete="off"
+            autoCorrect="off"
+            spellCheck={false}
+            placeholder="Buscar vidro, uso ou característica"
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+            onFocus={() => setFocoBusca(true)}
+            onBlur={() => setFocoBusca(false)}
+            aria-label="Buscar no catálogo"
+          />
+          {busca && (
+            <button
+              type="button"
+              className="cat-busca__limpar"
+              aria-label="Limpar busca"
+              onClick={() => setBusca('')}
+            >
+              <Xis />
+            </button>
+          )}
+        </div>
+      </header>
 
-      {/* Atalho do sorteio — mesma regra da navbar: some enquanto um card
-          está aberto, para não competir com o pop-up. */}
-      {!modalOpen && (
-        <SorteioButton
-          label={'Clique aqui para\nconcorrer a prêmios!'}
-          onPress={() => { setSorteioAberto(true); resetIdleTimer(); }}
-        />
+      {/* ══ Trilha A–Z — some durante a busca, quando a ordem já é o resultado ══ */}
+      {!busca && letras.length > 1 && (
+        <TrilhaAlfabetica letras={letras} ativa={letraAtiva} onEscolher={irParaLetra} />
       )}
 
-      {sorteioAberto && <SorteioModal onClose={() => setSorteioAberto(false)} />}
+      {/* ══ Lista ══ */}
+      <main className="cat-lista" style={busca ? { paddingLeft: 14 } : undefined}>
+        <p className="cat-contagem">{resumoContagem(totalItens, Boolean(busca))}</p>
 
-      {!modalOpen && (
-        <BottomNav
-          currentScreen={currentScreen}
-          onScreenChange={(screen) => { setCurrentScreen(screen); resetIdleTimer(); }}
+        {secoes.length === 0 && (
+          <div className="cat-vazio">
+            <SemResultado />
+            <p className="cat-vazio__titulo">Nada com “{busca}”</p>
+            <p className="cat-vazio__txt">
+              Tente o nome do vidro (temperado, insulado)
+              <br />
+              ou o que o cliente pediu (acústico, segurança).
+            </p>
+          </div>
+        )}
+
+        {secoes.map((secao, iSecao) => (
+          <section
+            className="cat-secao"
+            key={secao.letra}
+            ref={(el) => { secoesRef.current[secao.letra] = el }}
+          >
+            {!busca && <h2 className="cat-secao__letra">{secao.letra}</h2>}
+
+            <div className="cat-secao__itens">
+              {secao.itens.map((p, i) => (
+                <ItemProduto
+                  key={p.slug}
+                  produto={p}
+                  termo={busca}
+                  atraso={Math.min(iSecao * 2 + i, 12) * 0.022}
+                  onAbrir={() => abrirProduto(p)}
+                />
+              ))}
+            </div>
+          </section>
+        ))}
+      </main>
+
+      {/* ══ Telas por cima ══ */}
+      {produto && (
+        <ProdutoDetalhe
+          key={produto.slug}
+          produto={produto}
+          temFicha={Boolean(ficha)}
+          onVoltar={voltar}
+          onAbrirFicha={abrirFicha}
         />
       )}
+      {produto && ficha && fichaAberta && <FichaMobile ficha={ficha} onFechar={voltar} />}
     </div>
-  );
-};
+  )
+}
 
-export default App;
+/** "17 produtos" na lista cheia; "1 produto encontrado" no resultado da busca. */
+function resumoContagem(quantos, buscando) {
+  if (quantos === 0) return 'Nenhum produto'
+  const nome = quantos === 1 ? 'produto' : 'produtos'
+  if (!buscando) return `${quantos} ${nome}`
+  return `${quantos} ${nome} ${quantos === 1 ? 'encontrado' : 'encontrados'}`
+}
+
+/** Uma linha da lista: capa, nome, chamada e o selo de quem tem ficha. */
+function ItemProduto({ produto, termo, atraso, onAbrir }) {
+  const qtdMidias = produto.media?.length || 0
+
+  return (
+    <button
+      type="button"
+      className="cat-item"
+      style={{ animationDelay: `${atraso}s` }}
+      onClick={onAbrir}
+    >
+      <span className="cat-item__foto">
+        <img src={produto.image} alt="" loading="lazy" decoding="async" draggable={false} />
+        {qtdMidias > 1 && <span className="cat-item__qtd">{qtdMidias}</span>}
+      </span>
+
+      <span className="cat-item__texto">
+        <span className="cat-item__titulo">
+          <Realce texto={produto.title} termo={termo} />
+        </span>
+        <span className="cat-item__sub">
+          <Realce texto={produto.subtitle} termo={termo} />
+        </span>
+        {produto.ficha && (
+          <span className="cat-item__ficha">
+            <Documento size={10} />
+            Ficha
+          </span>
+        )}
+      </span>
+
+      <Chevron size={17} />
+    </button>
+  )
+}
+
+/** Pinta em Sunshine o trecho que casou com a busca. */
+function Realce({ texto, termo }) {
+  if (!termo) return texto
+  return fatiarBusca(texto, termo).map((parte, i) =>
+    parte.marcado ? (
+      <mark className="cat-marca-txt" key={i}>{parte.txt}</mark>
+    ) : (
+      <React.Fragment key={i}>{parte.txt}</React.Fragment>
+    ),
+  )
+}
