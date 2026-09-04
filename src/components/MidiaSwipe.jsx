@@ -16,6 +16,9 @@ export default function MidiaSwipe({ midias, altura = '46dvh', onIndice }) {
   const inicioX = useRef(null)
   const inicioY = useRef(null)
   const deslizando = useRef(false)
+  const eixoGesto = useRef(null)
+  const rolagemRef = useRef(null)
+  const scrollInicialRef = useRef(0)
   const total = midias.length
 
   // Busca a foto anterior e a próxima enquanto a atual está parada na tela.
@@ -43,18 +46,43 @@ export default function MidiaSwipe({ midias, altura = '46dvh', onIndice }) {
     inicioX.current = e.clientX
     inicioY.current = e.clientY
     deslizando.current = true
+    eixoGesto.current = null
+    rolagemRef.current = e.currentTarget.closest('.cat-detalhe__rolagem')
+    scrollInicialRef.current = rolagemRef.current?.scrollTop || 0
+    try { e.currentTarget.setPointerCapture(e.pointerId) } catch (_) {}
   }
   const aoMover = (e) => {
     if (!deslizando.current || inicioX.current === null) return
     const dx = e.clientX - inicioX.current
     const dy = e.clientY - (inicioY.current ?? e.clientY)
-    // Só assume o gesto como horizontal quando ele é claramente horizontal —
-    // caso contrário o dedo que queria rolar a página ficaria preso na foto.
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) e.preventDefault()
+    const absX = Math.abs(dx)
+    const absY = Math.abs(dy)
+
+    // Trava o eixo depois dos primeiros pixels. Um swipe lateral mantém o
+    // conteúdo exatamente onde estava; um gesto vertical segue entregue à
+    // rolagem nativa, com inércia normal do celular.
+    if (!eixoGesto.current && Math.max(absX, absY) > 8) {
+      if (absX > absY * 1.1) eixoGesto.current = 'horizontal'
+      else if (absY > absX * 1.1) eixoGesto.current = 'vertical'
+    }
+
+    if (eixoGesto.current === 'horizontal') {
+      if (e.cancelable) e.preventDefault()
+      if (rolagemRef.current) rolagemRef.current.scrollTop = scrollInicialRef.current
+    }
   }
+
+  const limparGesto = () => {
+    deslizando.current = false
+    inicioX.current = null
+    inicioY.current = null
+    eixoGesto.current = null
+    rolagemRef.current = null
+  }
+
   const aoSoltar = (e) => {
     if (!deslizando.current || inicioX.current === null) {
-      deslizando.current = false
+      limparGesto()
       return
     }
     const dx = e.clientX - inicioX.current
@@ -62,12 +90,13 @@ export default function MidiaSwipe({ midias, altura = '46dvh', onIndice }) {
     // Um arrasto vertical pode terminar alguns pixels para o lado. Exigir
     // predominância horizontal evita trocar a foto quando a intenção era
     // apenas rolar o conteúdo do produto.
-    if (Math.abs(dx) > 42 && Math.abs(dx) > Math.abs(dy) * 1.15) {
+    const foiHorizontal = eixoGesto.current === 'horizontal'
+      || (!eixoGesto.current && Math.abs(dx) > Math.abs(dy) * 1.15)
+    if (foiHorizontal && Math.abs(dx) > 42) {
+      if (rolagemRef.current) rolagemRef.current.scrollTop = scrollInicialRef.current
       ir(dx < 0 ? indice + 1 : indice - 1)
     }
-    deslizando.current = false
-    inicioX.current = null
-    inicioY.current = null
+    limparGesto()
   }
 
   const item = midias[indice]
@@ -80,7 +109,7 @@ export default function MidiaSwipe({ midias, altura = '46dvh', onIndice }) {
       onPointerDown={aoDescer}
       onPointerMove={aoMover}
       onPointerUp={aoSoltar}
-      onPointerCancel={aoSoltar}
+      onPointerCancel={limparGesto}
     >
       {item.type === 'video' ? (
         <video

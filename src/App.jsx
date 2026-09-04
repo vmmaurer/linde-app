@@ -87,10 +87,23 @@ export default function App() {
     const conferir = () => {
       agendado = false
       const pagina = document.scrollingElement || document.documentElement
-      const noFim = pagina.scrollTop + pagina.clientHeight >= pagina.scrollHeight - 2
+      const alturaViewport = Math.max(
+        pagina.clientHeight,
+        window.innerHeight || 0,
+        window.visualViewport?.height || 0,
+      )
+      const distanciaDoFim = pagina.scrollHeight - pagina.scrollTop - alturaViewport
+      const ultimaSecao = secoesRef.current[letras[letras.length - 1]]
+      const limiteInferior = alturaViewport + 48
+      const ultimaSecaoInteiraVisivel = Boolean(
+        ultimaSecao && ultimaSecao.getBoundingClientRect().bottom <= limiteInferior,
+      )
+      const noFim = distanciaDoFim <= 24 || ultimaSecaoInteiraVisivel
 
-      // A última seção geralmente já cabe inteira na tela antes de seu
-      // título alcançar o cabeçalho. No fim da lista, ela deve ser a ativa.
+      // A última seção geralmente cabe inteira antes de o título alcançar o
+      // cabeçalho. Além disso, Safari/Chrome móveis variam a altura útil ao
+      // esconder a barra de endereço e nem sempre informam o último pixel
+      // exato. Se a seção final já está inteira visível, ela é a seção ativa.
       if (noFim) {
         setLetraAtiva(letras[letras.length - 1])
         return
@@ -113,7 +126,13 @@ export default function App() {
 
     conferir()
     window.addEventListener('scroll', aoRolar, { passive: true })
-    return () => window.removeEventListener('scroll', aoRolar)
+    window.addEventListener('resize', aoRolar, { passive: true })
+    window.visualViewport?.addEventListener('resize', aoRolar, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', aoRolar)
+      window.removeEventListener('resize', aoRolar)
+      window.visualViewport?.removeEventListener('resize', aoRolar)
+    }
   }, [letras])
 
   const irParaLetra = useCallback((letra) => {

@@ -171,6 +171,8 @@
 html {
   font-size: 16px;
   overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   /* Rolagem instantânea: o arrasto na trilha A–Z precisa acompanhar o
      dedo, e `smooth` faria a lista chegar depois dele. */
   scroll-behavior: auto;
@@ -182,6 +184,8 @@ body {
   background: var(--cat-fundo);
   color: var(--cat-off);
   overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   overscroll-behavior-y: none;
   -webkit-touch-callout: none;
   /* Arrastar a lista não pode virar seleção de texto (o input reverte isso). */
@@ -211,7 +215,9 @@ video {
 /* Barra de rolagem fora: no celular ela não existe, e no desktop
    atravessaria o cabeçalho de vidro. */
 ::-webkit-scrollbar {
+  display: none;
   width: 0;
+  height: 0;
   background: transparent;
 }
 
@@ -680,6 +686,8 @@ video {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   overscroll-behavior-y: contain;
   -webkit-overflow-scrolling: touch;
 }
@@ -807,15 +815,13 @@ video {
 ══════════════════════════════════════════════════════════════ */
 .cat-midia {
   position: relative;
-  /* A foto cede espaço para produtos com um pouco mais de texto. Assim,
-     telas curtas não ganham uma rolagem de poucos pixels; quando o conteúdo
-     realmente é longo, este limite preserva uma foto ainda útil e o restante
-     segue na rolagem nativa. */
+  /* A foto mantém a proporção visual do carrossel em todos os produtos.
+     Conteúdo maior rola abaixo dela, sem comprimir a apresentação da imagem. */
   height: var(--cat-midia-altura, 46dvh);
   min-height: 210px;
   min-height: clamp(210px, 34dvh, 250px);
   max-height: 480px;
-  flex: 1 1 var(--cat-midia-altura, 46dvh);
+  flex: 0 0 var(--cat-midia-altura, 46dvh);
   width: 100%;
   background: #0b1426;
   overflow: hidden;
@@ -1048,6 +1054,8 @@ video {
   max-width: 560px;
   align-self: center;
   overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   padding: 16px calc(var(--cat-safe-direita) + 14px) calc(var(--cat-safe-base) + 30px) calc(var(--cat-safe-esquerda) + 14px);
