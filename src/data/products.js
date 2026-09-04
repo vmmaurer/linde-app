@@ -166,7 +166,7 @@ export const products = [
     // O valor foi ajustado foto a foto para a construção aparecer inteira.
     media: [
       // `badge` = selo que aparece no topo da foto (só esta tem)
-      { type: 'image', src: './images/HABITAT_NEUTRO_BRONZE.webp', caption: 'Neutro Bronze', badge: 'Lançamento Fesqua 2026' },
+      { type: 'image', src: './images/HABITAT_NEUTRO_BRONZE.webp', caption: 'Neutro Bronze', badge: 'Pre-Lançamento Fesqua 2026' },
       { type: 'image', src: './images/HABITAT_NEUTRO_CINZA.webp', caption: 'Neutro Cinza', position: 'center 90%' },
       { type: 'image', src: './images/HABITAT_NEUTRO_CINZA_CLARO.webp', caption: 'Neutro Cinza Claro', position: 'center 85%' },
       { type: 'image', src: './images/HABITAT_NEUTRO_INCOLOR.webp', caption: 'Neutro Incolor', position: 'center 100%' },
@@ -428,12 +428,16 @@ export const products = [
     subtitle: 'Privacidade sob controle',
     // ATENÇÃO: imagens temporárias (banco gratuito Pexels) até chegarem as
     // fotos da Linde. Trocar os arquivos SMARTGLASS_*.webp em public/images.
-    image: './images/SMARTGLASS_1.webp',
-    modalImage: './images/SMARTGLASS_1.webp',
+    image: './images/SMARTGLASS-CAPA.webp',
+    modalImage: './images/SMARTGLASS-CAPA.webp',
     brandLogo: '',
     media: [
-      { type: 'image', src: './images/SMARTGLASS_1.webp' },
+      { type: 'image', src: './images/SMARTGLASS-CAPA.webp' },
       { type: 'image', src: './images/SMARTGLASS_2.webp' },
+      { type: 'image', src: './images/SMARTGLASS_3.webp' },
+      { type: 'image', src: './images/SMARTGLASS_4.webp' },
+      { type: 'image', src: './images/SMARTGLASS_5.webp' },
+      { type: 'image', src: './images/SMARTGLASS_6.webp' },
     ],
     color: 'from-slate-800/80 to-navy-950/90',
     description:
@@ -448,11 +452,11 @@ export const products = [
     id: 16,
     slug: 'pelicula-seguranca',
     title: 'Película de Segurança',
-    subtitle: 'Proteção sem trocar o vidro',
+    subtitle: 'Proteção e segurança para sua família.',
     // PELICULA_1 é imagem de banco, mantida só como capa do card até chegar
     // uma foto da Linde. No carrossel entram apenas os dois vídeos.
-    image: './images/PELICULA_1.webp',
-    modalImage: './images/PELICULA_1.webp',
+    image: './images/CAPA_PELICULA.webp',
+    modalImage: './images/CAPA_PELICULA.webp',
     brandLogo: '',
     media: [
       { type: 'video', src: './images/PELICULA_VIDEO_1.webm' },
@@ -460,17 +464,17 @@ export const products = [
     ],
     color: 'from-blue-900/80 to-navy-950/90',
     description:
-      'A película de segurança é aplicada sobre o vidro já instalado e mantém os fragmentos unidos em caso de quebra, reduzindo o risco de acidentes. Também filtra raios UV e auxilia no controle de calor e ofuscamento, sendo a solução mais rápida para reforçar vidros existentes.',
+      'A aplicação de película de segurança em vidros temperados da Linde Vidros é realizada após o processo de têmpera exclusivamente na face externa (área seca) do vidro para boxes de banheiro, atendendo rigorosamente à norma ABNT NBR 14207. Essa tecnologia retém os fragmentos em caso de impacto, garantindo máxima proteção e segurança ao usuário.',
     applications: [
-      'Vitrines e fachadas comerciais',
-      'Portas e janelas residenciais',
-      'Reforço de vidros já instalados',
+      'Boxes de banheiro.',
+      'Portas e divisórias de vidro.',
+      'Vidros temperados para áreas de banho.',
     ],
   },
   {
     id: 17,
-    slug: 'anti-chama',
-    title: 'Anti Chama',
+    slug: 'anti-chamas',
+    title: 'Anti Chamas',
     subtitle: 'Resistência ao fogo',
     image: './images/FOGO_4_CAPA.webp',
     modalImage: './images/FOGO_4_CAPA.webp',
@@ -485,11 +489,11 @@ export const products = [
     ],
     color: 'from-orange-900/80 to-navy-950/90',
     description:
-      'Os vidros resistentes ao fogo formam uma barreira contra fumaça, chamas e gases tóxicos por até 120 minutos, reduzindo o calor irradiado e garantindo tempo para a evacuação. São vidros de segurança temperados e laminados, estáveis aos raios UV, com classificações de E/EW30 a EW120 e de EI30 a EI120 conforme o nível de proteção exigido.',
+      'O vidro Anti Chamas é uma solução de segurança transparente que ajuda a conter o fogo e reduz o calor que chega ao lado protegido. Isso aumenta o tempo de proteção de pessoas, móveis e materiais próximos, sem comprometer a iluminação e a visibilidade do ambiente. Resistente e versátil, é indicado principalmente para aplicações externas.',
     applications: [
-      'Portas e paredes corta-fogo',
-      'Visores em drywall e alvenaria',
-      'Fachadas, claraboias e rotas de fuga',
+      'Portas e divisórias envidraçadas.',
+      'Janelas e visores de segurança.',
+      'Centros técnicos e áreas industriais.',
     ],
   },
 ]

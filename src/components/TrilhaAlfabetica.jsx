@@ -11,27 +11,54 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
  */
 export default function TrilhaAlfabetica({ letras, ativa, onEscolher }) {
   const [arrastando, setArrastando] = useState(false)
-  const [bolhaY, setBolhaY] = useState(0)
   const botoesRef = useRef([])
+  const limitesRef = useRef([])
+  const bolhaRef = useRef(null)
+  const bolhaYRef = useRef(0)
+  const quadroRef = useRef(null)
+  const arrastandoRef = useRef(false)
   const ultima = useRef(null)
 
-  const letraEmY = (y) => {
-    const botoes = botoesRef.current.filter(Boolean)
-    if (botoes.length === 0) return null
-
-    for (const btn of botoes) {
+  // Mede uma vez no início do gesto. Ler o layout a cada pixel arrastado
+  // fazia o navegador alternar medição e pintura, perceptível como engasgo.
+  const medirLetras = () => {
+    limitesRef.current = botoesRef.current.filter(Boolean).map((btn) => {
       const r = btn.getBoundingClientRect()
-      if (y >= r.top && y <= r.bottom) return btn.dataset.letra
+      return { letra: btn.dataset.letra, centro: (r.top + r.bottom) / 2 }
+    })
+  }
+
+  const letraEmY = (y) => {
+    const limites = limitesRef.current
+    if (limites.length === 0) return null
+
+    // A letra de centro mais próximo cobre também o pequeno espaço entre
+    // botões. Antes, qualquer toque nesses intervalos caía direto em "V".
+    let maisProxima = limites[0]
+    let menorDistancia = Math.abs(y - maisProxima.centro)
+    for (let i = 1; i < limites.length; i += 1) {
+      const distancia = Math.abs(y - limites[i].centro)
+      if (distancia < menorDistancia) {
+        maisProxima = limites[i]
+        menorDistancia = distancia
+      }
     }
-    // Fora da barra (dedo escorregou para cima/baixo): trava nas pontas.
-    const primeira = botoes[0].getBoundingClientRect()
-    if (y < primeira.top) return botoes[0].dataset.letra
-    return botoes[botoes.length - 1].dataset.letra
+    return maisProxima.letra
+  }
+
+  const posicionarBolha = (y) => {
+    const centroSeguro = Math.max(31, Math.min(window.innerHeight - 31, y))
+    bolhaYRef.current = centroSeguro - 31
+    if (quadroRef.current !== null) return
+    quadroRef.current = requestAnimationFrame(() => {
+      quadroRef.current = null
+      bolhaRef.current?.style.setProperty('--cat-bolha-y', `${bolhaYRef.current}px`)
+    })
   }
 
   const aplicar = (y) => {
     const letra = letraEmY(y)
-    setBolhaY(y)
+    posicionarBolha(y)
     if (!letra || letra === ultima.current) return
     ultima.current = letra
     // Vibração curtíssima a cada letra nova — no Android dá a sensação de
@@ -42,11 +69,14 @@ export default function TrilhaAlfabetica({ letras, ativa, onEscolher }) {
   }
 
   const aoSoltar = useCallback(() => {
+    arrastandoRef.current = false
     setArrastando(false)
     ultima.current = null
   }, [])
 
   const aoDescer = (e) => {
+    medirLetras()
+    arrastandoRef.current = true
     setArrastando(true)
     ultima.current = null
     // O Chrome recusa a captura se o ponteiro já não estiver ativo; sem o
@@ -55,7 +85,7 @@ export default function TrilhaAlfabetica({ letras, ativa, onEscolher }) {
     aplicar(e.clientY)
   }
   const aoMover = (e) => {
-    if (!arrastando) return
+    if (!arrastandoRef.current) return
     e.preventDefault()
     aplicar(e.clientY)
   }
@@ -78,6 +108,10 @@ export default function TrilhaAlfabetica({ letras, ativa, onEscolher }) {
     }
   }, [arrastando, aoSoltar])
 
+  useEffect(() => () => {
+    if (quadroRef.current !== null) cancelAnimationFrame(quadroRef.current)
+  }, [])
+
   return (
     <>
       <div
@@ -98,17 +132,23 @@ export default function TrilhaAlfabetica({ letras, ativa, onEscolher }) {
             type="button"
             aria-label={`Ir para a letra ${letra}`}
             className={`cat-trilha__letra${letra === ativa ? ' cat-trilha__letra--ativa' : ''}`}
+            onClick={(e) => {
+              // Clique gerado por teclado não dispara pointerdown.
+              if (e.detail === 0) onEscolher(letra)
+            }}
           >
             {letra}
           </button>
         ))}
       </div>
 
-      {arrastando && (
-        <div className="cat-bolha" style={{ top: bolhaY }} aria-hidden>
-          {ativa}
-        </div>
-      )}
+      <div
+        ref={bolhaRef}
+        className={`cat-bolha${arrastando ? ' cat-bolha--visivel' : ''}`}
+        aria-hidden
+      >
+        {ativa || letras[0]}
+      </div>
     </>
   )
 }

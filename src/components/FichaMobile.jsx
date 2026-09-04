@@ -59,6 +59,7 @@ export default function FichaMobile({ ficha, onFechar }) {
               key={l.id}
               type="button"
               className="cat-seg__btn"
+              aria-pressed={i === linhaAtiva}
               style={{
                 color: i === linhaAtiva ? '#f0f0f0' : 'rgba(240,240,240,0.5)',
                 fontWeight: i === linhaAtiva ? 700 : 500,
@@ -82,6 +83,7 @@ export default function FichaMobile({ ficha, onFechar }) {
           <button
             type="button"
             className={`cat-tipo__btn${tipo === 'mono' ? ' cat-tipo__btn--ativo' : ''}`}
+            aria-pressed={tipo === 'mono'}
             onClick={() => setTipo('mono')}
           >
             Monolítico
@@ -89,6 +91,7 @@ export default function FichaMobile({ ficha, onFechar }) {
           <button
             type="button"
             className={`cat-tipo__btn${tipo === 'lam' ? ' cat-tipo__btn--ativo' : ''}`}
+            aria-pressed={tipo === 'lam'}
             onClick={() => setTipo('lam')}
           >
             Laminados
@@ -117,7 +120,7 @@ function BlocoVidro({ vidro, tipo, espessuras }) {
   })
 
   return (
-    <div className="cat-vidro" style={{ borderLeft: `3px solid ${vidro.accent}` }}>
+    <section className="cat-vidro" style={{ '--cat-vidro-accent': vidro.accent }}>
       <div
         className="cat-vidro__nome"
         style={{ background: `linear-gradient(90deg, ${vidro.accent}26 0%, rgba(35,60,100,0.18) 100%)` }}
@@ -131,11 +134,16 @@ function BlocoVidro({ vidro, tipo, espessuras }) {
 
       <div className="cat-tabela-rolagem">
         <table className="cat-tabela">
+          <caption className="sr-only">
+            Desempenho técnico de {vidro.nome} em diferentes espessuras
+          </caption>
           <thead>
             <tr>
-              <th className="cat-tabela__metrica" />
+              <th scope="col" className="cat-tabela__metrica cat-tabela__metrica--cabecalho">
+                Indicador
+              </th>
               {espessuras.map((e) => (
-                <th key={e} className="cat-tabela__esp" style={{ color: vidro.accent }}>
+                <th scope="col" key={e} className="cat-tabela__esp" style={{ color: vidro.accent }}>
                   {e}
                 </th>
               ))}
@@ -153,10 +161,10 @@ function BlocoVidro({ vidro, tipo, espessuras }) {
                 const valor = m[tipo]
                 return (
                   <tr key={m.abbr + m.label}>
-                    <td className="cat-tabela__metrica">
+                    <th scope="row" className="cat-tabela__metrica">
                       {m.label}
                       <span className="cat-tabela__abbr">{m.abbr}</span>
-                    </td>
+                    </th>
                     {/* valor em array = um por espessura; string = vale para todas */}
                     {Array.isArray(valor) ? (
                       valor.map((v, i) => (
@@ -174,6 +182,6 @@ function BlocoVidro({ vidro, tipo, espessuras }) {
           ))}
         </table>
       </div>
-    </div>
+    </section>
   )
 }

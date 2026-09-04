@@ -86,6 +86,16 @@ export default function App() {
     let agendado = false
     const conferir = () => {
       agendado = false
+      const pagina = document.scrollingElement || document.documentElement
+      const noFim = pagina.scrollTop + pagina.clientHeight >= pagina.scrollHeight - 2
+
+      // A última seção geralmente já cabe inteira na tela antes de seu
+      // título alcançar o cabeçalho. No fim da lista, ela deve ser a ativa.
+      if (noFim) {
+        setLetraAtiva(letras[letras.length - 1])
+        return
+      }
+
       const limite = (topoRef.current?.offsetHeight || 132) + 24
       let atual = letras[0]
       for (const letra of letras) {
@@ -110,8 +120,10 @@ export default function App() {
     const el = secoesRef.current[letra]
     if (!el) return
     const alturaTopo = topoRef.current?.offsetHeight || 132
-    const y = el.getBoundingClientRect().top + window.scrollY - alturaTopo - 8
-    window.scrollTo({ top: Math.max(0, y), behavior: 'instant' })
+    const pagina = document.scrollingElement || document.documentElement
+    const yDesejado = el.getBoundingClientRect().top + pagina.scrollTop - alturaTopo - 8
+    const yMaximo = Math.max(0, pagina.scrollHeight - pagina.clientHeight)
+    window.scrollTo({ top: Math.min(yMaximo, Math.max(0, yDesejado)), behavior: 'auto' })
     setLetraAtiva(letra)
   }, [])
 
@@ -202,7 +214,7 @@ export default function App() {
       )}
 
       {/* ══ Lista ══ */}
-      <main className="cat-lista" style={busca ? { paddingLeft: 14 } : undefined}>
+      <main className={`cat-lista${busca ? ' cat-lista--busca' : ''}`}>
         <p className="cat-contagem">{resumoContagem(totalItens, Boolean(busca))}</p>
 
         {secoes.length === 0 && (

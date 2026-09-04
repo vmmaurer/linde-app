@@ -11,7 +11,7 @@ import { Estrela } from './icones'
  *
  * Lê os campos que products.js já traz: type, src, position, caption e badge.
  */
-export default function MidiaSwipe({ midias, altura = '46vh', onIndice }) {
+export default function MidiaSwipe({ midias, altura = '46dvh', onIndice }) {
   const [indice, setIndice] = useState(0)
   const inicioX = useRef(null)
   const inicioY = useRef(null)
@@ -58,7 +58,13 @@ export default function MidiaSwipe({ midias, altura = '46vh', onIndice }) {
       return
     }
     const dx = e.clientX - inicioX.current
-    if (Math.abs(dx) > 42) ir(dx < 0 ? indice + 1 : indice - 1)
+    const dy = e.clientY - (inicioY.current ?? e.clientY)
+    // Um arrasto vertical pode terminar alguns pixels para o lado. Exigir
+    // predominância horizontal evita trocar a foto quando a intenção era
+    // apenas rolar o conteúdo do produto.
+    if (Math.abs(dx) > 42 && Math.abs(dx) > Math.abs(dy) * 1.15) {
+      ir(dx < 0 ? indice + 1 : indice - 1)
+    }
     deslizando.current = false
     inicioX.current = null
     inicioY.current = null
@@ -70,7 +76,7 @@ export default function MidiaSwipe({ midias, altura = '46vh', onIndice }) {
   return (
     <div
       className="cat-midia"
-      style={{ height: altura, minHeight: 250, maxHeight: 430 }}
+      style={{ '--cat-midia-altura': altura }}
       onPointerDown={aoDescer}
       onPointerMove={aoMover}
       onPointerUp={aoSoltar}
